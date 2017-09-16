@@ -1,0 +1,4 @@
+Main is a special method in Java.
+A Java program will only run if it has a main method.
+Even though mAIn has A.I. inside, it is not very smart.
+So, you must remember to use MAIN!!!

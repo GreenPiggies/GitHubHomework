@@ -1,0 +1,311 @@
+4/9/17
+——————
+Agenda
+	Review Homework
+	Exception
+	Exception Categories (additional notes)
+	Exception Handling (Continued)
+		Finally Clause
+	Next Homework
+
+
+Exception
+—————————
+- The term exception is a shorthand for the phrase “exceptional event”
+- An exception is an event, which occurs during the execution of a program, that disrupts the normal flow of the program’s instructions.
+
+- When an error occurs within a method, the method creates an object and hands it off to the runtime system.
+	- This object is called an “exception object” and contains information about the error.
+	- This process of creating an exception object and handling it to the runtime system is called “throwing an exception”.
+
+- After the method throws an exception, the runtime system attempts to find something to handle it. 
+	- The possible set of “somethings” to handle the exception is the list of methods that had been called to get to the method where the error occurred.
+	- This list of methods is known as the “call stack”. 
+	- Example Call Stack:
+
+		———————————————————————————————————		
+		methodC is where the error occurred 
+		———————————————————————————————————		
+		methodB called methodC
+		———————————————————————————————————		
+		method A called methodB
+		———————————————————————————————————		
+		main called methodA
+		———————————————————————————————————	
+
+- The runtime system searches the call stack for a method that contains a block of code that can handle the exception.
+	- This block of code is called an “exception handler”. 
+	- The search begins with the method in which the error occurred and proceeds through the call stack in reverse order in which the methods were called.
+	- When an appropriate handler is found, the runtime system passes the exception to the handler.
+		- An exception handler is considered “appropriate” if the type of the exception object thrown matches the type that can be handled by the handler.
+		- The exception handler chosen is said to “catch the exception”.
+	- The runtime system will exhaustively search all the methods on the call stack all the way to the main method.
+	- If no appropriate exception handler is found, then the runtime system (the program) terminates.
+	- Example Call Stack Search:
+
+		———————————————————————————————————		
+		methodC is where the error occurred       <— Throws exception
+		———————————————————————————————————		
+		methodB called methodC but does           <— Look for appropriate handler in this method first
+		Not contain an exception handler
+		———————————————————————————————————		
+		method A called methodB which does 	    <— Look for appropriate handler in this method second
+		contain an exception handler             
+		———————————————————————————————————		
+		main called methodA
+		———————————————————————————————————	
+
+
+Exception Categories (additional notes)
+———————————————————————————————————————
+- Checked Exceptions
+	- These are exceptional conditions that a well-written application should anticipate and recover from.
+	- Example:
+		- A program prompts a user for an input file name
+		- The program opens the file by passing the name to the constructor for FileReader.
+		- If the construction of the FileReader object succeeds, then the program proceeds normally. However, if the user supplies the name of a nonexistent file, then the constructor throws a FileNotFoundException.
+		- A well-written program will catch this exception and notify the user of the mistake, possibly prompting for a corrected file name.
+	- Your program must deal with checked exceptions or it will not compile. 
+	- All exceptions are checked exceptions, except for those indicated by Error, RuntimeException, and their subclasses.
+
+- Unchecked Exceptions
+	- These are runtime exceptions that are internal to the application.
+	- The program cannot usually anticipate or recover from these exceptions.
+	- These usually indicate programming bug, such as logic errors and/or improper use of an API.
+	- Example:
+		- From the previous example, if the program passes a null to the constructor for FileReader instead of a file name due to a logic error, then the constructor throws a NullPointerException.
+		- The program can catch this exception, but it probably makes more sense to eliminate the bug that caused the exception to occur.
+	- Unchecked exceptions are those indicated by RuntimeException and its subclasses.
+
+
+Finally Clause
+——————————————
+- The finally clause is used when you need to take some action whether or not an exception is thrown.
+
+—> The statements in the finally clause are ALWAYS executed when the try block exits.
+	- Once a try block is entered, the statements in the finally clause are GUARANTEED to be executed, whether or not an exception is thrown.
+	—> Even if an unexpected exception occurs, the statements in the finally clause are executed.
+		- This means that statements in the finally clause are executed even when an exception was thrown in the try block and NOT caught.
+	—> The finally clause is useful for more than just exception handling.
+		- The statements in the finally clause are also executed if the try block is exited by a return, continue, or break statement.
+- Use the finally clause whenever you need to do some clean up, such as closing files and recovering resources, to ensure that the clean up happens no matter how the try block exits.
+	- Putting cleanup code in a finally block is always good practice, even when no exceptions are anticipated.
+	- The finally clause is a key tool for preventing resource leaks.
+
+
+Syntax for the full Try/Catch/Finally block
+===========================================
+try
+{
+	statement;
+	statement;
+	…
+} catch (ExceptionClass exceptionObject)
+{
+	statement;
+	statement;
+	…
+} finally
+{
+	statement;
+	statement;
+	…
+}
+
+- Example: PrintWriter may not close properly.
+
+	PrintWriter output = null;
+	try
+	{
+		FileWriter fileOut = new FileWriter("limit.txt"); /* Use chmod ugo-w limit.txt to make limit.txt read-only. */
+		
+		BufferedWriter bufferOut = new BufferedWriter(fileOut); //Default buffer size is 8192 bytes
+		output = new PrintWriter(bufferOut);
+		for (int count = 1; count <= 4000; count++)
+		{
+			output.print(count + ((count % 50 == 0) ? "\n" : " "));
+			/* Cause an ArithmeticException by dividing by zero. */
+			int bad = 1 / (3501 - count); 
+		}
+		/* NOTE: This close method may never be reached if there is an exception. Therefore, the PrintWriter will not be flushed and closed properly. Data will be lost! */
+		output.close();
+	} catch (IOException exception)
+	{
+		System.err.println("Error -- " + exception);
+	} catch (ArithmeticException exception)
+	{
+		System.err.println("Error -- " + exception);
+	}
+
+	- The try block opens a PrintWriter and should close that stream before exiting.
+	- This presents a problem because the try block can exit in one of three ways:
+		- Everything succeeds and the try block exits normally.
+		- The new FileWriter statement fails and throws an IOException.
+		- When count reaches 3501, a divide by zero occurs and throws an ArithmeticException.
+	- If an exception is thrown, the close method of the PrintWriter will NOT be executed and the data will not be flushed to the file and closed properly.
+		- Data will be lost!
+
+- Example: Adding a finally clause to close PrintWriter properly.
+
+	PrintWriter output = null;
+	try
+	{
+		FileWriter fileOut = new FileWriter("limit.txt"); /* Use chmod ugo-w limit.txt to make limit.txt read-only. */
+		
+		BufferedWriter bufferOut = new BufferedWriter(fileOut); //Default buffer size is 8192 bytes
+		output = new PrintWriter(bufferOut);
+		for (int count = 1; count <= 4000; count++)
+		{
+			output.print(count + ((count % 50 == 0) ? "\n" : " "));
+			/* Cause an ArithmeticException by dividing by zero. */
+			int bad = 1 / (3501 - count); 
+		}
+		/* NOTE: This close method may never be reached if there is an exception. Therefore, the PrintWriter will not be flushed and closed properly. Data will be lost! */
+		/* Move this close method to the finally clause. */
+		//output.close();
+	} catch (IOException exception)
+	{
+		System.err.println("Error -- " + exception);
+	} catch (ArithmeticException exception)
+	{
+		System.err.println("Error -- " + exception);
+	}  finally
+	{
+		if (output != null)
+		{
+			output.close();
+			System.out.println("Closing PrintWriter...");
+		} else
+		{
+			System.out.println("PrintWriter not open.");
+		}
+	} 
+
+	- The finally clause cleans up and then closes the PrintWriter.
+		- The program always executes the statement within the finally block regardless of what happens with the try block, so it’s the perfect place to perform cleanup.
+	- Note that the PrintWriter variable must be declared outside the try block so that the finally clause can access it.
+
+- Example: The finally clause will be executed even if the ArithmeticException is NOT caught.
+
+	PrintWriter output = null;
+	try
+	{
+		FileWriter fileOut = new FileWriter("limit.txt"); /* Use chmod ugo-w limit.txt to make limit.txt read-only. */
+		
+		BufferedWriter bufferOut = new BufferedWriter(fileOut); //Default buffer size is 8192 bytes
+		output = new PrintWriter(bufferOut);
+		for (int count = 1; count <= 4000; count++)
+		{
+			output.print(count + ((count % 50 == 0) ? "\n" : " "));
+			/* Cause an ArithmeticException by dividing by zero. */
+			int bad = 1 / (3501 - count); 
+		}
+		/* NOTE: This close method may never be reached if there is an exception. Therefore, the PrintWriter will not be flushed and closed properly. Data wil be lost! */
+		/* Move this close method to the finally clause. */
+		//output.close();
+	} catch (IOException exception)
+	{
+		System.err.println("Error -- " + exception);
+	} finally
+	{
+		if (output != null)
+		{
+			output.close();
+			System.out.println("Closing PrintWriter...");
+		} else
+		{
+			System.out.println("PrintWriter not open.");
+		}
+	} 
+
+	- The finally clause still cleans up and closes the PrintWriter before the program terminates because the ArithmeticException is not handled.
+
+- Example: Exiting a method within a try block
+	PrintWriter output = null;
+	try
+	{
+		FileWriter fileOut = new FileWriter("limit.txt"); /* Use chmod ugo-w limit.txt to make limit.txt read-only. */
+		
+		BufferedWriter bufferOut = new BufferedWriter(fileOut); //Default buffer size is 8192 bytes
+		output = new PrintWriter(bufferOut);
+		for (int count = 1; count <= 4000; count++)
+		{
+			output.print(count + ((count % 50 == 0) ? "\n" : " "));
+			if (count > 3453)
+			{
+				/* Exit the method when count reaches 3453 by using the return statement. */
+				return;
+			}
+			/* Cause an ArithmeticException by dividing by zero. */
+			int bad = 1 / (3501 - count); 
+		}
+		/* NOTE: This close method may never be reached if there is an exception. Therefore, the PrintWriter will not be flushed and closed properly. Data wil be lost! */
+		/* Move this close method to the finally clause. */
+		//output.close();
+	} catch (IOException exception)
+	{
+		System.err.println("Error -- " + exception);
+	} catch (ArithmeticException exception)
+	{
+		System.err.println("Error -- " + exception);
+	} finally
+	{
+		if (output != null)
+		{
+			output.close();
+			System.out.println("Closing PrintWriter...");
+		} else
+		{
+			System.out.println("PrintWriter not open.");
+		}
+	} 
+
+	- The statements in the finally clause are still executed even if the try block is exited by a return statement.
+
+
+- Note that the try statement should contain at least one catch block or a finally block and may have multiple catch blocks.
+	—> This means that a try statement does NOT have to have a catch block if it has a finally block.
+	- If the code in the try statement has multiple exit points and no associated catch clauses, the code in the finally block is executed no matter how the try block is exited.
+	- Thus, it makes sense to provide a finally block whenever there is code that must always be executed. 
+	- This is very useful sometimes.
+
+Syntax for the Try/Finally Block
+================================
+try
+{
+	statement;
+	statement;
+	…
+} finally
+{
+	statement;
+	statement;
+	…
+}
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,124 @@
+4/12/17
+———————
+Agenda
+	Review Homework
+	Exception Handling (continued)
+		Nested Try Blocks
+	Next Homework
+
+
+Nested Try Blocks
+—————————————————
+
+- Example: The close method of BufferedReader can throw an exception. 
+
+	BufferedReader input = null;
+	try
+	{
+		/* If the following line fails, finally will be executed with input still being null. */
+		input = new BufferedReader(new FileReader("limit.txt"));
+		String line = input.readLine();
+		while (line != null)
+		{
+			System.out.println(line);
+			line = input.readLine();
+		}
+	} catch (IOException exception)
+	{
+		System.err.println("IO Exception Error -- " + exception);
+	} finally
+	{
+		try
+		{
+			/* Check input for null. */
+			if (input != null)
+			{
+				input.close();
+				System.out.println("Closing BufferedReader...");
+			} else
+			{
+				System.out.println("BufferedReader not open.");
+			}
+		} catch (IOException exception)
+		{
+			System.err.println("IO Exception Error -- " + exception);
+		}
+	} 
+
+	- Since the close method may throw an exception, another try and catch block is placed within the finally clause.
+		- This approach makes the style awkward with an additional block.
+	- The finally clause still cleans up and closes the BufferedReader.
+	- Note again that the BufferedReader variable is declared outside the try block so that the finally clause can access it. 
+	- Note that if the FileReader or BufferedReader constructors fail, finally will be executed with input still being null. (So you need to check for null.)
+
+- Example: Nest a try and finally block within a try and catch block.
+	try
+	{
+		/* If the following line fails, finally will not be executed. */
+		BufferedReader input = new BufferedReader(new FileReader("limit.txt"));
+		try
+		{
+			String line = input.readLine();
+			while (line != null)
+			{
+				System.out.println(line);
+				line = input.readLine();
+			}
+		} finally
+		{
+			/* No need to check input for null. */
+			/* Any exceptions thrown here will be caught by the outer catch block. */
+			input.close();
+			System.out.println("Closing BufferedReader...");
+		}
+	} catch (IOException exception)
+	{
+		System.err.println("IO Exception Error -- " + exception);
+	}
+
+	- Since the close method may throw an exception in the finally clause, it is nested within another try and catch block.
+		- This approach is especially useful when the finally clause throws the same exceptions as the rest of the code. (This is common with java.io operations.)
+		- Although this approach seems slightly more complex, it is very succinct.
+	- Note that the BufferedReader variable does NOT need to be declared outside the try block. 
+	- Note that if the FileReader or BufferedReader constructors fail, the catch block will be executed immediately and the nested try and finally block will NOT be executed.
+		- Thus, there is no need to check if input is null inside the finally clause.
+
+
+Automatic Resource Management in Java 7
+———————————————————————————————————————
+- In Java 7, there is a new form of the try block called a try-with-resources statement.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

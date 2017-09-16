@@ -1,0 +1,79 @@
+/* 1 */ import java.io.BufferedReader;
+/* 2 */ import java.io.BufferedWriter;
+/* 3 */ import java.io.FileNotFoundException;
+/* 4 */ import java.io.FileReader;
+/* 5 */ import java.io.FileWriter;
+/* 6 */ import java.io.IOException;
+/* 7 */ import java.io.PrintWriter;
+/* 8 */ 
+/* 9 */ /* Write a program Number that reads a file containing text. Read each line and send it to the screen or to an output file with each line preceded by line numbers. If the input file contained:
+/* 10 */ 
+/* 11 */ Mary had a little lamb
+/* 12 */ Whose fleece was white as snow.
+/* 13 */ And everywhere that Mary went,
+/* 14 */ The lamb was sure to go!
+/* 15 */ then the program will produce the following output:
+/* 16 */ 
+/* 17 */ /* 1 * / Mary had a little lamb
+/* 18 */ /* 2 * / Whose fleece was white as snow.
+/* 19 */ /* 3 * / And everywhere that Mary went,
+/* 20 */ /* 4 * / The lamb was sure to go!
+/* 21 */ The line numbers are enclosed in /* * / delimiters so that the program can be used for numbering Java source files.
+/* 22 */ 
+/* 23 */ The user can specify the input file name and output file name as two command-line inputs. The user can also just specify the input file name as a single command-line input to have the output printed to the screen. If the user doesn't specify any command-line inputs, then prompt the user for an input file name and print the output to the screen. */
+/* 24 */ 
+/* 25 */ public class NumberTester 
+/* 26 */ {
+/* 27 */ 	public static void main(String[] args)
+/* 28 */ 	{
+/* 29 */ 		if (args.length == 1 || args.length == 2)
+/* 30 */ 		{
+/* 31 */ 			try 
+/* 32 */ 			{
+/* 33 */ 				FileReader fileRead = new FileReader(args[0]);
+/* 34 */ 				BufferedReader buffRead = new BufferedReader(fileRead);
+/* 35 */ 				PrintWriter out = null;
+/* 36 */ 				if (args.length == 2)
+/* 37 */ 				{
+/* 38 */ 					FileWriter fileWrite = new FileWriter(args[1]);
+/* 39 */ 					BufferedWriter buffWrite = new BufferedWriter(fileWrite);
+/* 40 */ 					out = new PrintWriter(buffWrite);
+/* 41 */ 				}
+/* 42 */ 				try
+/* 43 */ 				{
+/* 44 */ 					String line;
+/* 45 */ 					int counter = 1;
+/* 46 */ 					while ((line = buffRead.readLine()) != null)
+/* 47 */ 					{
+/* 48 */ 						if (args.length == 2)
+/* 49 */ 						{
+/* 50 */ 							out.println("/* " + counter + " */ " + line);
+/* 51 */ 						} else
+/* 52 */ 						{
+/* 53 */ 							System.out.println("/* " + counter + " */ " + line);
+/* 54 */ 						}
+/* 55 */ 						counter++;
+/* 56 */ 					}
+/* 57 */ 				} finally
+/* 58 */ 				{
+/* 59 */ 					buffRead.close();
+/* 60 */ 					if (args.length == 2)
+/* 61 */ 					{
+/* 62 */ 						out.close();
+/* 63 */ 					}
+/* 64 */ 				}
+/* 65 */ 			} catch (FileNotFoundException exception) 
+/* 66 */ 			{
+/* 67 */ 				System.err.println("File Not Found Exception Error -- " + exception);
+/* 68 */ 			} catch (IOException exception)
+/* 69 */ 			{
+/* 70 */ 				System.err.println("IO Exception Error -- " + exception);
+/* 71 */ 			}
+/* 72 */ 		} else 
+/* 73 */ 		{
+/* 74 */ 			System.out.println("Please enter an input and an output file.");
+/* 75 */ 		}
+/* 76 */ 		
+/* 77 */ 		
+/* 78 */ 	}
+/* 79 */ }

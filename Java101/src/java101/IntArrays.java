@@ -13,7 +13,7 @@ import java.util.Random;
  */
 
 /**
- * A int array that can be changed using the methods in this class.
+ * A int array that can be manipulated using the methods in this class. Its methods make it similar to an ArrayList, except this class is especially for integers.
  * @author Wesley
  */
 
@@ -23,7 +23,7 @@ public class IntArrays
 	private int[] array;
 	
 	/**
-	 * Constructs a new int array with a length of 10.
+	 * Constructs a new integer array with a default length of 10.
 	 */
 	public IntArrays()
 	{
@@ -43,15 +43,19 @@ public class IntArrays
 	}
 	
 	/**
-	 * Prints the number at the specified value in the array.
+	 * Returns the number at the specified value in the array. It will print out an error message if the array is empty or the index is out of bounds.
 	 * @param index The index of the number to be printed.
 	 * @return The number at the specified index in the array.
 	 */
 	public int get(int index)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			return array[index];
+			if (index > -1 && index < arraySize)
+			{
+				return array[index];
+			}
+			System.out.println("Syntax error, index is out of bounds.");
 		}
 		System.out.println("Syntax error, array is empty.");
 		return -1;
@@ -59,7 +63,7 @@ public class IntArrays
 	
 	/**
 	 * Returns the length of the array.	
-	 * @return The length of the array.
+	 * @return The length of the array as an integer.
 	 */
 	public int size()
 	{
@@ -67,12 +71,12 @@ public class IntArrays
 	}
 	
 	/**
-	 * Tells you if the array is empty.
+	 * Used to check if an IntArrays object has a size of zero.
 	 * @return Returns true when the array is empty, and false when the array is not empty.
 	 */
 	public boolean isEmpty()
 	{
-		return (arraySize == 0);
+		return arraySize == 0;
 	}
 	
 	/**
@@ -81,13 +85,14 @@ public class IntArrays
 	 */
 	public int min()
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
 			int minNumber = array[0];
-			for (int i = 0; i < arraySize; i++) {
-				if(array[i] < minNumber)
+			for (int index = 0; index < arraySize; index++) 
+			{
+				if (array[index] < minNumber)
 				{
-					minNumber = array[i];
+					minNumber = array[index];
 				}
 			}			
 			return minNumber;
@@ -102,13 +107,13 @@ public class IntArrays
 	 */
 	public int max()
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
 			int maxNumber = array[0];
-			for (int i = 0; i < arraySize; i++) {
-				if(array[i] > maxNumber)
+			for (int index = 0; index < arraySize; index++) {
+				if (array[index] > maxNumber)
 				{
-					maxNumber = array[i];
+					maxNumber = array[index];
 				}
 			}			
 			return maxNumber;
@@ -125,9 +130,9 @@ public class IntArrays
 		if(arraySize != 0)
 		{
 			int sum = 0;
-			for (int i = 0; i < arraySize; i++)
+			for (int index = 0; index < arraySize; index++)
 			{
-				sum += array[i];
+				sum += array[index];
 			}
 			return sum;
 			
@@ -142,7 +147,7 @@ public class IntArrays
 	 */
 	public double average()
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
 			double sum = this.sum();
 			return sum / arraySize;
@@ -158,11 +163,10 @@ public class IntArrays
 	
 	public boolean add(int number)
 	{
-		if(arraySize < array.length)
+		if (arraySize < array.length)
 		{
 			array[arraySize] = number;			
-		}
-		else
+		} else
 		{
 			this.ensureCapacity(array.length * 2);
 			array[arraySize] = number;
@@ -174,34 +178,34 @@ public class IntArrays
 	}
 	/**
 	 * Adds a number to the array at a certain index.
-	 * @param index The index at which the number is inserted into.
+	 * @param inputIndex The index at which the number is inserted into.
 	 * @param number The number that is to be inserted at the index.
 	 * @return True if successful.
 	 */
 	
-	public boolean add(int index, int number)
+	public boolean add(int inputIndex, int number)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			if(index < arraySize)
+			if (inputIndex < arraySize)
 			{
 				if (arraySize < array.length)
 				{
 					arraySize++;
-					for(int i = arraySize - 1; i > index; i--)
+					for (int index = arraySize - 1; index > index; index--)
 					{
-						array[i] = array[i - 1];
+						array[index] = array[index - 1];
 					}
-					array[index] = number;
+					array[inputIndex] = number;
 					
 				}
-				else if(arraySize >= array.length)
+				else if (arraySize >= array.length)
 				{
 					arraySize++;
 					this.ensureCapacity(array.length * 2);
-					for(int i = arraySize - 1; i > index; i--)
+					for (int index = arraySize - 1; index > inputIndex; index--)
 					{
-						array[i] = array[i - 1];
+						array[index] = array[index - 1];
 					}
 								
 				}
@@ -215,19 +219,19 @@ public class IntArrays
 	}
 	/**
 	 * Removes an element at the specified index, and moves in elements on the right to fill the gap.
-	 * @param index The index of the element that is to be removed.
+	 * @param removeIndex The index of the element that is to be removed.
 	 * @return The removed element.
 	 */
-	public int removeByIndex(int index)
+	public int removeByIndex(int removeIndex)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			if(index < array.length)
+			if (removeIndex < array.length)
 			{
-				int element = array[index];
-				for(int i = index + 1; i < arraySize; i++)
+				int element = array[removeIndex];
+				for(int index = removeIndex + 1; index < arraySize; index++)
 				{
-					array[i - 1] = array[i];
+					array[index - 1] = array[index];
 				}
 				arraySize--;
 				return element;
@@ -244,20 +248,20 @@ public class IntArrays
 	 */
 	public boolean removeByNumber(int number)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			if(this.indexOf(number) != -1)
+			if (this.indexOf(number) != -1)
 			{
-				if(this.indexOf(number) == arraySize - 1)
+				if (this.indexOf(number) == arraySize - 1)
 				{
 					arraySize--;
 					return true;
 				}
 				else
 				{
-					for(int i = this.indexOf(number); i < arraySize - 1; i++)
+					for (int index = this.indexOf(number); index < arraySize - 1; index++)
 					{
-						array[i] = array[i + 1];
+						array[index] = array[index + 1];
 					}
 					arraySize--;
 					return true;
@@ -274,11 +278,11 @@ public class IntArrays
 	 */
 	public boolean contains(int number)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			for (int i = 0; i < arraySize; i++) 
+			for (int index = 0; index < arraySize; index++) 
 			{
-				if(array[i] == number)
+				if (array[index] == number)
 				{
 					return true;
 				}
@@ -294,11 +298,11 @@ public class IntArrays
 	 */
 	public int indexOf(int number)
 	{
-		for (int i = 0; i < arraySize; i++) 
+		for (int index = 0; index < arraySize; index++) 
 		{
-			if(array[i] == number)
+			if (array[index] == number)
 			{
-				return i;
+				return index;
 			}
 		
 		}
@@ -311,11 +315,11 @@ public class IntArrays
 	 */
 	public int lastIndexOf(int number)
 	{
-		for (int i = arraySize - 1; i >= 0; i--)
+		for (int index = arraySize - 1; index >= 0; index--)
 		{
-			if(array[i] == number)
+			if (array[index] == number)
 			{
-				return i;
+				return index;
 			}
 		}
 		return -1;
@@ -328,9 +332,9 @@ public class IntArrays
 	//Problems
 	public void set(int index, int integer)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			if(index >= 0 && index < arraySize)
+			if (index >= 0 && index < arraySize)
 			{
 				array[index] = integer;
 			}
@@ -350,9 +354,9 @@ public class IntArrays
 	public int[] clone()
 	{	
 		int[] newArray = new int[array.length];
-		for (int i = 0; i < arraySize; i++)
+		for (int index = 0; index < arraySize; index++)
 		{
-			newArray[i] = array[i];
+			newArray[index] = array[index];
 		}
 		return newArray;
 	}
@@ -368,9 +372,9 @@ public class IntArrays
 		if(arraySize != 0)
 		{
 			int[] newArray = new int[toIndex - fromIndex];
-			for(int i = fromIndex; i < toIndex; i++)
+			for(int index = fromIndex; index < toIndex; index++)
 			{
-				newArray[i] = array[i];
+				newArray[index] = array[index];
 			}
 			return newArray;	
 		}
@@ -384,14 +388,14 @@ public class IntArrays
 	 */
 	public void ensureCapacity(int minCapacity)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			if(array.length < minCapacity)
+			if (array.length < minCapacity)
 			{
 				int[] newArray = new int[minCapacity];
-				for(int i = 0; i < array.length; i++)
+				for (int index = 0; index < array.length; index++)
 				{
-					newArray[i] = array[i];
+					newArray[index] = array[index];
 				}
 				array = newArray;
 			}
@@ -407,10 +411,10 @@ public class IntArrays
 	 */
 	public boolean swap(int index1, int index2)
 	{
-		if(arraySize != 0)
+		if (arraySize != 0)
 		{
-			if(index1 >= 0 && index2 >= 0 && index1 < arraySize && index2 < arraySize)
-			{
+			if (index1 >= 0 && index2 >= 0 && index1 < arraySize && index2 < arraySize)
+			{ 
 				int holder = array[index1];
 				array[index1] = array[index2];
 				array[index2] = holder;
@@ -432,28 +436,28 @@ public class IntArrays
 				System.out.print(array[0]);
 			}
 
-			for (int i = 1; i < arraySize; i++) 
+			for (int index = 1; index < arraySize; index++) 
 			{ 
-				System.out.print((", " + array[i]));
+				System.out.print((", " + array[index]));
 			}
 			System.out.println(" ");
 		}
 	}
 	/**
-	 * Creates and returns a new array that is a numerically sorted version of the array. 
+	 * Creates and returns a new array that is a numerically sorted version of the array. I accomplish this by comparing an element of an array to the one on its right: if it is in the right order, continue. If not, I swap them. 
 	 */
 	public int[] oldSorted()
 	{
 		int[] newArray = array.clone();
-		for (int i = 0; i < arraySize; i++) 
+		for (int index = 0; index < arraySize; index++) 
 		{
-			for (int j = i + 1; j < arraySize; j++) 
+			for (int secondIndex = index + 1; secondIndex < arraySize; secondIndex++) 
 			{
-				if (newArray[i] > newArray[j]) 
+				if (newArray[index] > newArray[secondIndex]) 
 				{
-					int temp = newArray[i];
-					newArray[i] = newArray[j];
-					newArray[j] = temp;
+					int temp = newArray[index];
+					newArray[index] = newArray[secondIndex];
+					newArray[secondIndex] = temp;
 				}
 			}
 		}
@@ -461,17 +465,17 @@ public class IntArrays
 		
 	}
 	/**
-	 * Numerically sorts an array.
+	 * Numerically sorts an array.  I accomplish this by comparing an element of an array to the one on its right: if it is in the right order, continue. If not, I swap them. 
 	 */
 	public void oldSort()
 	{
-		for (int i = 0; i < arraySize; i++) {
-			for (int j = i + 1; j < arraySize; j++) {
+		for (int index = 0; index < arraySize; index++) {
+			for (int secondIndex = index + 1; secondIndex < arraySize; secondIndex++) {
 				int temp = 0;
-				if (array[i] > array[j]) {
-					temp = array[i];
-					array[i] = array[j];
-					array[j] = temp;
+				if (array[index] > array[secondIndex]) {
+					temp = array[index];
+					array[index] = array[secondIndex];
+					array[secondIndex] = temp;
 				}
 			}
 		}
@@ -634,34 +638,34 @@ public class IntArrays
 	public int[] merge(int[] otherArray)
 	{
 		int[] newArray = new int[array.length + otherArray.length];
-	    int i = 0, j = 0, k = 0;
-	    while (i < array.length && j < otherArray.length)
+	    int index = 0, secondIndex = 0, thirdIndex = 0;
+	    while (index < array.length && secondIndex < otherArray.length)
 	    {
-	        if (array[i] < otherArray[j])
+	        if (array[index] < otherArray[secondIndex])
 	        {
-	            newArray[k] = array[i];
-	            i++;
+	            newArray[thirdIndex] = array[index];
+	            index++;
 	        }
 	        else
 	        {
-	            newArray[k] = otherArray[j];
-	            j++;
+	            newArray[thirdIndex] = otherArray[secondIndex];
+	            secondIndex++;
 	        }
-	        k++;
+	        thirdIndex++;
 	    }
 
-	    while (i < array.length)
+	    while (index < array.length)
 	    {
-	        newArray[k] = array[i];
-	        i++;
-	        k++;
+	        newArray[thirdIndex] = array[index];
+	        index++;
+	        thirdIndex++;
 	    }
 
-	    while (j < otherArray.length)
+	    while (secondIndex < otherArray.length)
 	    {
-	        newArray[k] = otherArray[j];
-	        j++;
-	        k++;
+	        newArray[thirdIndex] = otherArray[secondIndex];
+	        secondIndex++;
+	        thirdIndex++;
 	    }
 
 	    return newArray;

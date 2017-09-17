@@ -2,9 +2,6 @@ package java101;
 
 public class Sudoku {
 	
-	//TODO: make new method called isPermutation
-
-	
 	int[][] sudokuBoard;
 	
 	/**
@@ -21,10 +18,22 @@ public class Sudoku {
 	 */
 	public boolean checkBoard()
 	{
-		System.out.println("Row: " + rowChecker());
-		System.out.println("Column: " + columnChecker());
-		System.out.println("SubSquare: " + subSquareChecker());
-		return (rowChecker() && columnChecker() && subSquareChecker());
+		for (int index = 0; index < sudokuBoard.length; index++)
+		{
+			if (!isPermutation(getColumn(index)))
+			{
+				return false;
+			}
+			if (!isPermutation(getRow(index)))
+			{
+				return false;
+			}
+			if (!isPermutation(getSubSquare(index)))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	/**
 	 * Checks if an integer array is a permutation.
@@ -98,7 +107,6 @@ public class Sudoku {
 	 * @param rowIndex The row number.
 	 * @return The row in the form of an int array.
 	 */
-	//There really isn't a need for this method, it's just for consistency
 	public int[] getRow(int rowIndex)
 	{
 		return sudokuBoard[rowIndex];
@@ -116,52 +124,6 @@ public class Sudoku {
 			columnArray[row] = sudokuBoard[row][colIndex];
 		}
 		return columnArray;
-	}
-	/**
-	 * Checks if the columns of the sudoku puzzle are a random permutation.  
-	 * @return True if they are all random permutations, false if not. 
-	 */
-	public boolean columnChecker()
-	{
-		for (int column = 0; column < sudokuBoard.length; column++)
-		{
-			if (!isPermutation(getColumn(column)))
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-	/**
-	 * Checks if the rows of the sudoku puzzle are a random permutation.  
-	 * @return True if they are all random permutations, false if not. 
-	 */
-	public boolean rowChecker()
-	{
-		for (int row = 0; row < sudokuBoard.length; row++)
-		{
-			if (!isPermutation(getRow(row)))
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Checks if the subsquares of the sudoku puzzle are a random permutation.  
-	 * @return True if they are all random permutations, false if not. 
-	 */
-	public boolean subSquareChecker()
-	{
-		for (int square = 0; square < sudokuBoard.length; square++)
-		{
-			if (!isPermutation(getSubSquare(square)))
-			{
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	/** TESTING METHODS START HERE **/

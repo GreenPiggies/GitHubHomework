@@ -6,12 +6,13 @@
  * This can be done with any size checkerboard over 3.
  * 
  * For the solving of this problem, I used a backtrace method to place and remove queens. First, I would search to place a queen on the 
- * first available row. If I could find a space on that row, I would place it and mark all other spaces under it that could not be occupied.
+ * first available row. If I could find a space on that row, I would place it and mark all other spaces under it that could not be occupied (diagonals and vertically downward).
  * If that piece was the xth piece, meaning I had found a solution, I would display the solution and remove the piece to continue to find more solutions.
  * 
- * However, If I could not find a space on that row, I would remove the previous piece and its markers. Then, I would mark the previous queens' spot as
- * invalid so the next time I searched through the row I would not place a piece there again. 
+ * However, If I could not find a space on that row, I would remove the previous piece and its markers. Then, I would continue to search the spots to the right of the previous piece as to not place another piece again. 
  * 
+ * The program ends when all of the solutions are found. This will print out a message to the user.
+ *
  * @author Wesley
  *
  */
@@ -257,12 +258,12 @@ public class QueensEight
 			//If any input was NOT given, use default size. No error.
 		} catch (NumberFormatException exception)
 		{
+			//This prints out an error message and sets default to 8.
 			System.err.println("Error -- " + exception);
-			boardSize = -1; //This prints out an error message and sets default to 8.
 		}
 		board = new QueensEight(boardSize);
 		int solutions = board.find();
-		System.out.println("For an " + boardSize + " by " + boardSize + " board, there are " + solutions + " solutions. ");		
+		System.out.println("For an " + board.board.length + " by " + board.board.length + " board, there are " + solutions + " solutions. ");		
 	}
 }
 

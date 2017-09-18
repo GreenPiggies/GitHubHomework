@@ -1,8 +1,9 @@
 package java101;
-
-public class Sudoku {
+//Class comments
+public class Sudoku 
+{
 	
-	int[][] sudokuBoard;
+	private int[][] sudokuBoard;
 	
 	/**
 	 * Constructs a sudoku board.
@@ -92,9 +93,10 @@ public class Sudoku {
 	{
 		int[] squareArray = new int[sudokuBoard.length];
 		int index = 0;
+		//Make for loop for index
 		for (int row = ((squareIndex / 3) * 3); row < (((squareIndex) / 3) * 3 + 3); row++)
 		{
-			for (int column = ((squareIndex % 3) * 3); column < (((squareIndex % 3) + 1) * 3); column++)
+			for (int column = ((squareIndex % 3) * 3); column < (((squareIndex % 3)) * 3 + 3); column++)
 			{
 				squareArray[index] = sudokuBoard[row][column];
 				index++;

@@ -1,16 +1,9 @@
 package java101;
 
-//TODO: Reformat
 import java.util.Random;
 
-/* Notes
- * When I return -1, print out that the array is clear.
- * Turn in homework earlier(On Monday Maybe?) 
- * Do array.clone by EnsureCapacity; using it overrides the previous int[].
- * Only add (arraySize != 0) condition if necessary.
- * WRITE CODE THE WAY YOU WOULD DO IT IN YOUR MIND
- * 
- */
+//TODO: Add comment: What is a permutation?
+//TODO: Partially filled array with methods and stuff
 
 /**
  * A int array that can be manipulated using the methods in this class. Its methods make it similar to an ArrayList, except this class is especially for integers.
@@ -23,39 +16,45 @@ public class IntArrays
 	private int[] array;
 	
 	/**
-	 * Constructs a new integer array with a default length of 10. The size is set to zero as the array is empty.
+	 * Constructs a new IntArrays object with a default capacity of 10. 
 	 */
 	public IntArrays()
 	{
-		arraySize = 0;
-		array = new int[10];
+		this(10);
 	}
 	
 	/**
-	 * Constructs a new int array with a length of initialCapacity.	The size is set to zero as the array is empty.
-	 * @param initialCapacity The initial length of the array.
+	 * Constructs a new IntArrays object with a user-specified capacity.	
+	 * @param initialCapacity The user-specified capacity.
 	 */
-	
 	public IntArrays(int initialCapacity)
 	{
 		arraySize = 0;
-		array = new int[initialCapacity];
+		if (initialCapacity < 1)
+		{
+			array = new int[initialCapacity];
+		} else
+		{
+			array = new int[10];
+		}		
 	}
 	
 	/**
-	 * Returns the number at the specified value in the array. It will print out an error message if the array is empty or the index is out of bounds.
+	 * Returns the number at the specified value in the array. It will print out an error message and returning -1 if the IntArrays object is empty or the index is out of bounds.
 	 * @param index The index of the number to be printed.
 	 * @return The number at the specified index in the array.
 	 */
 	public int get(int index)
 	{
-		if (arraySize != 0)
+		if (arraySize > 0)
 		{
 			if (index > -1 && index < arraySize)
 			{
 				return array[index];
+			} else 
+			{
+				System.out.println("Syntax error, index is out of bounds.");
 			}
-			System.out.println("Syntax error, index is out of bounds.");
 		}
 		System.out.println("Syntax error, array is empty.");
 		return -1;
@@ -71,8 +70,8 @@ public class IntArrays
 	}
 	
 	/**
-	 * Checks if an int array object is empty (not its length).
-	 * @return Returns true when the array is empty, and false when the array is not empty.
+	 * Returns true if the IntArrays object does not contain any elements.
+	 * @return Returns true when the IntArrays object is empty, otherwise false.
 	 */
 	public boolean isEmpty()
 	{
@@ -85,7 +84,7 @@ public class IntArrays
 	 */
 	public int min()
 	{
-		if (arraySize != 0)
+		if (arraySize > 0)
 		{
 			int minNumber = array[0];
 			for (int index = 0; index < arraySize; index++) 
@@ -107,7 +106,7 @@ public class IntArrays
 	 */
 	public int max()
 	{
-		if (arraySize != 0)
+		if (arraySize > 0)
 		{
 			int maxNumber = array[0];
 			for (int index = 0; index < arraySize; index++) 
@@ -123,32 +122,25 @@ public class IntArrays
 		
 	}
 	/**
-	 * Finds the sum of the elements in the array as an integer and returns it. It will print an error is the array is empty.
-	 * @return The sum of the elements in the array as an integer.
+	 * Finds the sum of the number in the array as an integer and returns it. 
+	 * @return The sum of the number in the array as an integer.
 	 */
 	public int sum()
 	{
-		if (arraySize != 0)
+		int sum = 0;
+		for (int index = 0; index < arraySize; index++)
 		{
-			int sum = 0;
-			for (int index = 0; index < arraySize; index++)
-			{
-				sum += array[index];
-			}
-			return sum;
-			
+			sum += array[index];
 		}
-		System.out.println("Syntax error, array is empty.");
-		return -1;
-		
+		return sum;
 	}
 	/**
 	 * Finds the average of the numbers in the int array and returns it. It will print an error if the array is empty.
-	 * @return The average of the numbers in the array as an integer.
+	 * @return The average of the numbers in the array as an double.
 	 */
 	public double average()
 	{
-		if (arraySize != 0)
+		if (arraySize > 0)
 		{
 			double sum = this.sum();
 			return sum / arraySize;
@@ -164,80 +156,71 @@ public class IntArrays
 	
 	public boolean add(int number)
 	{
-		if (arraySize < array.length)
+		if (arraySize >= array.length)
 		{
-			array[arraySize] = number;			
-		} else
-		{
-			this.ensureCapacity(array.length * 2);
-			array[arraySize] = number;
-		}
+			this.ensureCapacity(array.length * 2 + 1);
+		} 
+		array[arraySize] = number;			
 		arraySize++;
 		return true;
 		
 
 	}
+	//Moving 1 down :)
 	/**
-	 * Adds a number to the array at a certain index by pushing away other elements to make room.
+	 * Adds a number to the array at a certain index by pushing away other index to make room.
 	 * @param inputIndex The index at which the number is inserted into.
 	 * @param number The number that is to be inserted at the index.
 	 * @return True if successful.
 	 */
-	
+	//TODO: FIXXXXXXXXXXXXXXXXXXXXX
 	public boolean add(int inputIndex, int number)
 	{
-		if (arraySize != 0)
+		if (inputIndex < arraySize)
 		{
-			if (inputIndex < arraySize)
+			if (arraySize < array.length)
 			{
-				if (arraySize < array.length)
+				arraySize++;
+				for (int index = arraySize - 1; index > index; index--)
 				{
-					arraySize++;
-					for (int index = arraySize - 1; index > index; index--)
-					{
-						array[index] = array[index - 1];
-					}
-					array[inputIndex] = number;
-					
+					array[index] = array[index - 1];
 				}
-				else if (arraySize >= array.length)
-				{
-					arraySize++;
-					this.ensureCapacity(array.length * 2);
-					for (int index = arraySize - 1; index > inputIndex; index--)
-					{
-						array[index] = array[index - 1];
-					}
-								
-				}
-				return true;
+				array[inputIndex] = number;
+				
 			}
-			
+			else if (arraySize >= array.length)
+			{
+				arraySize++;
+				this.ensureCapacity(array.length * 2 + 1);
+				for (int index = arraySize - 1; index > inputIndex; index--)
+				{
+					array[index] = array[index - 1];
+				}
+							
+			}
+			return true;
 		}
 		System.out.println("Syntax error, array is empty.");
 		return false;
 			
 	}
 	/**
-	 * Removes an element at the specified index, and moves in elements on the right to fill the gap.
-	 * @param removeIndex The index of the element that is to be removed.
-	 * @return The removed element.
+	 * Removes an number at the specified index, and increments the position of the remaining numbers by 1 to fill the gap.
+	 * @param removeIndex The index of the number that is to be removed.
+	 * @return The removed number.
 	 */
 	public int removeByIndex(int removeIndex)
 	{
-		if (arraySize != 0)
+		if (removeIndex < arraySize)
 		{
-			if (removeIndex < array.length)
+			int element = array[removeIndex];
+			for (int index = removeIndex + 1; index < arraySize; index++)
 			{
-				int element = array[removeIndex];
-				for(int index = removeIndex + 1; index < arraySize; index++)
-				{
-					array[index - 1] = array[index];
-				}
-				arraySize--;
-				return element;
-			}	
-		}
+				array[index - 1] = array[index];
+			}
+			arraySize--;
+			return element;
+		}	
 		System.out.println("Syntax error, array is empty.");
 		return -1;
 	
@@ -247,28 +230,26 @@ public class IntArrays
 	 * @param number The number which is to be removed
 	 * @return True if the removal was successful, false if the number was not in the array.
 	 */
+	 //TODO: FIX
 	public boolean removeByNumber(int number)
 	{
-		if (arraySize != 0)
+		if (this.indexOf(number) != -1)
 		{
-			if (this.indexOf(number) != -1)
+			if (this.indexOf(number) == arraySize - 1)
 			{
-				if (this.indexOf(number) == arraySize - 1)
+				arraySize--;
+				return true;
+			} else
+			{
+				for (int index = this.indexOf(number); index < arraySize - 1; index++)
 				{
-					arraySize--;
-					return true;
-				} else
-				{
-					for (int index = this.indexOf(number); index < arraySize - 1; index++)
-					{
-						array[index] = array[index + 1];
-					}
-					arraySize--;
-					return true;
+					array[index] = array[index + 1];
 				}
-			
-			}	
-		}
+				arraySize--;
+				return true;
+			}
+		
+		}	
 		return false;
 	}
 	/**
@@ -278,17 +259,7 @@ public class IntArrays
 	 */
 	public boolean contains(int number)
 	{
-		if (arraySize != 0)
-		{
-			for (int index = 0; index < arraySize; index++) 
-			{
-				if (array[index] == number)
-				{
-					return true;
-				}
-			}
-		}
-		return false;
+		return indexOf(number) != -1 ? true : false;
 		
 	}
 	/**
@@ -325,19 +296,19 @@ public class IntArrays
 		return -1;
 	}
 	/**
-	 * Replaces the integer at the specified position in the array with the specified integer.
+	 * Replaces the number at the specified index in the array with the specified number.
 	 * @param index The index to set to the integer.
 	 * @param integer The number to replace the current number in the index.
+	 * @return True if successful, false if not.
 	 */
 	public void set(int index, int integer)
 	{
-		if (arraySize != 0)
+		if (index >= 0 && index < arraySize)
 		{
-			if (index >= 0 && index < arraySize)
-			{
-				array[index] = integer;
-			}
+			array[index] = integer;
+			return true;
 		}
+		return false;
 			
 	}
 	/**
@@ -348,7 +319,7 @@ public class IntArrays
 		arraySize = 0;
 	}
 	/**
-	 * Returns a new copy of the int array.
+	 * Returns a copy of the IntArrays object as an integer array.
 	 */
 	public int[] clone()
 	{	
@@ -387,38 +358,31 @@ public class IntArrays
 	 */
 	public void ensureCapacity(int minCapacity)
 	{
-		if (arraySize != 0)
+		if (array.length < minCapacity)
 		{
-			if (array.length < minCapacity)
+			int[] newArray = new int[minCapacity];
+			for (int index = 0; index < arraySize; index++)
 			{
-				int[] newArray = new int[minCapacity];
-				for (int index = 0; index < array.length; index++)
-				{
-					newArray[index] = array[index];
-				}
-				array = newArray;
+				newArray[index] = array[index];
 			}
-		
+			array = newArray;
 		}
 			
 	}
 	/**
-	 * Swaps 2 elements of the array.
+	 * Swaps 2 numbers of the array.
 	 * @param index1 The index of the element that is going to be swapped.
 	 * @param index2 The index of the element that will be swapped with index1.
 	 * @return True if the swap is successful, and false if the swap is unsuccessful.
 	 */
 	public boolean swap(int index1, int index2)
 	{
-		if (arraySize != 0)
-		{
-			if (index1 >= 0 && index2 >= 0 && index1 < arraySize && index2 < arraySize)
-			{ 
-				int holder = array[index1];
-				array[index1] = array[index2];
-				array[index2] = holder;
-				return true;
-			}
+		if (index1 >= 0 && index2 >= 0 && index1 < arraySize && index2 < arraySize)
+		{ 
+			int holder = array[index1];
+			array[index1] = array[index2];
+			array[index2] = holder;
+			return true;
 		}	
 		return false;
 	}
@@ -427,7 +391,6 @@ public class IntArrays
 	 */
 	public void print()
 	{
-		//TODO: Fix
 		StringBuffer print = new StringBuffer();
 		if (arraySize != 0)
 		{
@@ -440,7 +403,7 @@ public class IntArrays
 		}
 	}
 	/**
-	 * Creates and returns a new array that is a numerically sorted version of the array. I accomplish this by comparing an element of an array to the one on its right: if it is in the right order, continue. If not, I swap them. 
+	 * Creates and returns a new array that is a numerically sorted version of the array. I accomplish this by comparing an element of an array to the ones after it: if it is in the right order, continue. If not, I swap them. 
 	 */
 	public int[] oldSorted()
 	{
@@ -519,7 +482,7 @@ public class IntArrays
 		
 	}
 	/**
-	 * Checks if the array is a random permutation. Assumes permutation is from 1 to arraySize.
+	 * Checks if the array is a random permutation. Assumes permutation is size of int array object.
 	 * @return True if the array is a random permutation, false if it is not a random permutation. 
 	 */
 	public boolean isRandomPerm()
@@ -632,39 +595,39 @@ public class IntArrays
 	}
 
 	/**
-	 * Merges two sorted array and creates a new array that merges them into a sorted array. 
+	 * Merges two sorted arrays into a new sorted integer array. 
 	 * @param otherArray The array to be merged with the array in the object IntArrays.
 	 * @return The new array. 
 	 */
 	public int[] merge(int[] otherArray)
 	{
 		int[] newArray = new int[array.length + otherArray.length];
-	    int index = 0, secondIndex = 0, thirdIndex = 0;
-	    while (index < array.length && secondIndex < otherArray.length)
+	    int arrayIndex = 0, otherIndex = 0, thirdIndex = 0;
+	    while (index < array.length && otherIndex < otherArray.length)
 	    {
-	        if (array[index] < otherArray[secondIndex])
+	        if (array[arrayInex] < otherArray[otherIndex])
 	        {
-	            newArray[thirdIndex] = array[index];
+	            newArray[thirdIndex] = array[arrayIndex];
 	            index++;
 	        } else
 	        {
-	            newArray[thirdIndex] = otherArray[secondIndex];
-	            secondIndex++;
+	            newArray[thirdIndex] = otherArray[otherIndex];
+	            otherIndex++;
 	        }
 	        thirdIndex++;
 	    }
 
 	    while (index < array.length)
 	    {
-	        newArray[thirdIndex] = array[index];
+	        newArray[thirdIndex] = array[arrayIndex];
 	        index++;
 	        thirdIndex++;
 	    }
 
-	    while (secondIndex < otherArray.length)
+	    while (otherIndex < otherArray.length)
 	    {
-	        newArray[thirdIndex] = otherArray[secondIndex];
-	        secondIndex++;
+	        newArray[thirdIndex] = otherArray[otherIndex];
+	        otherIndex++;
 	        thirdIndex++;
 	    }
 
@@ -673,13 +636,15 @@ public class IntArrays
 		
 }
 	
+/* Notes
+ * When I return -1, print out that the array is clear.
+ * Turn in homework earlier(On Monday Maybe?) 
+ * Do array.clone by EnsureCapacity; using it overrides the previous int[].
+ * Only add (arraySize != 0) condition if necessary.
+ * WRITE CODE THE WAY YOU WOULD DO IT IN YOUR MIND
+ * 
+ */
 
-
-//DO BINARY SORT FOR SEARCH 
-//Hold on...do later
-
-
-//WHY R THERE SO MANY BINARY THINGS ASK NEXT CLASS 1/30/2015
 	
 
 	

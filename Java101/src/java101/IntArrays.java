@@ -178,26 +178,16 @@ public class IntArrays
 	{
 		if (inputIndex < arraySize)
 		{
-			if (arraySize < array.length)
+			arraySize++;
+			if (arraySize >= array.length)
 			{
-				arraySize++;
-				for (int index = arraySize - 1; index > index; index--)
-				{
-					array[index] = array[index - 1];
-				}
-				array[inputIndex] = number;
-				
-			}
-			else if (arraySize >= array.length)
-			{
-				arraySize++;
 				this.ensureCapacity(array.length * 2 + 1);
-				for (int index = arraySize - 1; index > inputIndex; index--)
-				{
-					array[index] = array[index - 1];
-				}
-							
 			}
+			for (int index = arraySize - 1; index > index; index--)
+			{
+				array[index] = array[index - 1];
+			}
+			array[inputIndex] = number;
 			return true;
 		}
 		System.out.println("Syntax error, array is empty.");
@@ -301,7 +291,7 @@ public class IntArrays
 	 * @param integer The number to replace the current number in the index.
 	 * @return True if successful, false if not.
 	 */
-	public void set(int index, int integer)
+	public boolean set(int index, int integer)
 	{
 		if (index >= 0 && index < arraySize)
 		{
@@ -603,12 +593,12 @@ public class IntArrays
 	{
 		int[] newArray = new int[array.length + otherArray.length];
 	    int arrayIndex = 0, otherIndex = 0, thirdIndex = 0;
-	    while (index < array.length && otherIndex < otherArray.length)
+	    while (arrayIndex < array.length && otherIndex < otherArray.length)
 	    {
-	        if (array[arrayInex] < otherArray[otherIndex])
+	        if (array[arrayIndex] < otherArray[otherIndex])
 	        {
 	            newArray[thirdIndex] = array[arrayIndex];
-	            index++;
+	            arrayIndex++;
 	        } else
 	        {
 	            newArray[thirdIndex] = otherArray[otherIndex];
@@ -617,10 +607,10 @@ public class IntArrays
 	        thirdIndex++;
 	    }
 
-	    while (index < array.length)
+	    while (arrayIndex < array.length)
 	    {
 	        newArray[thirdIndex] = array[arrayIndex];
-	        index++;
+	        arrayIndex++;
 	        thirdIndex++;
 	    }
 

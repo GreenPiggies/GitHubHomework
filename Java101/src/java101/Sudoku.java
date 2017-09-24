@@ -1,5 +1,14 @@
 package java101;
-//Class comments
+/**
+ * This class creates a Sudoku board. 
+ * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is represented using a two-dimensional array. 
+ * In a solved Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
+ * 
+ * The method used to check for completion is called checkBoard. It loops through the entire board, checking all rows, columns, and subsquares using the isPermutation method.
+ * If one is an invalid permutation, the board is not a valid solution and false is returned. If all are permutations, true is returned.
+ * @author Wesley
+ *
+ */
 public class Sudoku 
 {
 	
@@ -19,17 +28,24 @@ public class Sudoku
 	 */
 	public boolean checkBoard()
 	{
-		for (int index = 0; index < sudokuBoard.length; index++)
+		for (int row = 0; row < sudokuBoard.length; row++)
 		{
-			if (!isPermutation(getColumn(index)))
+			if (!isPermutation(sudokuBoard[row]))
 			{
 				return false;
 			}
-			if (!isPermutation(getRow(index)))
+			int[] columnArray = new int[sudokuBoard.length];
+			int[] subSquareArray = new int[sudokuBoard.length];
+			for (int column = 0; column < sudokuBoard.length; column++)
+			{
+				columnArray[column] = sudokuBoard[row][column];
+				subSquareArray[column] = sudokuBoard[(row / 3) * 3 + (column / 3)][(row % 3) * 3 + (column % 3)];
+			}
+			if (!isPermutation(columnArray))
 			{
 				return false;
 			}
-			if (!isPermutation(getSubSquare(index)))
+			if (!isPermutation(subSquareArray))
 			{
 				return false;
 			}
@@ -78,7 +94,7 @@ public class Sudoku
 		}
 		return true;
 	}
-	
+	//REFERENCES DOWN HERE
 	/**
 	 * Gets a subsquare of the sudoku board.
 	 * @param squareIndex The square number. It would look something like this: 

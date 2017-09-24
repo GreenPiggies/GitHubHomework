@@ -39,8 +39,26 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public boolean addWord(String word)
 	{
-	    //TODO: Implement this method.
-	    return false;
+		String lowerCaseWord = word.toLowerCase();
+		int index = 0;
+		TrieNode node = root;
+		boolean added = false;
+		while (index < lowerCaseWord.length())
+		{
+			TrieNode nextNode = node.getChild(lowerCaseWord.charAt(index));
+			if (nextNode != null)
+			{
+				node = nextNode;
+			} else
+			{
+				node.insert(lowerCaseWord.charAt(index));
+				node = node.getChild(lowerCaseWord.charAt(index));
+				added = true;
+			}
+			index++;
+		}
+		node.setEndsWord(true);
+	    return added;
 	}
 	
 	/** 
@@ -49,8 +67,23 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 */
 	public int size()
 	{
-	    //TODO: Implement this method
-	    return 0;
+		LinkedList<TrieNode> nodeQueue = new LinkedList<>();
+   	 	TrieNode testNode = root;
+   	 	nodeQueue.addLast(testNode);
+   	 	int size = 0;
+   	 	while (nodeQueue.size() > 0)
+   	 	{
+   	 		testNode = nodeQueue.removeFirst();
+   	 		if (testNode.endsWord())
+   	 		{
+   	 			size++;
+   	 		}
+   	 		for (char key : testNode.getValidNextCharacters())
+   	 		{
+   	 			nodeQueue.add(testNode.getChild(key));
+   	 		}
+   	 	}
+   	 	return size;
 	}
 	
 	
@@ -59,8 +92,31 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	@Override
 	public boolean isWord(String s) 
 	{
-	    // TODO: Implement this method
-		return false;
+		String lowerCaseWord = s.toLowerCase();
+		int index = 0;
+		TrieNode node = root;
+		boolean isWord = true;
+		while (index < lowerCaseWord.length())
+		{
+			TrieNode nextNode = node.getChild(lowerCaseWord.charAt(index));
+			if (nextNode != null)
+			{
+				node = nextNode;
+			} else
+			{
+				isWord = false;
+				break;
+			}
+			index++;
+		}
+		if (isWord)
+		{
+			if (!node.endsWord())
+			{
+				isWord = false;
+			}
+		}
+	    return isWord;
 	}
 
 	/** 
@@ -86,7 +142,35 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
      */@Override
      public List<String> predictCompletions(String prefix, int numCompletions) 
      {
-    	 // TODO: Implement this method
+    	 List<String> wordList = new LinkedList<>();
+    	 TrieNode node = root;
+    	 for (int preIndex = 0; preIndex < prefix.length(); preIndex++)
+    	 {
+    		 TrieNode nextNode = node.getChild(prefix.charAt(preIndex));
+    		 if (nextNode != null)
+    	     {
+    			 node = nextNode;
+    	     } else
+    	     {
+    	    	 return wordList;
+    	     }
+    	 }
+    	 LinkedList<TrieNode> nodeQueue = new LinkedList<>();
+    	 nodeQueue.add(node);
+    	 while (nodeQueue.size() > 0 && wordList.size() < numCompletions)
+    	 {
+    		 TrieNode testNode = nodeQueue.removeFirst();
+    		 System.out.println("TestNode: " + testNode.getText());
+    		 System.out.println("IsWord: " + testNode.endsWord());
+    		 if (testNode.endsWord())
+    		 {
+    			 wordList.add(testNode.getText());
+    		 }
+    		 for (char key : testNode.getValidNextCharacters())
+        	 {
+        		 nodeQueue.add(testNode.getChild(key));
+        	 }
+    	 }
     	 // This method should implement the following algorithm:
     	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
     	 //    empty list
@@ -100,8 +184,8 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
     	 //       If it is a word, add it to the completions list
     	 //       Add all of its child nodes to the back of the queue
     	 // Return the list of completions
-    	 
-         return null;
+    	 System.out.println(wordList);
+         return wordList;
      }
 
  	// For debugging

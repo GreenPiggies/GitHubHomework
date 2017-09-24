@@ -6,7 +6,10 @@ import java.util.Random;
 //TODO: Partially filled array with methods and stuff
 
 /**
- * A int array that can be manipulated using the methods in this class. Its methods make it similar to an ArrayList, except this class is especially for integers.
+ * This class constructs a partially-filled int array. 
+ * Methods here are used to get and set the properties of the partially-filled int array contained inside the IntArrays object.
+ * The methods implemented in this class help the user add, remove, set, and perform multiple tasks with minimal effort.
+ * 
  * @author Wesley
  */
 
@@ -40,9 +43,9 @@ public class IntArrays
 	}
 	
 	/**
-	 * Returns the number at the specified value in the array. It will print out an error message and returning -1 if the IntArrays object is empty or the index is out of bounds.
-	 * @param index The index of the number to be printed.
-	 * @return The number at the specified index in the array.
+	 * Returns the value at the specified value in the array. It will print out an error message and returning -1 if the IntArrays object is empty or the index is out of bounds.
+	 * @param index The index of the value to be printed.
+	 * @return The value at the specified index in the array.
 	 */
 	public int get(int index)
 	{
@@ -61,8 +64,8 @@ public class IntArrays
 	}
 	
 	/**
-	 * Returns the number of elements in the array.
-	 * @return The number of elements in the array as an integer.
+	 * Returns the number of values in the IntArrays object.
+	 * @return The number of values in the IntArrays object as an integer.
 	 */
 	public int size()
 	{
@@ -79,8 +82,8 @@ public class IntArrays
 	}
 	
 	/**
-	 * Finds the smallest number in an int array and returns it.
-	 * @return The smallest number in the array as an integer.
+	 * Returns the smallest value in an IntArrays object.
+	 * @return The smallest value in an IntArrays object as an integer.
 	 */
 	public int min()
 	{
@@ -101,8 +104,8 @@ public class IntArrays
 
 	}
 	/**
-	 * Finds the biggest number in an int array and returns it.
-	 * @return The biggest number in the array as an integer.
+	 * Returns the biggest value in an IntArrays object.
+	 * @return The biggest value in an IntArrays object as an integer.
 	 */
 	public int max()
 	{
@@ -122,8 +125,8 @@ public class IntArrays
 		
 	}
 	/**
-	 * Finds the sum of the number in the array as an integer and returns it. 
-	 * @return The sum of the number in the array as an integer.
+	 * Returns the sum of the values in the IntArrays object. 
+	 * @return The sum of the values in the IntArrays object as an integer.
 	 */
 	public int sum()
 	{
@@ -135,8 +138,8 @@ public class IntArrays
 		return sum;
 	}
 	/**
-	 * Finds the average of the numbers in the int array and returns it. It will print an error if the array is empty.
-	 * @return The average of the numbers in the array as an double.
+	 * Returns the average of the values in the IntArrays object. It will print an error if the array is empty.
+	 * @return The average of the values in the IntArrays object as an double.
 	 */
 	public double average()
 	{
@@ -148,12 +151,12 @@ public class IntArrays
 		System.out.println("Syntax error, array is empty.");
 		return -1;
 	}	
+	
 	/**
-	 * Adds a number at the end of the array; increases length if necessary.
-	 * @param number The number you want to add in. 
+	 * Adds a value in the IntArrays object; increases length if necessary.
+	 * @param number The user-specified value added in. 
 	 * @return True when successful.
 	 */
-	
 	public boolean add(int number)
 	{
 		if (arraySize >= array.length)
@@ -163,17 +166,14 @@ public class IntArrays
 		array[arraySize] = number;			
 		arraySize++;
 		return true;
-		
-
 	}
 	//Moving 1 down :)
 	/**
-	 * Adds a number to the array at a certain index by pushing away other index to make room.
-	 * @param inputIndex The index at which the number is inserted into.
-	 * @param number The number that is to be inserted at the index.
+	 * Adds a value to the IntArrays object at a user-specified index. If the specified index is occupied, the elements present in or after the index are moved down to create space.
+	 * @param inputIndex The index at which the value is inserted into.
+	 * @param number The value that is to be inserted at the index.
 	 * @return True if successful.
 	 */
-	//TODO: FIXXXXXXXXXXXXXXXXXXXXX
 	public boolean add(int inputIndex, int number)
 	{
 		if (inputIndex < arraySize)
@@ -195,9 +195,9 @@ public class IntArrays
 			
 	}
 	/**
-	 * Removes an number at the specified index, and increments the position of the remaining numbers by 1 to fill the gap.
-	 * @param removeIndex The index of the number that is to be removed.
-	 * @return The removed number.
+	 * Removes and returns a value at the specified index. Any elements positioned after the removed element are shifted up 1 position.
+	 * @param removeIndex The index of the value that is to be removed.
+	 * @return The removed value.
 	 */
 	public int removeByIndex(int removeIndex)
 	{
@@ -216,36 +216,31 @@ public class IntArrays
 	
 	}
 	/**
-	 * Removes the first occurrence of a number from the array. It moves elements from the right of the number to fill the gap when it is removed, similar to removeByIndex.
-	 * @param number The number which is to be removed
-	 * @return True if the removal was successful, false if the number was not in the array.
+	 * Removes the first occurrence of a value from the array. Any elements positioned after the removed element are shifted up 1 position.
+	 * @param number The element which is to be removed
+	 * @return True if the removal was successful, false if the element was not in the array.
 	 */
-	 //TODO: FIX
 	public boolean removeByNumber(int number)
 	{
 		if (this.indexOf(number) != -1)
 		{
-			if (this.indexOf(number) == arraySize - 1)
-			{
-				arraySize--;
-				return true;
-			} else
+			if (this.indexOf(number) != arraySize - 1)
 			{
 				for (int index = this.indexOf(number); index < arraySize - 1; index++)
 				{
 					array[index] = array[index + 1];
 				}
-				arraySize--;
-				return true;
 			}
+			arraySize--;
+			return true;
 		
 		}	
 		return false;
 	}
 	/**
-	 * Checks and returns if the array has the given number as an element.
-	 * @param number The number that is being checked for in the array.
-	 * @return True if the number is in the array, false if the number is not in the array.
+	 * Checks and returns if the IntArrays object has the given element.
+	 * @param number The element that is checked in the IntArrays object.
+	 * @return True if the element is in the array, false if the element is not in the array.
 	 */
 	public boolean contains(int number)
 	{
@@ -253,9 +248,9 @@ public class IntArrays
 		
 	}
 	/**
-	 * Finds the index of the first occurrence of the given number.
-	 * @param number The number that is searched for in the array.
-	 * @return The index of the first occurrence of the number, or -1 if the number is not in the array.
+	 * Returns the index of the first occurrence of a user-specified value.
+	 * @param number The value that is searched for in the IntArrays object.
+	 * @return The index of the first occurrence of the value, or -1 if the value is not present.
 	 */
 	public int indexOf(int number)
 	{
@@ -265,14 +260,13 @@ public class IntArrays
 			{
 				return index;
 			}
-		
 		}
 		return -1;
 	}
 	/**
-	 * Finds the index of the last occurrence of the given number.
-	 * @param number The number that is searched for in the array.
-	 * @return The index of the last occurrence of the number, or -1 if the number is not in the array.
+	 * Returns the index of the last occurrence of the a user-specified value.
+	 * @param number The value that is searched for in the IntArrays object.
+	 * @return The index of the last occurrence of the value, or -1 if the number is not in the IntArrays object.
 	 */
 	public int lastIndexOf(int number)
 	{
@@ -286,9 +280,9 @@ public class IntArrays
 		return -1;
 	}
 	/**
-	 * Replaces the number at the specified index in the array with the specified number.
-	 * @param index The index to set to the integer.
-	 * @param integer The number to replace the current number in the index.
+	 * Replaces the value at the specified index in the IntArrays object with the specified value.
+	 * @param index The index locations whose element will be set to the user-specified value.
+	 * @param integer The value to replace the current value in the index.
 	 * @return True if successful, false if not.
 	 */
 	public boolean set(int index, int integer)
@@ -302,7 +296,7 @@ public class IntArrays
 			
 	}
 	/**
-	 * Removes all of the elements from the array.
+	 * Removes all of the elements from the IntArrays object.
 	 */
 	public void clear()
 	{
@@ -320,13 +314,13 @@ public class IntArrays
 		}
 		return newArray;
 	}
+	
 	/**
-	 * Returns a new array containing only a portion of this array starting with fromIndex (inclusive) to toIndex (exclusive).
+	 * Returns a new array containing only a portion of this IntArrays object starting with fromIndex (inclusive) to toIndex (exclusive).
 	 * @param fromIndex Where the portion of the new array starts (inclusive).
 	 * @param toIndex Where the portion of the new array ends (exclusive).
 	 * @return The new array.
 	 */
-	
 	public int[] subList(int fromIndex, int toIndex)
 	{	
 		if (arraySize != 0)
@@ -343,8 +337,8 @@ public class IntArrays
 		
 	}
 	/**
-	 * Increase the capacity of the array, if necessary, to ensure that it can hold at least the number of elements specified by the minimum capacity argument.
-	 * @param minCapacity The minimum capacity that is used to see if the capacity of the array must be increased.
+	 * Increase the capacity of the IntArrays object, if necessary, to ensure that it can hold at least the number of elements specified by the minimum capacity argument.
+	 * @param minCapacity The minimum capacity that is used to see if the capacity of the IntArrays object must be increased.
 	 */
 	public void ensureCapacity(int minCapacity)
 	{
@@ -360,7 +354,7 @@ public class IntArrays
 			
 	}
 	/**
-	 * Swaps 2 numbers of the array.
+	 * Swaps 2 elements in the IntArrays object.
 	 * @param index1 The index of the element that is going to be swapped.
 	 * @param index2 The index of the element that will be swapped with index1.
 	 * @return True if the swap is successful, and false if the swap is unsuccessful.
@@ -393,7 +387,7 @@ public class IntArrays
 		}
 	}
 	/**
-	 * Creates and returns a new array that is a numerically sorted version of the array. I accomplish this by comparing an element of an array to the ones after it: if it is in the right order, continue. If not, I swap them. 
+	 * Creates and returns a new array that is a numerically sorted interpretation of the IntArrays object. I accomplish this by comparing an element of an array to the ones after it: if it is in the right order, continue. If not, I swap them. 
 	 */
 	public int[] oldSorted()
 	{
@@ -414,7 +408,7 @@ public class IntArrays
 		
 	}
 	/**
-	 * Numerically sorts an array. I accomplish this by comparing an element of an array to the one on its right: if it is in the right order, continue. If not, I swap them. 
+	 * Numerically sorts an IntArrays object. I accomplish this by comparing an element of an array to the ones after: if it is in the right order, continue. If not, I swap them. 
 	 */
 	public void oldSort()
 	{
@@ -431,9 +425,9 @@ public class IntArrays
 		
 	}
 	/**
-	 * Finds out and returns if a number is present in a sorted array. It uses a binary search method that divides the array in half again and again to search for the given number.
-	 * @param number The number searched for in the array.
-	 * @return True if the number is in the array, false if it is not in the array.
+	 * Finds and returns if a number is present in a sorted array. It uses a binary search method that divides the array in half again and again to search for the given number.
+	 * @param number The value searched for in the array.
+	 * @return True if the value is in the array, false if it is not in the array.
 	 */
 	public boolean search(int number)
 	{
@@ -456,8 +450,8 @@ public class IntArrays
 		return false;
 	}
 	/**
-	 * Checks if an array is sorted.
-	 * @return True if the array is sorted, false if the array is not sorted. 
+	 * Checks and returns if the IntArrays object is sorted.
+	 * @return True if the IntArrays object is sorted, false if it is not sorted. 
 	 */
 	public boolean isSorted()
 	{	
@@ -472,8 +466,8 @@ public class IntArrays
 		
 	}
 	/**
-	 * Checks if the array is a random permutation. Assumes permutation is size of int array object.
-	 * @return True if the array is a random permutation, false if it is not a random permutation. 
+	 * Checks if the IntArrays object is a random permutation. Assumes permutation is from 1 to arraySize.
+	 * @return True if the IntArrays object is a random permutation, false if it is not a random permutation. 
 	 */
 	public boolean isRandomPerm()
 	{
@@ -500,7 +494,6 @@ public class IntArrays
 	 */
 	public static boolean isPermutation(int[] inputArray)
 	{
-		//TODO: Check null and length
 		if (inputArray == null || inputArray.length == 0)
 		{
 			return false;
@@ -539,7 +532,7 @@ public class IntArrays
 	}
 	
 	/**
-	 * Makes a random permutation from 1 to 10
+	 * Returns a random permutation from 1 to 10.
 	 * @return The random permutation in the form of an int[] array.
 	 */
 	public static int[] permutation()
@@ -561,7 +554,7 @@ public class IntArrays
 	}
 	
 	/**
-	 * Makes a random permutation from the lower boundary to the upper boundary
+	 * Makes a random permutation from the lower boundary to the upper boundary.
 	 * @param lower The lower boundary of the permutation.
 	 * @param upper The upper boundary of the permutation.
 	 * @return The random permutation in the form of an int[] array.
@@ -586,7 +579,7 @@ public class IntArrays
 
 	/**
 	 * Merges two sorted arrays into a new sorted integer array. 
-	 * @param otherArray The array to be merged with the array in the object IntArrays.
+	 * @param otherArray The array to be merged with the array interpretation of the object IntArrays.
 	 * @return The new array. 
 	 */
 	public int[] merge(int[] otherArray)
@@ -626,16 +619,7 @@ public class IntArrays
 		
 }
 	
-/* Notes
- * When I return -1, print out that the array is clear.
- * Turn in homework earlier(On Monday Maybe?) 
- * Do array.clone by EnsureCapacity; using it overrides the previous int[].
- * Only add (arraySize != 0) condition if necessary.
- * WRITE CODE THE WAY YOU WOULD DO IT IN YOUR MIND
- * 
- */
 
-	
 
 	
 

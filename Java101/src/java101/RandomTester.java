@@ -1,5 +1,4 @@
 package java101;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,18 +12,11 @@ public class RandomTester
 	public static void main(String[] args) 
 	{
 		int[] array = {5, 7, 8, 9, 6, 10};
-		System.out.println(IntArrays.isPermutation(array));
-		array = IntArrays.permutation();
-		for (int index = 0; index < array.length; index++)
+		IntArrays intArray = new IntArrays(array);
+		intArray.add(11, 2);
+		for (int index = 0; index < intArray.length; index++)
 		{
-			System.out.print(array[index] + "\t");
-		}
-		System.out.println();
-		array = IntArrays.permutation(5, 13);
-		
-		for (int index = 0; index < array.length; index++)
-		{
-			System.out.print(array[index] + "\t");
+			System.out.println(intArray[index] + "\t");
 		}
 		
 	

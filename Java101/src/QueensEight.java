@@ -6,16 +6,17 @@
  * This can be done with any size checkerboard over 3.
  * 
  * For the solving of this problem, I used a backtrace method to place and remove queens. First, I would search to place a queen on the 
- * first available row. If I could find a space on that row, I would place it and mark all other spaces under it that could not be occupied (diagonals and vertically downward).
+ * first available row in the first available column. If I could find a space on that row, I would place it and mark all other spaces under it that could not be occupied (diagonals and vertically downward).
  * If that piece was the xth piece, meaning I had found a solution, I would display the solution and remove the piece to continue to find more solutions.
  * 
- * However, If I could not find a space on that row, I would remove the previous piece and its markers. Then, I would continue to search the spots to the right of the previous piece as to not place another piece again. 
+ * However, if I could not find a space on that row, I would remove the previous piece and its markers. Then, I would continue to search the spots to the right of the previous piece as to not place another piece again. 
  * 
  * The program ends when all of the solutions are found. This will print out a message to the user.
  *
  * @author Wesley
  *
  */
+ //TODO: Work on the class comments
 public class QueensEight 
 {
 	
@@ -130,7 +131,7 @@ public class QueensEight
 	
 	/**
 	 * Finds all solutions of the Queens puzzle. It prints out each solution on the console and with graphics. At the end, it returns the number of solutions for the board.
-	 * @return The number of solutions for the given boardsize. This is in a complete sentence as a String.
+	 * @return The number of solutions for the given board size as an integer.
 	 */
 	public int find()
 	{

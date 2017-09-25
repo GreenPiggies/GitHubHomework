@@ -43,9 +43,9 @@ public class IntArrays
 	}
 	
 	/**
-	 * Returns the value at the specified value in the array. It will print out an error message and returning -1 if the IntArrays object is empty or the index is out of bounds.
+	 * Returns the value at the specified value in the IntArrays object. It will print out an error message and returning -1 if the IntArrays object is empty or the index is out of bounds.
 	 * @param index The index of the value to be printed.
-	 * @return The value at the specified index in the array.
+	 * @return The value at the specified index in the IntArrays object.
 	 */
 	public int get(int index)
 	{
@@ -73,7 +73,7 @@ public class IntArrays
 	}
 	
 	/**
-	 * Returns true if the IntArrays object does not contain any elements.
+	 * Returns true if the IntArrays object does not contain any values.
 	 * @return Returns true when the IntArrays object is empty, otherwise false.
 	 */
 	public boolean isEmpty()
@@ -138,7 +138,7 @@ public class IntArrays
 		return sum;
 	}
 	/**
-	 * Returns the average of the values in the IntArrays object. It will print an error if the array is empty.
+	 * Returns the average of the values in the IntArrays object. It will print an error if the IntArrays object is empty.
 	 * @return The average of the values in the IntArrays object as an double.
 	 */
 	public double average()
@@ -167,9 +167,8 @@ public class IntArrays
 		arraySize++;
 		return true;
 	}
-	//Moving 1 down :)
 	/**
-	 * Adds a value to the IntArrays object at a user-specified index. If the specified index is occupied, the elements present in or after the index are moved down to create space.
+	 * Adds a value to the IntArrays object at a user-specified index. If the specified index is occupied, the values present in or after the index are moved down to create space.
 	 * @param inputIndex The index at which the value is inserted into.
 	 * @param number The value that is to be inserted at the index.
 	 * @return True if successful.
@@ -201,6 +200,7 @@ public class IntArrays
 	 */
 	public int removeByIndex(int removeIndex)
 	{
+		//TODO: boundaries
 		if (removeIndex < arraySize)
 		{
 			int element = array[removeIndex];
@@ -222,14 +222,12 @@ public class IntArrays
 	 */
 	public boolean removeByNumber(int number)
 	{
+		//TODO: costly, call removeByIndex one-liner
 		if (this.indexOf(number) != -1)
 		{
-			if (this.indexOf(number) != arraySize - 1)
+			for (int index = this.indexOf(number); index < arraySize - 1; index++)
 			{
-				for (int index = this.indexOf(number); index < arraySize - 1; index++)
-				{
-					array[index] = array[index + 1];
-				}
+				array[index] = array[index + 1];
 			}
 			arraySize--;
 			return true;
@@ -244,8 +242,7 @@ public class IntArrays
 	 */
 	public boolean contains(int number)
 	{
-		return indexOf(number) != -1 ? true : false;
-		
+		return indexOf(number) != -1;
 	}
 	/**
 	 * Returns the index of the first occurrence of a user-specified value.
@@ -321,6 +318,7 @@ public class IntArrays
 	 * @param toIndex Where the portion of the new array ends (exclusive).
 	 * @return The new array.
 	 */
+	 //TODO: Edge cases
 	public int[] subList(int fromIndex, int toIndex)
 	{	
 		if (arraySize != 0)
@@ -328,12 +326,12 @@ public class IntArrays
 			int[] newArray = new int[toIndex - fromIndex];
 			for (int index = fromIndex; index < toIndex; index++)
 			{
-				newArray[index] = array[index];
+				newArray[index - fromIndex] = array[index];
 			}
 			return newArray;	
 		}
 		
-		return array;
+		return null;
 		
 	}
 	/**
@@ -494,7 +492,7 @@ public class IntArrays
 	 */
 	public static boolean isPermutation(int[] inputArray)
 	{
-		if (inputArray == null || inputArray.length == 0)
+		if (inputArray == null || inputArray.length == 0) //Reverse
 		{
 			return false;
 		}
@@ -514,7 +512,7 @@ public class IntArrays
 			}
 		}
 		
-		if (max - min != inputArray.length - 1) //Means the number of #s between min and max do not correspond to the inputArray size; it could never be a permutation.
+		if (max - min != inputArray.length - 1) //Means the number of #s between min and max do not correspond to the inputArray size; it could never be a permutation. REVERSE
 		{
 			return false;
 		} 
@@ -545,7 +543,7 @@ public class IntArrays
 		}
 		for (int index = 0; index < permutation.length; index++)
 		{
-			int randomIndex = random.nextInt(9);
+			int randomIndex = random.nextInt(10);
 			int holder = permutation[randomIndex];
 			permutation[randomIndex] = permutation[index];
 			permutation[index] = holder;
@@ -615,6 +613,27 @@ public class IntArrays
 	    }
 
 	    return newArray;
+	}
+	
+	public static void main(String[] args)
+	{
+		int[] array = {5, 7, 8, 9, 6, 10};
+		IntArrays intArray = new IntArrays();
+		intArray.add(5);
+		intArray.add(7);
+		intArray.add(8);
+		intArray.add(9);
+		intArray.add(6);
+		intArray.add(10);
+		for (int index = 0; index < intArray.size(); index++)
+		{
+			System.out.println(intArray.get(index) + "\t");
+		}
+		intArray.add(11, 2);
+		for (int index = 0; index < intArray.size(); index++)
+		{
+			System.out.println(intArray.get(index) + "\t");
+		}
 	}
 		
 }

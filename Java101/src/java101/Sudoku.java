@@ -1,11 +1,13 @@
 package java101;
 /**
- * This class creates a Sudoku board. 
+ * This class creates a Sudoku board. //TODO: Fix
  * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is represented using a two-dimensional array. 
  * In a solved Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
  * 
- * The method used to check for completion is called checkBoard. It loops through the entire board, checking all rows, columns, and subsquares using the isPermutation method.
- * If one is an invalid permutation, the board is not a valid solution and false is returned. If all are permutations, true is returned.
+ * TODO: Add defition of permutation, completion -> valid solution
+ *
+ * The method used to check for completion is called checkBoard. It iterates through the entire board, checking all rows, columns, and subsquares. It uses the isPermutation method to check if each is a legal permutation.
+ * If one is an invalid permutation, the board is not a valid solution and false is returned. If all are valid permutations, than true is returned.
  * @author Wesley
  *
  */
@@ -16,16 +18,17 @@ public class Sudoku
 	
 	/**
 	 * Constructs a sudoku board.
-	 * @param sudoku Determines the numbers on the sudoku puzzle. 
+	 * @param sudoku Determines the numbers on the sudoku puzzle. //TODO: FIX
 	 */
 	public Sudoku(int[][] sudoku)
 	{
 		sudokuBoard = sudoku;
 	}
 	/**
-	 * Checks if sudoku board is a permutation.
+	 * Checks if sudoku board is a permutation. //TODO: FIX permutation -> valid solution
 	 * @return True if board is permutation, false if not.
 	 */
+	 //TODO: Print out at end how may of each is wrong...
 	public boolean checkBoard()
 	{
 		for (int row = 0; row < sudokuBoard.length; row++)
@@ -53,10 +56,11 @@ public class Sudoku
 		return true;
 	}
 	/**
-	 * Checks if an integer array is a permutation.
+	 * Checks if an integer array is a permutation. //TODO: Explain permutation and return
 	 * @param inputArray The array to be checked.
 	 * @return True if inputArray is a permutation, false if not.
 	 */
+	 //CLEAN
 	public boolean isPermutation(int[] inputArray)
 	{
 		int min = inputArray[0];
@@ -64,6 +68,7 @@ public class Sudoku
 		
 		for (int index = 0; index < inputArray.length; index++)
 		{
+			bins[index] = false;
 			if (inputArray[index] < min)
 			{
 				min = inputArray[index];
@@ -73,7 +78,7 @@ public class Sudoku
 				max = inputArray[index];
 			}
 		}
-		if (max - min != inputArray.length - 1)
+		if (max - min != inputArray.length - 1) //Reverse
 		{
 			return false;
 		} 

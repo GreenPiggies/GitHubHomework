@@ -2,9 +2,6 @@ package java101;
 
 import java.util.Random;
 
-//TODO: Add comment: What is a permutation?
-//TODO: Partially filled array with methods and stuff
-
 /**
  * This class constructs a partially-filled int array. 
  * Methods here are used to get and set the properties of the partially-filled int array contained inside the IntArrays object.
@@ -163,7 +160,8 @@ public class IntArrays
 		{
 			this.ensureCapacity(array.length * 2 + 1);
 		} 
-		array[arraySize] = number;			
+		array[arraySize] = number;	
+		System.out.println("ArraySize: " + arraySize);
 		arraySize++;
 		return true;
 	}
@@ -177,7 +175,6 @@ public class IntArrays
 	{
 		if (inputIndex < arraySize)
 		{
-			arraySize++;
 			if (arraySize >= array.length)
 			{
 				this.ensureCapacity(array.length * 2 + 1);
@@ -187,6 +184,7 @@ public class IntArrays
 				array[index] = array[index - 1];
 			}
 			array[inputIndex] = number;
+			arraySize++;
 			return true;
 		}
 		System.out.println("Syntax error, array is empty.");
@@ -200,8 +198,7 @@ public class IntArrays
 	 */
 	public int removeByIndex(int removeIndex)
 	{
-		//TODO: boundaries
-		if (removeIndex < arraySize)
+		if (removeIndex < arraySize || removeIndex > -1)
 		{
 			int element = array[removeIndex];
 			for (int index = removeIndex + 1; index < arraySize; index++)
@@ -222,18 +219,7 @@ public class IntArrays
 	 */
 	public boolean removeByNumber(int number)
 	{
-		//TODO: costly, call removeByIndex one-liner
-		if (this.indexOf(number) != -1)
-		{
-			for (int index = this.indexOf(number); index < arraySize - 1; index++)
-			{
-				array[index] = array[index + 1];
-			}
-			arraySize--;
-			return true;
-		
-		}	
-		return false;
+		return removeByIndex(indexOf(number)) != -1;
 	}
 	/**
 	 * Checks and returns if the IntArrays object has the given element.
@@ -318,10 +304,9 @@ public class IntArrays
 	 * @param toIndex Where the portion of the new array ends (exclusive).
 	 * @return The new array.
 	 */
-	 //TODO: Edge cases
 	public int[] subList(int fromIndex, int toIndex)
 	{	
-		if (arraySize != 0)
+		if (arraySize != 0 && fromIndex > -1 && fromIndex < arraySize && toIndex > -1 && toIndex < arraySize)
 		{
 			int[] newArray = new int[toIndex - fromIndex];
 			for (int index = fromIndex; index < toIndex; index++)
@@ -487,6 +472,8 @@ public class IntArrays
 	
 	/**
 	 * Checks if an integer array is a permutation.
+	 * A permutation is an arrangement of numbers such that there is only one of each number from the smallest to the greatest number. 
+	 * For example, if you had a permutation with the lowest value being 5 and highest being 10, a valid permutation would be a random order of numbers from 5 to 10.
 	 * @param inputArray The array to be checked.
 	 * @return True if inputArray is a permutation, false if not.
 	 */
@@ -531,6 +518,7 @@ public class IntArrays
 	
 	/**
 	 * Returns a random permutation from 1 to 10.
+	 * A permutation is an arrangement of numbers such that there is only one of each number from the smallest to the greatest number. 
 	 * @return The random permutation in the form of an int[] array.
 	 */
 	public static int[] permutation()
@@ -553,6 +541,7 @@ public class IntArrays
 	
 	/**
 	 * Makes a random permutation from the lower boundary to the upper boundary.
+	 * A permutation is an arrangement of numbers such that there is only one of each number from the smallest to the greatest number. 
 	 * @param lower The lower boundary of the permutation.
 	 * @param upper The upper boundary of the permutation.
 	 * @return The random permutation in the form of an int[] array.
@@ -629,7 +618,7 @@ public class IntArrays
 		{
 			System.out.println(intArray.get(index) + "\t");
 		}
-		intArray.add(11, 2);
+		intArray.add(2, 11);
 		for (int index = 0; index < intArray.size(); index++)
 		{
 			System.out.println(intArray.get(index) + "\t");

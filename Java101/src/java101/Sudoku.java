@@ -1,6 +1,6 @@
 package java101;
 /**
- * This class creates a Sudoku board. //TODO: Fix
+ * This class creates a sudoku. //TODO: Fix
  * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is represented using a two-dimensional array. 
  * In a solved Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
  * 

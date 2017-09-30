@@ -5,13 +5,18 @@
  * You try to place x number of queens on an x by x checkerboard so that no 2 queens can attack each other. 
  * This can be done with any size checkerboard over 3.
  * 
- * For the solving of this problem, I used a backtrace method to place and remove queens. First, I would search to place a queen on the 
- * first available row in the first available column. If I could find a space on that row, I would place it and mark all other spaces under it that could not be occupied (diagonals and vertically downward).
- * If that piece was the xth piece, meaning I had found a solution, I would display the solution and remove the piece to continue to find more solutions.
+ * For the solving of this problem, I used a backtrace method to place and remove queens: 
  * 
- * However, if I could not find a space on that row, I would remove the previous piece and its markers. Then, I would continue to search the spots to the right of the previous piece as to not place another piece again. 
+ * First, search for a space on the first available row. 
  * 
- * The program ends when all of the solutions are found. This will print out a message to the user.
+ * If there was a valid space on that row to place a piece, I would place a queen there and mark the queen's attack movements. 
+ * There is no need to mark the movements on or above the row of the queen because the next search will continue below the current queen.
+ * 
+ * However, if I could not find a space on that row, I will remove the previous piece and its attack markers. 
+ * Next time around, I will make sure to search to the right of this previous queen. 
+ * If I don't, I will place a queen in the same place and repeat the same scenario again.
+ * 
+ * The program ends when the program cannot place any more pieces on the first row. It returns the number of solutions as an integer, which is then printed out in a statement in main.
  *
  * @author Wesley
  *

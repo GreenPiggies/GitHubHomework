@@ -4,9 +4,9 @@ package java101;
  * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is represented using a two-dimensional array. 
  * In a solved Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
  * 
- * TODO: Add defition of permutation, completion -> valid solution
+ * A permutation is an arrangement of integers between a lower and upper boundary, inclusive. Only one of each number is present.
  *
- * The method used to check for completion is called checkBoard. It iterates through the entire board, checking all rows, columns, and subsquares. It uses the isPermutation method to check if each is a legal permutation.
+ * The method used to check for a valid solution is called checkBoard. It iterates through the entire board, checking all rows, columns, and subsquares. It uses the isPermutation method to check if each is a legal permutation.
  * If one is an invalid permutation, the board is not a valid solution and false is returned. If all are valid permutations, than true is returned.
  * @author Wesley
  *
@@ -17,25 +17,30 @@ public class Sudoku
 	private int[][] sudokuBoard;
 	
 	/**
-	 * Constructs a sudoku board.
-	 * @param sudoku Determines the numbers on the sudoku puzzle. //TODO: FIX
+	 * Constructs a Sudoku object. The contents of the Sudoku board are specified with the user-specifed two-dimensional array.
+	 * @param sudoku The data present on the sudoku board. 
 	 */
 	public Sudoku(int[][] sudoku)
 	{
 		sudokuBoard = sudoku;
 	}
 	/**
-	 * Checks if sudoku board is a permutation. //TODO: FIX permutation -> valid solution
-	 * @return True if board is permutation, false if not.
+	 * Returns if the Sudoku object is a valid solution. 
+	 * @return True if board is valid solution, false if not.
 	 */
 	 //TODO: Print out at end how may of each is wrong...
 	public boolean checkBoard()
 	{
+		boolean valid = true;
+		int rowProblem = 0;
+		int columnProblem = 0;
+		int squareProblem = 0;
 		for (int row = 0; row < sudokuBoard.length; row++)
 		{
 			if (!isPermutation(sudokuBoard[row]))
 			{
-				return false;
+				valid = false;
+				rowProblem++;
 			}
 			int[] columnArray = new int[sudokuBoard.length];
 			int[] subSquareArray = new int[sudokuBoard.length];
@@ -46,58 +51,69 @@ public class Sudoku
 			}
 			if (!isPermutation(columnArray))
 			{
-				return false;
+				valid = false;
+				columnProblem++;
 			}
 			if (!isPermutation(subSquareArray))
 			{
-				return false;
+				valid = false;
+				squareProblem++;
 			}
 		}
-		return true;
+		System.out.println("# of invalid rows: " + rowProblem);
+		System.out.println("# of invalid columns: " + columnProblem);
+		System.out.println("# of invalid sub squares: " + squareProblem);
+		return valid;
 	}
 	/**
-	 * Checks if an integer array is a permutation. //TODO: Explain permutation and return
+	 * Checks if an integer array is a permutation.
+	 * A permutation is an arrangement of integers between a lower and upper boundary, inclusive. Only one of each number is present.
 	 * @param inputArray The array to be checked.
 	 * @return True if inputArray is a permutation, false if not.
 	 */
 	 //CLEAN
 	public boolean isPermutation(int[] inputArray)
 	{
-		int min = inputArray[0];
-		int max = inputArray[0]; 
-		
-		for (int index = 0; index < inputArray.length; index++)
+		boolean isPerm = true;
+		if (inputArray != null && inputArray.length > 0) 
 		{
-			bins[index] = false;
-			if (inputArray[index] < min)
+			int min = inputArray[0];
+			int max = inputArray[0]; 
+			boolean[] bins = new boolean[inputArray.length];
+			for (int index = 0; index < inputArray.length; index++)
 			{
-				min = inputArray[index];
+				bins[index] = false;
+				if (inputArray[index] < min)
+				{
+					min = inputArray[index];
+				}
+				if (inputArray[index] > max)
+				{
+					max = inputArray[index];
+				}
 			}
-			if (inputArray[index] > max)
+			if (max - min == inputArray.length - 1)
 			{
-				max = inputArray[index];
+				for (int index = 0; index < inputArray.length; index++)
+				{
+					int compareIndex = inputArray[index] - min;
+					if (bins[compareIndex])
+					{
+						isPerm = false;
+					} 
+					bins[compareIndex] = true;
+				}
+			} else
+			{
+				isPerm = false;
 			}
-		}
-		if (max - min != inputArray.length - 1) //Reverse
+		} else
 		{
-			return false;
-		} 
-		boolean[] bins = new boolean[inputArray.length];
+			isPerm = false;
+		}
+		return isPerm;
 		
-		for (int index = 0; index < inputArray.length; index++)
-		{
-			bins[index] = false;
-		}
 		
-		for (int index = 0; index < inputArray.length; index++)
-		{
-			if (bins[inputArray[index] - min])
-			{
-				return false;
-			} 
-			bins[inputArray[index] - min] = true;
-		}
-		return true;
 	}
 	//REFERENCES DOWN HERE
 	/**

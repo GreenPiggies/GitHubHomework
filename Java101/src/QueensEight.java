@@ -1,27 +1,32 @@
 /**
- * This class constructs a red and gray checkerboard. This is the basis used to solve a puzzle known as the Eight Queens Puzzle, 
+ * This class constructs a red and gray checkerboard. This is the basis used to
+ * solve a puzzle known as the Eight Queens Puzzle, 
  * which is as follows: 
  * 
- * You try to place x number of queens on an x by x checkerboard so that no 2 queens can attack each other. 
- * This can be done with any size checkerboard over 3.
+ * You try to place x number of queens on an x by x checkerboard so that no 2 
+ * queens can attack each other. This can be done with any size checkerboard over 3.
  * 
- * For the solving of this problem, I used a backtrace method to place and remove queens: 
+ * For the solving of this problem, I used a backtrace method to place and remove
+ * queens: 
  * 
- * First, search for a space on the first available row. 
+ * First, search for an empty space on the first available row, which would be 
+ * denoted as 0 in the two-dimensional array.
  * 
- * If there was a valid space on that row to place a piece, I would place a queen there and mark the queen's attack movements. 
- * There is no need to mark the movements on or above the row of the queen because the next search will continue below the current queen.
+ * If there is a valid space on that row to place a piece, I would place a queen 
+ * there and mark the queen's attack movements. //TODO: explain queens attack movements
+ * There is no need to mark the movements on or above the row of the queen because
+ *  the next search will continue below the current queen. //TODO: explain marking
  * 
- * However, if I could not find a space on that row, I will remove the previous piece and its attack markers. 
- * Next time around, I will make sure to search to the right of this previous queen. 
- * If I don't, I will place a queen in the same place and repeat the same scenario again.
+ * However, if I could not find a space on that row, I will remove the previous
+ * queen and its attack markers and find the next available space.
  * 
- * The program ends when the program cannot place any more pieces on the first row. It returns the number of solutions as an integer, which is then printed out in a statement in main.
+ * The program ends when the queen on the first row cannot find a space on its row. 
+ * //TODO: explain solution-finding
+ *
  *
  * @author Wesley
  *
  */
- //TODO: Work on the class comments
 public class QueensEight 
 {
 	
@@ -135,7 +140,9 @@ public class QueensEight
 	
 	
 	/**
-	 * Finds all solutions of the Queens puzzle. It prints out each solution on the console and with graphics. At the end, it returns the number of solutions for the board.
+	 * Finds all solutions of the Queens puzzle. It prints out each solution 
+	 * on the console and with graphics. At the end, it returns the number of 
+	 * solutions for the board.
 	 * @return The number of solutions for the given board size as an integer.
 	 */
 	public int find()
@@ -250,7 +257,7 @@ public class QueensEight
 	 */
 	public static void main(String[] args)
 	{
-		QueensEight board;
+		QueensEight checkerBoard;
 		int boardSize = 8;
 		try
 		{
@@ -267,9 +274,9 @@ public class QueensEight
 			//This prints out an error message and sets default to 8.
 			System.err.println("Error -- " + exception);
 		}
-		board = new QueensEight(boardSize);
-		int solutions = board.find();
-		System.out.println("For an " + board.board.length + " by " + board.board.length + " board, there are " + solutions + " solutions. ");		
+		checkerBoard = new QueensEight(boardSize);
+		int solutions = checkerBoard.find();
+		System.out.println("For an " + checkerBoard.board.length + " by " + checkerBoard.board.length + " board, there are " + solutions + " solutions. ");		
 	}
 }
 

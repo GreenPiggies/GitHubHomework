@@ -1,13 +1,12 @@
 package java101;
 /**
- * This class creates a sudoku. //TODO: Fix
  * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is represented using a two-dimensional array. 
- * In a solved Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
+ * In a valid Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
  * 
  * A permutation is an arrangement of integers between a lower and upper boundary, inclusive. Only one of each number is present.
  *
  * The method used to check for a valid solution is called checkBoard. It iterates through the entire board, checking all rows, columns, and subsquares. It uses the isPermutation method to check if each is a legal permutation.
- * If one is an invalid permutation, the board is not a valid solution and false is returned. If all are valid permutations, than true is returned.
+ * If one is an invalid permutation, the board is not a valid solution and false is returned. If all rows, columns, and subsquaresare valid permutations, than true is returned.
  * @author Wesley
  *
  */
@@ -22,16 +21,18 @@ public class Sudoku
 	 */
 	public Sudoku(int[][] sudoku)
 	{
-		sudokuBoard = sudoku;
+		//TODO: Check null and size. If not, use default
+		if (sudoku != null && sudoku.length == 9)
+		{
+			sudokuBoard = sudoku;
+		} 
 	}
 	/**
 	 * Returns if the Sudoku object is a valid solution. 
 	 * @return True if board is valid solution, false if not.
 	 */
-	 //TODO: Print out at end how may of each is wrong...
 	public boolean checkBoard()
 	{
-		boolean valid = true;
 		int rowProblem = 0;
 		int columnProblem = 0;
 		int squareProblem = 0;
@@ -39,7 +40,6 @@ public class Sudoku
 		{
 			if (!isPermutation(sudokuBoard[row]))
 			{
-				valid = false;
 				rowProblem++;
 			}
 			int[] columnArray = new int[sudokuBoard.length];
@@ -47,23 +47,21 @@ public class Sudoku
 			for (int column = 0; column < sudokuBoard.length; column++)
 			{
 				columnArray[column] = sudokuBoard[row][column];
-				subSquareArray[column] = sudokuBoard[(row / 3) * 3 + (column / 3)][(row % 3) * 3 + (column % 3)];
+				subSquareArray[column] = sudokuBoard[(row / 3) * 3 + (column / 3)][(row % 3) * 3 + (column % 3)]; //USE sqrt(board.length)
 			}
 			if (!isPermutation(columnArray))
 			{
-				valid = false;
 				columnProblem++;
 			}
 			if (!isPermutation(subSquareArray))
 			{
-				valid = false;
 				squareProblem++;
 			}
 		}
 		System.out.println("# of invalid rows: " + rowProblem);
 		System.out.println("# of invalid columns: " + columnProblem);
 		System.out.println("# of invalid sub squares: " + squareProblem);
-		return valid;
+		return rowProblem + columnProblem + squareProblem == 0;
 	}
 	/**
 	 * Checks if an integer array is a permutation.
@@ -71,10 +69,9 @@ public class Sudoku
 	 * @param inputArray The array to be checked.
 	 * @return True if inputArray is a permutation, false if not.
 	 */
-	 //CLEAN
 	public boolean isPermutation(int[] inputArray)
 	{
-		boolean isPerm = true;
+		//boolean isPerm = true;
 		if (inputArray != null && inputArray.length > 0) 
 		{
 			int min = inputArray[0];
@@ -99,19 +96,14 @@ public class Sudoku
 					int compareIndex = inputArray[index] - min;
 					if (bins[compareIndex])
 					{
-						isPerm = false;
+						return false;
 					} 
 					bins[compareIndex] = true;
 				}
-			} else
-			{
-				isPerm = false;
-			}
-		} else
-		{
-			isPerm = false;
+				return true;
+			} 
 		}
-		return isPerm;
+		return false;
 		
 		
 	}

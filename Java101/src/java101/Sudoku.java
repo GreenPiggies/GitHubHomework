@@ -21,7 +21,6 @@ public class Sudoku
 	 */
 	public Sudoku(int[][] sudoku)
 	{
-		//TODO: Check null and size. If not, use default
 		if (sudoku != null && sudoku.length == 9)
 		{
 			sudokuBoard = sudoku;

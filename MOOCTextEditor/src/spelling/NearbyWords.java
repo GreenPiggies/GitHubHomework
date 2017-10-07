@@ -56,7 +56,6 @@ public class NearbyWords implements SpellingSuggest {
 				// letters in the String
 				StringBuffer sb = new StringBuffer(s);
 				sb.setCharAt(index, (char)charCode);
-
 				// if the item isn't in the list, isn't the original string, and
 				// (if wordsOnly is true) is a real word, add to the list
 				if(!currentList.contains(sb.toString()) && 
@@ -76,19 +75,21 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return
 	 */
 	public void insertions(String s, List<String> currentList, boolean wordsOnly ) {
-		for(int index = 0; index < s.length(); index++)
+		for(int index = 0; index <= s.length(); index++) //correct
 		{
-			StringBuffer sb = new StringBuffer();
-			for(int charCode = (int)'a'; charCode <= (int)'z'; charCode++) 
+			for(int charCode = (int)'a'; charCode <= (int)'z'; charCode++)  
 			{
-				sb = new StringBuffer(s);
+				StringBuffer sb = new StringBuffer();
+				sb.append(s);
 				sb.insert(index, (char) charCode);
+				if(!currentList.contains(sb.toString()) && 
+				(!wordsOnly||dict.isWord(sb.toString())) &&
+				!s.equals(sb.toString())) {
+					
+					currentList.add(sb.toString());
+				}
 			}
-			if(!currentList.contains(sb.toString()) && 
-					(!wordsOnly||dict.isWord(sb.toString())) &&
-					!s.equals(sb.toString())) {
-				currentList.add(sb.toString());
-			}
+			
 		}
 	}
 

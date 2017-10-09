@@ -1,12 +1,20 @@
 package java101;
 /**
- * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is represented using a two-dimensional array. 
- * In a valid Sudoku puzzle, every column, row, and subsquare (found by dividing the board into 9 equal squares) should be a legal permutation of numbers from 1 to 9.
+ * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is 
+ * represented using a two-dimensional array. 
+ * In a valid Sudoku puzzle, every column, row, and subsquare (found by 
+ * dividing the board into 9 equal squares) should be a legal permutation of 
+ * numbers from 1 to 9.
  * 
- * A permutation is an arrangement of integers between a lower and upper boundary, inclusive. Only one of each number is present.
+ * A permutation is an arrangement of integers between a lower and upper boundary, 
+ * inclusive. Only one of each number is present.
  *
- * The method used to check for a valid solution is called checkBoard. It iterates through the entire board, checking all rows, columns, and subsquares. It uses the isPermutation method to check if each is a legal permutation.
- * If one is an invalid permutation, the board is not a valid solution and false is returned. If all rows, columns, and subsquaresare valid permutations, than true is returned.
+ * The method used to check for a valid solution is called checkBoard. It iterates 
+ * through the entire board, checking all rows, columns, and subsquares. It uses the 
+ * isPermutation method to check if each is a legal permutation.
+ * If one is an invalid permutation, the board is not a valid solution and false is 
+ * returned. If all rows, columns, and subsquares valid permutations, than true 
+ * is returned.
  * @author Wesley
  *
  */
@@ -16,7 +24,8 @@ public class Sudoku
 	private int[][] sudokuBoard;
 	
 	/**
-	 * Constructs a Sudoku object. The contents of the Sudoku board are specified with the user-specifed two-dimensional array.
+	 * Constructs a Sudoku object. The contents of the Sudoku board are specified 
+	 * with the user-specifed two-dimensional array.
 	 * @param sudoku The data present on the sudoku board. 
 	 */
 	public Sudoku(int[][] sudoku)
@@ -35,6 +44,7 @@ public class Sudoku
 		int rowProblem = 0;
 		int columnProblem = 0;
 		int squareProblem = 0;
+		int subSquareSize = Math.round((float) Math.sqrt(sudokuBoard.length));
 		for (int row = 0; row < sudokuBoard.length; row++)
 		{
 			if (!isPermutation(sudokuBoard[row]))
@@ -46,7 +56,9 @@ public class Sudoku
 			for (int column = 0; column < sudokuBoard.length; column++)
 			{
 				columnArray[column] = sudokuBoard[row][column];
-				subSquareArray[column] = sudokuBoard[(row / 3) * 3 + (column / 3)][(row % 3) * 3 + (column % 3)]; //USE sqrt(board.length)
+				subSquareArray[column] = sudokuBoard
+					[(row / subSquareSize) * subSquareSize + (column / subSquareSize)]
+					[(row % subSquareSize) * subSquareSize + (column % subSquareSize)]; 
 			}
 			if (!isPermutation(columnArray))
 			{
@@ -62,15 +74,16 @@ public class Sudoku
 		System.out.println("# of invalid sub squares: " + squareProblem);
 		return rowProblem + columnProblem + squareProblem == 0;
 	}
+	
 	/**
 	 * Checks if an integer array is a permutation.
-	 * A permutation is an arrangement of integers between a lower and upper boundary, inclusive. Only one of each number is present.
+	 * A permutation is an arrangement of integers between a lower and upper boundary, 
+	 * inclusive. Only one of each number is present.
 	 * @param inputArray The array to be checked.
 	 * @return True if inputArray is a permutation, false if not.
 	 */
 	public boolean isPermutation(int[] inputArray)
 	{
-		//boolean isPerm = true;
 		if (inputArray != null && inputArray.length > 0) 
 		{
 			int min = inputArray[0];
@@ -102,11 +115,8 @@ public class Sudoku
 				return true;
 			} 
 		}
-		return false;
-		
-		
+		return false;	
 	}
-	//REFERENCES DOWN HERE
 	/**
 	 * Gets a subsquare of the sudoku board.
 	 * @param squareIndex The square number. It would look something like this: 
@@ -121,7 +131,6 @@ public class Sudoku
 	{
 		int[] squareArray = new int[sudokuBoard.length];
 		int index = 0;
-		//Make for loop for index
 		for (int row = ((squareIndex / 3) * 3); row < (((squareIndex) / 3) * 3 + 3); row++)
 		{
 			for (int column = ((squareIndex % 3) * 3); column < (((squareIndex % 3)) * 3 + 3); column++)

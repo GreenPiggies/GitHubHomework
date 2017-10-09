@@ -13,15 +13,17 @@
  * denoted as 0 in the two-dimensional array.
  * 
  * If there is a valid space on that row to place a piece, I would place a queen 
- * there and mark the queen's attack movements. //TODO: explain queens attack movements
+ * there and mark the queen's attack movements. The queen's attack movements include
+ * its immediate diagonals, row, and column.
  * There is no need to mark the movements on or above the row of the queen because
- *  the next search will continue below the current queen. //TODO: explain marking
+ *  the next search will continue below the current queen. 
+ *  
+ * Queens are marked with a "-1" on the board and markers are denoted by incrementing the current value by 1. 
  * 
  * However, if I could not find a space on that row, I will remove the previous
  * queen and its attack markers and find the next available space.
  * 
  * The program ends when the queen on the first row cannot find a space on its row. 
- * //TODO: explain solution-finding
  *
  *
  * @author Wesley

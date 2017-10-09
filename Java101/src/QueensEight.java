@@ -1,7 +1,6 @@
-/**
+/** TODO: CHECK LINE LENGTH
  * This class constructs a red and gray checkerboard. This is the basis used to
- * solve a puzzle known as the Eight Queens Puzzle, 
- * which is as follows: 
+ * solve a puzzle known as the Eight Queens Puzzle, which is as follows: 
  * 
  * You try to place x number of queens on an x by x checkerboard so that no 2 
  * queens can attack each other. This can be done with any size checkerboard over 3.
@@ -12,18 +11,23 @@
  * First, search for an empty space on the first available row, which would be 
  * denoted as 0 in the two-dimensional array.
  * 
+ * Queens are marked with a "-1" on the board and markers are denoted by incrementing the current value by 1. 
+
  * If there is a valid space on that row to place a piece, I would place a queen 
  * there and mark the queen's attack movements. The queen's attack movements include
  * its immediate diagonals, row, and column.
  * There is no need to mark the movements on or above the row of the queen because
- *  the next search will continue below the current queen. 
+ * the next search will continue below the current queen. 
  *  
- * Queens are marked with a "-1" on the board and markers are denoted by incrementing the current value by 1. 
+ * After this, I will search for an available space on the next row.
+ * If there are x amount of queens on the board, the program will stop for 1 second, print out a graphical 
+ * interpretation to the console, and remove the queen on the last row.
+ *  
  * 
- * However, if I could not find a space on that row, I will remove the previous
- * queen and its attack markers and find the next available space.
+ * However, if I could not find a space on that row, I will remove the queen on the preceding row
+ * and its attack markers and find the next available space on that preceding row.
  * 
- * The program ends when the queen on the first row cannot find a space on its row. 
+ * The program ends when the queen on the first row cannot find a space on its row. //TODO: Explain more please <3
  *
  *
  * @author Wesley
@@ -34,6 +38,7 @@ public class QueensEight
 	
 	private int[][] board; 
 	public static final int DEFAULT_BOARD_SIZE = 8;
+	public static final int QUEEN_MARK = -1;
 	
 	/**
 	 * Creates a new checker board with dimensions of eight by eight.
@@ -44,7 +49,8 @@ public class QueensEight
 	}
 	
 	/**
-	 * Creates a new checkerboard of a specified input size. It will use a default board size if the inputted boardsize is invalid.
+	 * Creates a new checkerboard of a specified input size. It will use a default 
+	 * board size if the inputted boardsize is invalid.
 	 * @param boardSize The length of all sides of the board.
 	 */
 	public QueensEight(int boardSize)
@@ -69,7 +75,8 @@ public class QueensEight
 	}
 	
 	/**
-	 * Draws a red and gray checker board on the screen using StdDrawPlus. The bottom left square should always be gray.
+	 * Draws a red and gray checker board on the screen using StdDrawPlus. The 
+	 * bottom left square should always be gray.
 	 */
 	public void drawBoard()
 	{
@@ -79,13 +86,14 @@ public class QueensEight
 		{
 			for (int column = 0; column < board.length; column++)
 			{
-				this.drawSquare(column, row);
+				this.drawSquare(column, row, 10);
 			}
 		}
 	}
 	
 	/**
-	 * Removes a queen from the checker board, along with its attack markers. Also updates the screen by removing a piece.
+	 * Removes a queen from the checker board, along with its attack markers. 
+	 * Also updates the screen by removing a piece.
 	 * @param queenX The row of the queen removed.
 	 * @param queenY The column of the queen removed.
 	 */
@@ -93,8 +101,7 @@ public class QueensEight
 	{
 		//Removing piece
 		board[queenX][queenY] = 0;
-		this.drawSquare(queenX, queenY);
-		StdDrawPlus.show(10);
+		this.drawSquare(queenX, queenY, 100);
 		//Marking markers
 		for (int row = queenX + 1; row < board.length; row++)
 		{
@@ -108,21 +115,20 @@ public class QueensEight
 		{
 			board[row][column]--;
 		}
-			
 	}
 	
 	
 	/**
-	 * Places a queen on the checker board, and marks its attack spaces. Also updates the screen by placing a queen.
+	 * Places a queen on the checker board, and marks its attack spaces. 
+	 * Also updates the screen by placing a queen.
 	 * @param queenX The row number of the queen.
 	 * @param queenY The column number of the queen
 	 */
 	private void place(int queenX, int queenY)
 	{
 		//Placing the piece
-		board[queenX][queenY] = -1;
-		this.drawPiece(queenX, queenY);
-		StdDrawPlus.show(10);
+		board[queenX][queenY] = QUEEN_MARK;
+		this.drawPiece(queenX, queenY, 100);
 		
 		//Placing markers
 		for (int row = queenX + 1; row < board.length; row++)
@@ -162,22 +168,24 @@ public class QueensEight
 			{	
 				//If there is an empty space to place a queen:
 				if (board[row][column] == 0)
-				{
-					//Place the queen
-					queenColumns[row] = column;
-					place(row, column);
+				{					
 					//If we are on the last row:
 					if (row >= board.length - 1)
 					{
 						//Print out solution
 						System.out.println("Solution #" + (++solutions));
+						board[row][column] = QUEEN_MARK;
 						printBoard();
-						StdDrawPlus.show(1000);
+						drawPiece(row, column, 1000);
 						//Remove the queen
-						remove(row, column);
+						board[row][column] = 0;
+						drawSquare(row, column, 0);
 						column++;
 					} else //If we are not yet at a solution
 					{
+						//Place the queen
+						queenColumns[row] = column;
+						place(row, column);
 						//Go another row down and start searching from the first column
 						row++;
 						column = 0;
@@ -204,7 +212,7 @@ public class QueensEight
 	 * @param x The x position of the square.
 	 * @param y The y position of the square.
 	 */
-	private void drawSquare(int x, int y)
+	private void drawSquare(int x, int y, int time)
 	{
 		if (x % 2 == (board.length - y) % 2)
 		{
@@ -215,6 +223,7 @@ public class QueensEight
 			StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
 		}
 		StdDrawPlus.filledSquare(x + .5, board.length - 1 - y + .5, .5);
+		StdDrawPlus.show(time);
 	}
 	
 	/**
@@ -222,9 +231,10 @@ public class QueensEight
 	 * @param x The x position of the piece.
 	 * @param y The y position of the piece.
 	 */
-	private void drawPiece(int x, int y)
+	private void drawPiece(int x, int y, int time)
 	{
 		StdDrawPlus.picture(x + .5, board.length - 1 - y + .5, "queen-dark2.png", 1, 1);
+		StdDrawPlus.show(time);
 	}
 	
 	/**
@@ -260,7 +270,7 @@ public class QueensEight
 	public static void main(String[] args)
 	{
 		QueensEight checkerBoard;
-		int boardSize = 8;
+		int boardSize = 7;
 		try
 		{
 			//If any input was given
@@ -278,7 +288,7 @@ public class QueensEight
 		}
 		checkerBoard = new QueensEight(boardSize);
 		int solutions = checkerBoard.find();
-		System.out.println("For an " + checkerBoard.board.length + " by " + checkerBoard.board.length + " board, there are " + solutions + " solutions. ");		
+		System.out.println("For a " + checkerBoard.board.length + " by " + checkerBoard.board.length + " board, there are " + solutions + " solutions. ");		
 	}
 }
 

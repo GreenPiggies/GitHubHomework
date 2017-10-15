@@ -20,15 +20,16 @@
  * There is no need to mark the movements on or above the row of the queen because
  * the next search will continue below the current queen. 
  *  
- * After this, I will search for an available space on the next row.
- * If there are x amount of queens on the board, the program will stop for 1 second, 
- * print out a graphical interpretation to the console, and remove the queen 
- * on the last row.
+ * After this, I will search for an available space on the next row. I will continue to
+ * do this until there are x amount of queens on the board.
+ * When this happens, the program will stop for 1 second, 
+ * print out a graphical interpretation to the console, remove the queen 
+ * on the last row, and resume searching.
  *  
  * 
  * However, if I could not find a space on that row, I will remove the queen on the 
  * preceding row and its attack markers and find the next available space on that
- * preceding row.
+ * preceding row. If no space is available on the preceding row, continue going backwards until there is an available space.
  * 
  * The program ends when the queen on the first row cannot find a space on its row.
  * This occurs when the queen on the uppermost row has reached the end of the board. 
@@ -44,6 +45,8 @@ public class QueensEight
 {
 	
 	private int[][] board; 
+	public static final int INIT_PAUSE = 10;
+	public static final int DRAW_PAUSE = 100;
 	public static final int DEFAULT_BOARD_SIZE = 8;
 	public static final int QUEEN_MARK = -1;
 	
@@ -93,7 +96,7 @@ public class QueensEight
 		{
 			for (int column = 0; column < board.length; column++)
 			{
-				this.drawSquare(column, row, 10);
+				this.drawSquare(column, row, INIT_PAUSE);
 			}
 		}
 	}
@@ -108,7 +111,7 @@ public class QueensEight
 	{
 		//Removing piece
 		board[queenX][queenY] = 0;
-		this.drawSquare(queenX, queenY, 100);
+		this.drawSquare(queenX, queenY, DRAW_PAUSE);
 		//Marking markers
 		for (int row = queenX + 1; row < board.length; row++)
 		{
@@ -139,7 +142,7 @@ public class QueensEight
 	{
 		//Placing the piece
 		board[queenX][queenY] = QUEEN_MARK;
-		this.drawPiece(queenX, queenY, 100);
+		this.drawPiece(queenX, queenY, DRAW_PAUSE);
 		
 		//Placing markers
 		for (int row = queenX + 1; row < board.length; row++)
@@ -231,6 +234,7 @@ public class QueensEight
 	 */
 	private void drawSquare(int x, int y, int time)
 	{
+		double squareSize = 0.5;
 		if (x % 2 == (board.length - y) % 2)
 		{
 			StdDrawPlus.setPenColor(StdDrawPlus.RED);
@@ -239,7 +243,7 @@ public class QueensEight
 		{
 			StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
 		}
-		StdDrawPlus.filledSquare(x + .5, board.length - 1 - y + .5, .5);
+		StdDrawPlus.filledSquare(x + squareSize, board.length - 1 - y + squareSize, squareSize);
 		StdDrawPlus.show(time);
 	}
 	
@@ -250,7 +254,8 @@ public class QueensEight
 	 */
 	private void drawPiece(int x, int y, int time)
 	{
-		StdDrawPlus.picture(x + .5, board.length - 1 - y + .5, "queen-dark2.png", 1, 1);
+		double picSize = 0.5;
+		StdDrawPlus.picture(x + picSize, board.length - 1 - y + picSize, "queen-dark2.png", 1, 1);
 		StdDrawPlus.show(time);
 	}
 	
@@ -263,18 +268,18 @@ public class QueensEight
 	{
 		for (int row = 0; row < board.length; row++)
 		{  
-	        for (int column = 0; column < board.length; column++)
-	        { 
-	        	if (board[row][column] == -1)
+			for (int column = 0; column < board.length; column++)
+			{ 
+				if (board[row][column] == -1)
 	        	{
 	        		System.out.print("Q ");
 	        	} else 
 	        	{
 	        		System.out.print(". ");
 	        	} 
-	        }
-	        System.out.print("\n");
-	    }
+			}
+			System.out.print("\n");
+		}
 		System.out.println();
 	}
 	
@@ -289,7 +294,7 @@ public class QueensEight
 	public static void main(String[] args)
 	{
 		QueensEight checkerBoard;
-		int boardSize = 7;
+		int boardSize = DEFAULT_BOARD_SIZE;
 		try
 		{
 			//If any input was given

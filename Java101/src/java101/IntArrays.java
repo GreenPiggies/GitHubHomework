@@ -384,9 +384,12 @@ public class IntArrays
 	{
 		if (index1 >= 0 && index2 >= 0 && index1 < arraySize && index2 < arraySize)
 		{ 
-			int holder = array[index1];
-			array[index1] = array[index2];
-			array[index2] = holder;
+			if (index1 != index2)
+			{
+				int holder = array[index1];
+				array[index1] = array[index2];
+				array[index2] = holder;
+			}
 			return true;
 		}	
 		return false;
@@ -413,7 +416,8 @@ public class IntArrays
 	 * Creates and returns a new array that is a numerically sorted interpretation 
 	 * of the IntArrays object. 
 	 * I accomplish this by comparing an value of an array to the ones after it: 
-	 * If it is in the right order, continue. If not, I swap them. 
+	 * If it is in the right order, continue. If not, I swap them.
+	 * @return A new integer array that is a numerically sorted interpretation of the IntArrays object. 
 	 */
 	public int[] oldSorted()
 	{

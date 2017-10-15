@@ -1,5 +1,4 @@
 package java101; 
-//TODO: LINE SPACING
 import java.util.Random;
 /**
  * This class constructs a partially-filled int array. 
@@ -230,8 +229,9 @@ public class IntArrays
 	}
 	
 	/**
-	 * Removes the first occurrence of a value from the IntArrays object. Any values positioned
-	 * after the removed value are shifted up 1 position. Returns false if the value was not found.
+	 * Removes the first occurrence of a value from the IntArrays object. Any 
+	 * values positioned after the removed value are shifted up 1 position. 
+	 * Returns false if the value was not found.
 	 * @param number The value to be removed.
 	 * @return True if the removal was successful, false if the value was not found.
 	 */
@@ -243,7 +243,8 @@ public class IntArrays
 	/**
 	 * Checks and returns if the IntArrays object has the given value.
 	 * @param number The value that is checked in the IntArrays object.
-	 * @return True if the value is in the array, false if the value is not in the array.
+	 * @return True if the value is in the array, false if the value is not in 
+	 * the array.
 	 */
 	public boolean contains(int number)
 	{
@@ -502,8 +503,8 @@ public class IntArrays
 	/**
 	 * Checks if the IntArrays object is a random permutation. 
 	 * Assumes permutation is from 1 to arraySize.
-	 * A permutation is an arrangement of integers between a lower and upper boundary, 
-	 * inclusive. Only one of each number is present.
+	 * A permutation is an arrangement of integers between a lower and upper 
+	 * boundary, inclusive. Only one of each number is present.
 	 * @return True if the IntArrays object is a random permutation, 
 	 * false if it is not a random permutation. 
 	 */
@@ -527,8 +528,8 @@ public class IntArrays
 	
 	/**
 	 * Checks if an integer array is a permutation.
-	 * A permutation is an arrangement of integers between a lower and upper boundary, 
-	 * inclusive. Only one of each number is present.
+	 * A permutation is an arrangement of integers between a lower and upper 
+	 * boundary, inclusive. Only one of each number is present.
 	 * @param inputArray The array to be checked.
 	 * @return True if inputArray is a permutation, false if not.
 	 */

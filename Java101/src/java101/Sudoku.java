@@ -1,4 +1,5 @@
 package java101;
+//TODO: READY TO TURN IN
 /**
  * A Sudoku board is a 9 by 9 grid filled with the numbers 1 to 9. This is 
  * represented using a two-dimensional array. 
@@ -22,6 +23,7 @@ public class Sudoku
 {
 	
 	private int[][] sudokuBoard;
+	public static final int DEFAULT_BOARD_SIZE = 9;
 	
 	/**
 	 * Constructs a Sudoku object. The contents of the Sudoku board are specified 
@@ -30,17 +32,20 @@ public class Sudoku
 	 */
 	public Sudoku(int[][] sudoku)
 	{
-		if (sudoku != null && sudoku.length == 9)
+		if (sudoku != null && sudoku.length == 9) //INPUT
 		{
 			sudokuBoard = sudoku;
-		} else
+		} else //DEFAULT
 		{
-			sudokuBoard = new int[9][9];
-			for (int row = 0; row < 9; row++)
+			System.out.println("Error: Two-dimensional array invalid: Implementing default...");
+			sudokuBoard = new int[DEFAULT_BOARD_SIZE][DEFAULT_BOARD_SIZE];
+			int sqrtLength = (int) Math.sqrt(sudokuBoard.length);
+			for (int row = 0; row < sudokuBoard.length; row++)
 			{
-				for (int column = 0; column < 9; column++)
+				for (int column = 0; column < sudokuBoard.length; column++)
 				{
-					sudokuBoard[row][column] = (row * 3 +  row / 3 + column) % (sudokuBoard.length) + 1;
+					sudokuBoard[row][column] = (row * sqrtLength + row / sqrtLength + column) 
+							% (sudokuBoard.length) + 1;
 				}
 			}
 			/* Something like this: 

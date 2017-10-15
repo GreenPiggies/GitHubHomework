@@ -38,13 +38,11 @@ public class Sudoku
 			sudokuBoard = new int[9][9];
 			for (int row = 0; row < 9; row++)
 			{
-				int startNum = row / 3 + (3 * (row / 3)) + 1;
 				for (int column = 0; column < 9; column++)
 				{
-					sudokuBoard[row][column] = (startNum + column) % sudokuBoard.length;
+					sudokuBoard[row][column] = (row * 3 +  row / 3 + column) % (sudokuBoard.length) + 1;
 				}
 			}
-			//TODO: FILL THE BOARD WITH SOMETHING
 			/* Something like this: 
 			 * 1 2 3 4 5 6 7 8 9 
 			 * 4 5 6 7 8 9 1 2 3 

@@ -1,4 +1,4 @@
-/** TODO: CHECK LINE LENGTH
+/** 
  * This class constructs a red and gray checkerboard. This is the basis used to
  * solve a puzzle known as the Eight Queens Puzzle, which is as follows: 
  * 
@@ -11,7 +11,8 @@
  * First, search for an empty space on the first available row, which would be 
  * denoted as 0 in the two-dimensional array.
  * 
- * Queens are marked with a "-1" on the board and markers are denoted by incrementing the current value by 1. 
+ * Queens are marked with a "-1" on the board and markers are denoted by 
+ * incrementing the current value by 1. 
 
  * If there is a valid space on that row to place a piece, I would place a queen 
  * there and mark the queen's attack movements. The queen's attack movements include
@@ -20,14 +21,20 @@
  * the next search will continue below the current queen. 
  *  
  * After this, I will search for an available space on the next row.
- * If there are x amount of queens on the board, the program will stop for 1 second, print out a graphical 
- * interpretation to the console, and remove the queen on the last row.
+ * If there are x amount of queens on the board, the program will stop for 1 second, 
+ * print out a graphical interpretation to the console, and remove the queen 
+ * on the last row.
  *  
  * 
- * However, if I could not find a space on that row, I will remove the queen on the preceding row
- * and its attack markers and find the next available space on that preceding row.
+ * However, if I could not find a space on that row, I will remove the queen on the 
+ * preceding row and its attack markers and find the next available space on that
+ * preceding row.
  * 
- * The program ends when the queen on the first row cannot find a space on its row. //TODO: Explain more please <3
+ * The program ends when the queen on the first row cannot find a space on its row.
+ * This occurs when the queen on the uppermost row has reached the end of the board. 
+ * Once the program removes this queen, it will not be able to find another space to
+ * place it (because the queen is at the edge of the board). This is when the program
+ * terminates.
  *
  *
  * @author Wesley
@@ -107,11 +114,15 @@ public class QueensEight
 		{
 			board[row][queenY]--;
 		}
-		for (int row = queenX + 1, column = queenY - 1; row < board.length && column >= 0; row++, column--)
+		for (int row = queenX + 1, column = queenY - 1; 
+			row < board.length && column >= 0; 
+			row++, column--)
 		{
 			board[row][column]--;
 		}
-		for (int row = queenX + 1, column = queenY + 1; row < board.length && column < board.length; row++, column++)
+		for (int row = queenX + 1, column = queenY + 1; 
+			row < board.length && column < board.length; 
+			row++, column++)
 		{
 			board[row][column]--;
 		}
@@ -136,11 +147,15 @@ public class QueensEight
 			board[row][queenY]++;
 		}
 
-		for (int row = queenX + 1, column = queenY - 1; row < board.length && column >= 0; row++, column--)
+		for (int row = queenX + 1, column = queenY - 1; 
+			row < board.length && column >= 0; 
+			row++, column--)
 		{
 			board[row][column]++;
 		}
-		for (int row = queenX + 1, column = queenY + 1; row < board.length && column < board.length; row++, column++)
+		for (int row = queenX + 1, column = queenY + 1; 
+			row < board.length && column < board.length; 
+			row++, column++)
 		{
 			board[row][column]++;
 		}
@@ -194,7 +209,8 @@ public class QueensEight
 				{
 					column++;
 				}
-			} else //We have reached the end of the row and have not found a place to put the piece; thus we must remove the previous piece.
+			} else //We have reached the end of the row and have not found a place
+				//to put the piece; thus we must remove the previous piece.
 			{ 
 				row--;
 				if (row >= 0) //If we can remove a piece
@@ -208,7 +224,8 @@ public class QueensEight
 	}
 	
 	/**
-	 * Draws a red or gray square on the checkerboard. The bottom left square of the checkerboard will always be gray.
+	 * Draws a red or gray square on the checkerboard. The bottom left square of
+	 * the checkerboard will always be gray.
 	 * @param x The x position of the square.
 	 * @param y The y position of the square.
 	 */
@@ -238,7 +255,9 @@ public class QueensEight
 	}
 	
 	/**
-	 * Prints the board on the console. Queens are represented using Q's and spaces with periods. It will be printed in the form of a square to give a graphically interpretation of the board on the console.
+	 * Prints the board on the console. Queens are represented using Q's and 
+	 * spaces with periods. It will be printed in the form of a square to give 
+	 * a graphically interpretation of the board on the console.
 	 */
 	public void printBoard()
 	{
@@ -277,7 +296,8 @@ public class QueensEight
 			if (args.length > 0)
 			{
 				//If there is an error parsing we will go down to the catch statement.
-				//If the boardsize is out of bounds the constructor will print out a warning and use the default board size.
+				//If the boardsize is out of bounds the constructor will print out a 
+				//warning and use the default board size.
 				boardSize = Integer.parseInt(args[0]);
 			} 
 			//If any input was NOT given, use default size. No error.
@@ -288,7 +308,8 @@ public class QueensEight
 		}
 		checkerBoard = new QueensEight(boardSize);
 		int solutions = checkerBoard.find();
-		System.out.println("For a " + checkerBoard.board.length + " by " + checkerBoard.board.length + " board, there are " + solutions + " solutions. ");		
+		System.out.println("For a " + checkerBoard.board.length + " by " + checkerBoard.board.length 
+				+ " board, there are " + solutions + " solutions. ");		
 	}
 }
 

@@ -14,6 +14,7 @@ public class IntArrays
 {
 	private int arraySize;
 	private int[] array;
+	public static final int DEFAULT_ARRAY_SIZE = 10;
 	
 	/**
 	 * Constructs a new IntArrays object with a default capacity of 10. 
@@ -37,7 +38,8 @@ public class IntArrays
 			array = new int[initialCapacity];
 		} else
 		{
-			array = new int[10];
+			System.err.println("Error: Initial capacity invalid, setting capacity to default of 10...");
+			array = new int[DEFAULT_ARRAY_SIZE];
 		}		
 	}
 	
@@ -223,7 +225,7 @@ public class IntArrays
 			arraySize--;
 			return element;
 		}	
-		System.out.println("Syntax error, index specified is greater than or equal to array size.");
+		System.out.println("Syntax error, element not found.");
 		return -1;
 	
 	}
@@ -582,7 +584,7 @@ public class IntArrays
 	 */
 	public static int[] permutation()
 	{
-		int[] permutation = new int[10];
+		int[] permutation = new int[DEFAULT_ARRAY_SIZE];
 		Random random = new Random();
 		for (int index = 0; index < permutation.length; index++)
 		{
@@ -590,7 +592,7 @@ public class IntArrays
 		}
 		for (int index = 0; index < permutation.length; index++)
 		{
-			int randomIndex = random.nextInt(10);
+			int randomIndex = random.nextInt(DEFAULT_ARRAY_SIZE);
 			int holder = permutation[randomIndex];
 			permutation[randomIndex] = permutation[index];
 			permutation[index] = holder;

@@ -235,7 +235,7 @@ public class QueensEight
 	 */
 	private void drawSquare(int x, int y, int time)
 	{
-		final double squareSize = 0.5;
+		final double SQUARE_SIZE = 0.5;
 		if (x % 2 == (board.length - y) % 2)
 		{
 			StdDrawPlus.setPenColor(StdDrawPlus.RED);
@@ -244,7 +244,7 @@ public class QueensEight
 		{
 			StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
 		}
-		StdDrawPlus.filledSquare(x + squareSize, board.length - 1 - y + squareSize, squareSize);
+		StdDrawPlus.filledSquare(x + SQUARE_SIZE, board.length - 1 - y + SQUARE_SIZE, SQUARE_SIZE);
 		StdDrawPlus.show(time);
 	}
 	
@@ -255,8 +255,8 @@ public class QueensEight
 	 */
 	private void drawPiece(int x, int y, int time)
 	{
-		final double picSize = 0.5;
-		StdDrawPlus.picture(x + picSize, board.length - 1 - y + picSize, "queen-dark2.png", 1, 1);
+		final double PIC_SIZE = 0.5;
+		StdDrawPlus.picture(x + PIC_SIZE, board.length - 1 - y + PIC_SIZE, "queen-dark2.png", 1, 1);
 		StdDrawPlus.show(time);
 	}
 	

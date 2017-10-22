@@ -25,6 +25,7 @@ newly written methods.
 
 
 */
+//TODO: Make validMoves to display POSSIBLE moves
 public class Piece 
 {
 	private int x;

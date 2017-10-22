@@ -36,6 +36,7 @@ public class CheckerBoard
 	 * - if i reach the bottom or top edge, becomes king.
 	 * - update if I have captured or moved a piece. 
 	 */
+	//TODO: ValidMove comes here!
 	
 	private static final int BOARDSIZE = 8;
 	private Piece[][] board;

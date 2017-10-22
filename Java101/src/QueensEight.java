@@ -47,6 +47,7 @@ public class QueensEight
 	private int[][] board; 
 	public static final int INIT_PAUSE = 10;
 	public static final int DRAW_PAUSE = 100;
+	public static final int SOLUTION_PAUSE = 1000;
 	public static final int DEFAULT_BOARD_SIZE = 8;
 	public static final int QUEEN_MARK = -1;
 	
@@ -194,10 +195,10 @@ public class QueensEight
 						System.out.println("Solution #" + (++solutions));
 						board[row][column] = QUEEN_MARK;
 						printBoard();
-						drawPiece(row, column, 1000);
+						drawPiece(row, column, SOLUTION_PAUSE);
 						//Remove the queen
 						board[row][column] = 0;
-						drawSquare(row, column, 0);
+						drawSquare(row, column, DRAW_PAUSE);
 						column++;
 					} else //If we are not yet at a solution
 					{
@@ -270,7 +271,7 @@ public class QueensEight
 		{  
 			for (int column = 0; column < board.length; column++)
 			{ 
-				if (board[row][column] == -1)
+				if (board[row][column] == QUEEN_MARK)
 	        	{
 	        		System.out.print("Q ");
 	        	} else 

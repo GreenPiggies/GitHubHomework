@@ -3,16 +3,16 @@ import java.util.Scanner;
 //Prompt every single time... .-.
 
 //Resubmit
-public class ShoppingList 
+public class ShoppingList_ArrayList 
 {
 	ArrayList<String> items;
 	
-	public ShoppingList(int arraySize)
+	public ShoppingList_ArrayList(int arraySize)
 	{
 		items = new ArrayList<>(arraySize);
 	}
 	
-	public ShoppingList()
+	public ShoppingList_ArrayList()
 	{
 		items = new ArrayList<>();
 	}

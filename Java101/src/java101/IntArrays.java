@@ -365,7 +365,7 @@ public class IntArrays
 	{
 		if (array.length < minCapacity)
 		{
-			int[] newArray = new int[minCapacity];
+			int[] newArray = new int[minCapacity * 2];
 			for (int index = 0; index < arraySize; index++)
 			{
 				newArray[index] = array[index];

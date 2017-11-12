@@ -14,10 +14,9 @@ public class ShoppingList_Stack
 	public String toString()
 	{
 		StringBuffer buff = new StringBuffer();
-		ListIterator<String> iterator = items.listIterator();
-		while (iterator.hasNext())
+		while (items.size() > 0)
 		{
-			buff.append(iterator.next() + "\t");
+			buff.append(items.pop());
 		}
 		return buff.toString();
 	}

@@ -72,6 +72,7 @@ public class CheckerBoardV2 extends JComponent
 					board[row][column] = null;
 				} else
 				{
+					//boolean
 					if (column >= 0 && column <= 2)
 			    	{
 			       		PieceV2 piece = new PieceV2(row, column, true, false);
@@ -130,6 +131,7 @@ public class CheckerBoardV2 extends JComponent
 		{
 			for(int column = 0; column < 8; column++)
 			{
+				//TODO: Reduce
 				if ((row + column) % 2 == 0)
 				{
 			       	this.drawSquare(g, row, column, false);

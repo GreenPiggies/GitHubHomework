@@ -1,9 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class ShoppingList_Queue 
 {

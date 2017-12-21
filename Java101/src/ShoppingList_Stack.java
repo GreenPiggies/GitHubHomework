@@ -16,7 +16,7 @@ public class ShoppingList_Stack
 		StringBuffer buff = new StringBuffer();
 		while (items.size() > 0)
 		{
-			buff.append(items.pop());
+			buff.append(items.pop() + " ");
 		}
 		return buff.toString();
 	}

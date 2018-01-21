@@ -59,7 +59,7 @@ public class CheckerBoardTest
 		Piece testPiece1 = new Piece(1, 1, true, true, test);
 		testPiece1.setMoved(true);
 		testPiece1.setCaptured(true);
-		test.changeTurn(true);
+		test.setTurn(true);
 		test.endTurn();
 		assertEquals(testPiece1.hasCaptured(), false);
 		assertEquals(testPiece1.hasMoved(), false);
@@ -70,7 +70,7 @@ public class CheckerBoardTest
 	{
 		CheckerBoard test = new CheckerBoard(true);
 		Piece testPiece1 = new Piece(1, 1, true, true, test);
-		test.changeTurn(true);
+		test.setTurn(true);
 		test.place(testPiece1, 0, 0);
 		assertEquals(test.winner(), "Dark");
 		assertEquals(test.getTurn(), false);

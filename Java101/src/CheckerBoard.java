@@ -91,6 +91,71 @@ public class CheckerBoard
 		}
 	}
 	
+	public boolean validMove(int x, int y)
+	{
+		boolean valid = false;
+		if(x >= 0 && x <= BOARDSIZE - 1 && y >= 0 && y <= BOARDSIZE - 1)
+		{
+			if ((x - 1 == select.getX()) || (x + 1 == select.getX()))
+			{
+				if (select.isKing() && (y - 1 == select.getY() || y + 1 == select.getY()))
+				{
+					
+				}
+			}
+			/*
+			if (select.isKing())
+			{
+				if ((x - 1 == select.getX() || x + 1 == select.getX()) && (y - 1 == select.getY() || y + 1 == select.getY()))
+				{
+					valid = true;
+				} else if ((x - 2 == select.getX() || x + 2 == select.getX()) && (y - 2 == select.getY() || y + 2 == select.getY()))
+				{
+					int captureX = -(select.getX() - x) / 2; //(x - this.x) / 2
+					int captureY = -(select.getY() - y) / 2; //(y - this.y) / 2
+					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
+					{
+						valid = true;
+					}
+				}
+			}	
+			else if (select.isDark())
+			{
+				if ((x - 1 == select.getX() || x + 1 == select.getX()) && y - 1 == select.getY())
+				{
+					valid = true;
+				}
+				else if ((x - 2 == select.getX() || x + 2 == select.getX()) && (y - 2 == select.getY()))
+				{
+					int captureX = -(select.getX() - x) / 2;
+					int captureY = -(select.getY() - y) / 2;
+					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
+					{
+						valid = true;
+					}	
+				}
+			}
+			else
+			{
+				if ((x - 1 == select.getX() || x + 1 == select.getX()) && y + 1 == select.getY())
+				{
+					valid = true;
+				}	
+				else if((x - 2 == select.getX() || x + 2 == select.getX()) && (y + 2 == select.getY()))
+				{
+					int captureX = -(select.getX() - x) / 2;
+					int captureY = -(select.getY() - y) / 2;
+					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
+					{
+						valid = true;
+					}
+				}
+			}
+			*/
+		}
+		return valid;	
+	}
+	
 	
 	/**
 	 * Places a piece on the CheckerBoard
@@ -159,7 +224,7 @@ public class CheckerBoard
 	public Piece remove(int x, int y)
 	{
 		Piece temp = null;
-		if(board[x][y] == null)
+		if (board[x][y] == null)
 		{
 			System.out.println("No piece to remove.");
 		}
@@ -191,13 +256,11 @@ public class CheckerBoard
 		{
 			//g2.setColor(Color.WHITE);
 			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
-		}
-		else if ((x + y) % 2 == 0)
+		} else if ((x + y) % 2 == 0)
 		{
 			//g2.setColor(Color.RED);
 			StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
-		} 	
-		else
+		} else
 		{
 			//g2.setColor(Color.GRAY);
 			StdDrawPlus.setPenColor(StdDrawPlus.RED);
@@ -247,14 +310,7 @@ public class CheckerBoard
 		return turn;
 	}
 	//Tester
-	/**
-	 * Changes the turn to the variable turn.
-	 * @param turn The value turn is changed to.
-	 */
-	public void changeTurn(boolean turn)
-	{
-		this.turn = turn;
-	}
+	
 	/**
 	 * Determines if the game has ended, and if it has, who won.
 	 * @return If the game has ended, it returns the winner. If the game has not ended, it returns null.
@@ -272,8 +328,7 @@ public class CheckerBoard
 					if (board[row][column].isDark())
 					{
 						dark++;
-					}
-					else
+					} else
 					{
 						light++;
 					}
@@ -283,8 +338,7 @@ public class CheckerBoard
 		if (light == 0)
 		{
 			return "Dark has won!";
-		}
-		else if (dark == 0)
+		} else if (dark == 0)
 		{
 			return "Light has won!";
 		}
@@ -336,8 +390,7 @@ public class CheckerBoard
 				System.out.println("Piece canSelect = false");
 				return false;
 			}
-		}
-		else //selects space
+		} else //selects space
 		{
 			if (select != null && ((!select.hasMoved() && select.validMove(x, y)) || (select.hasCaptured() && select.validMove(x, y) && (x == select.getX() - 2 || x == select.getX() + 2))))
 			{
@@ -369,8 +422,7 @@ public class CheckerBoard
 			this.drawSquare(x, y, true);
             select = board[x][y];
             this.place(select, x, y);
-		}
-		else//selecting empty space
+		} else//selecting empty space
 		{
 			select.move(x, y);
 		}

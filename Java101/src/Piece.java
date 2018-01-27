@@ -28,10 +28,10 @@ newly written methods.
 //TODO: Make validMoves to display POSSIBLE moves
 public class Piece 
 {
-	private int x;
-	private int y;
+	private int positionX;
+	private int positionY;
 	private CheckerBoard b;
-	private boolean side;
+	private boolean dark;
 	private boolean king;
 	private boolean moved;
 	private boolean captured;
@@ -39,15 +39,15 @@ public class Piece
 	 * The testing version for creating a Piece.
 	 * @param x The first index of the coordinates of the piece created.
 	 * @param y The second index of the coordinates of the piece created.
-	 * @param side The side on which the piece will be on.
+	 * @param dark The side on which the piece will be on.
 	 * @param king True if the piece is a king, false if not.
 	 * @param b The checkerboard that the piece is on.
 	 */
-	public Piece(int x, int y, boolean side, boolean king, CheckerBoard b)//just for testing purposes
+	public Piece(int x, int y, boolean dark, boolean king, CheckerBoard b)//just for testing purposes
 	{
-		this.x = x;
-		this.y = y;
-		this.side = side;
+		this.positionX = x;
+		this.positionY = y;
+		this.dark = dark;
 		this.king = king;
 		this.b = b;
 		this.moved = false;
@@ -62,9 +62,9 @@ public class Piece
 	 */
 	public Piece(int x, int y, boolean side, CheckerBoard b)
 	{
-		this.x = x;
-		this.y = y;
-		this.side = side;
+		this.positionX = x;
+		this.positionY = y;
+		this.dark = side;
 		this.king = false;
 		this.b = b;
 		this.moved = false;
@@ -80,35 +80,34 @@ public class Piece
 	public boolean validMove(int x, int y)
 	{
 		boolean valid = false;
-		if(x >= 0 && x <= b.getBoardSize() - 1 && y >= 0 && y <= b.getBoardSize() - 1)
+		if (x >= 0 && x <= b.getBoardSize() - 1 && y >= 0 && y <= b.getBoardSize() - 1)
 		{
 			if (king)
 			{
-				if ((x - 1 == this.x || x + 1 == this.x) && (y - 1 == this.y || y + 1 == this.y))
+				if ((x - 1 == this.positionX || x + 1 == this.positionX) && (y - 1 == this.positionY || y + 1 == this.positionY))
 				{
 					valid = true;
 				}
-				else if ((x - 2 == this.x || x + 2 == this.x) && (y - 2 == this.y || y + 2 == this.y))
+				else if ((x - 2 == this.positionX || x + 2 == this.positionX) && (y - 2 == this.positionY || y + 2 == this.positionY))
 				{
-					int captureX = -(this.x - x) / 2; //(x - this.x) / 2
-					int captureY = -(this.y - y) / 2; //(y - this.y) / 2
-					if (b.pieceAt(this.x + captureX, this.y + captureY) != null)
+					int captureX = -(this.positionX - x) / 2; //(x - this.x) / 2
+					int captureY = -(this.positionY - y) / 2; //(y - this.y) / 2
+					if (b.pieceAt(this.positionX + captureX, this.positionY + captureY) != null)
 					{
 						valid = true;
 					}
 				}
-			}	
-			else if (side)
+			} else if (dark)
 			{
-				if ((x - 1 == this.x || x + 1 == this.x) && y - 1 == this.y)
+				if ((x - 1 == this.positionX || x + 1 == this.positionX) && y - 1 == this.positionY)
 				{
 					valid = true;
 				}
-				else if ((x - 2 == this.x || x + 2 == this.x) && (y - 2 == this.y))
+				else if ((x - 2 == this.positionX || x + 2 == this.positionX) && (y - 2 == this.positionY))
 				{
-					int captureX = -(this.x - x) / 2;
-					int captureY = -(this.y - y) / 2;
-					if (b.pieceAt(this.x + captureX, this.y + captureY) != null)
+					int captureX = -(this.positionX - x) / 2;
+					int captureY = -(this.positionY - y) / 2;
+					if (b.pieceAt(this.positionX + captureX, this.positionY + captureY) != null)
 					{
 						valid = true;
 					}	
@@ -116,15 +115,15 @@ public class Piece
 			}
 			else
 			{
-				if ((x - 1 == this.x || x + 1 == this.x) && y + 1 == this.y)
+				if ((x - 1 == this.positionX || x + 1 == this.positionX) && y + 1 == this.positionY)
 				{
 					valid = true;
 				}	
-				else if((x - 2 == this.x || x + 2 == this.x) && (y + 2 == this.y))
+				else if((x - 2 == this.positionX || x + 2 == this.positionX) && (y + 2 == this.positionY))
 				{
-					int captureX = -(this.x - x) / 2;
-					int captureY = -(this.y - y) / 2;
-					if (b.pieceAt(this.x + captureX, this.y + captureY) != null)
+					int captureX = -(this.positionX - x) / 2;
+					int captureY = -(this.positionY - y) / 2;
+					if (b.pieceAt(this.positionX + captureX, this.positionY + captureY) != null)
 					{
 						valid = true;
 					}
@@ -149,7 +148,7 @@ public class Piece
 	 */
 	public boolean isDark()
 	{
-		return this.side;
+		return this.dark;
 	}
 	/**
 	 * Returns the value of captured.
@@ -165,7 +164,7 @@ public class Piece
 	 */
 	public int getX()
 	{
-		return x;
+		return positionX;
 	}
 	/**
 	 * Returns the value of y.
@@ -173,7 +172,7 @@ public class Piece
 	 */
 	public int getY()
 	{
-		return y;
+		return positionY;
 	}
 	/**
 	 * Returns the value of moved.
@@ -215,13 +214,13 @@ public class Piece
 	 * @param changeX The first index of the coordinates of the new position of the piece.
 	 * @param changeY The second index of the coordinates of the new position of the piece. 
 	 */
-	public void captured(int x, int y, int changeX, int changeY)
+	public void capture(int x, int y, int changeX, int changeY)
 	{
 		b.drawSquare(x, y, true);
-		b.place(b.remove(this.x, this.y), x, y);
-		b.remove(this.x + changeX, this.y + changeY);
-		this.x = x;
-		this.y = y;
+		b.place(b.remove(this.positionX, this.positionY), x, y); //new position
+		b.remove(this.positionX + changeX, this.positionY + changeY); //changeX and changeY 
+		this.positionX = x;
+		this.positionY = y;
 		captured = true;
 		moved = true;
 	}
@@ -232,26 +231,25 @@ public class Piece
 	 */
 	public void move(int x, int y)
 	{
-		if (this.x - x == 1 || this.x - x == -1)
+		if (this.positionX - x == 1 || this.positionX - x == -1)
 		{
-			Piece temp = b.remove(this.x, this.y);
-			this.x = x;
-			this.y = y;
+			Piece temp = b.remove(this.positionX, this.positionY);
+			this.positionX = x;
+			this.positionY = y;
 			b.drawSquare(x, y, true);
-			b.place(temp, this.x, this.y);
-			System.out.println(b.pieceAt(this.x, this.y));
+			b.place(temp, this.positionX, this.positionY);
+			System.out.println(b.pieceAt(this.positionX, this.positionY));
 			System.out.println(b.pieceAt(x, y));
 			System.out.println(temp);
 			System.out.println("Coordinates: (" + x + ", " + y + ").");
 			moved = true;
-		}
-		else if((this.x - x == 2 || this.x - x == -2) && (this.y - y == 2 || this.y - y == -2))
+		} else if((this.positionX - x == 2 || this.positionX - x == -2) && (this.positionY - y == 2 || this.positionY - y == -2))
 		{
-			this.captured(x, y, -(this.x - x) / 2, -(this.y - y) / 2);
+			this.capture(x, y, -(this.positionX - x) / 2, -(this.positionY - y) / 2);
 			
 		}
 		
-		if((b.getTurn() && this.y == b.getBoardSize() - 1) || (!b.getTurn() && this.y == 0))
+		if((b.getTurn() && this.positionY == b.getBoardSize() - 1) || (!b.getTurn() && this.positionY == 0))
 		{
 			king = true;
 			Piece temp = b.remove(x, y);
@@ -262,7 +260,7 @@ public class Piece
 			System.out.println("Apple.king = " + apple.king);
 			System.out.println("Apple.moved = " + apple.moved);	
 			System.out.println("Apple.captured = " + apple.captured);
-			System.out.println("Apple.side = " + apple.side);
+			System.out.println("Apple.side = " + apple.dark);
 		}
 		
 	}

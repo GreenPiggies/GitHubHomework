@@ -40,8 +40,8 @@ public class CheckerBoard
 	
 	private static final int BOARDSIZE = 8;
 	private Piece[][] board;
-	private boolean turn = true; //true is dark and false is light. Dark is bottom and top is light. 
-	private Piece select = null;
+	private boolean darkTurn = true; //true is dark and false is light. Dark is bottom and top is light. 
+	private Piece selectedPiece = null;
 	
 	/**
 	 * Creates a CheckerBoard
@@ -100,27 +100,35 @@ public class CheckerBoard
 	 */
 	public void place(Piece p, int x, int y)
 	{
-		if(p != null)
-		{
-			board[x][y] = p;
-			this.drawPiece(p, x, y);	
-		}
+		board[x][y] = p;
+		this.drawPiece(p, x, y);	
 	}
-	public Piece[][] getBoard() {
+	
+	public Piece[][] getBoard() 
+	{
 		return board;
 	}
-	public void setBoard(Piece[][] board) {
+	
+	public void setBoard(Piece[][] board) 
+	{
 		this.board = board;
 	}
-	public static int getBoardsize() {
+	
+	public static int getBoardsize() 
+	{
 		return BOARDSIZE;
 	}
-	public Piece getSelect() {
-		return select;
+	
+	public Piece getSelect() 
+	{
+		return selectedPiece;
 	}
-	public void setTurn(boolean turn) {
-		this.turn = turn;
+	
+	public void setTurn(boolean turn) 
+	{
+		this.darkTurn = turn;
 	}
+	
 	/**
 	 * Draws a piece.
 	 * @param p The piece to be drawn
@@ -159,13 +167,16 @@ public class CheckerBoard
 	public Piece remove(int x, int y)
 	{
 		Piece temp = null;
-		if(board[x][y] == null)
+		if (board[x][y] == null)
 		{
 			System.out.println("No piece to remove.");
+		} else
+		{
+			temp = board[x][y];
+			board[x][y] = null;
+			this.drawSquare(x, y);
 		}
-		temp = board[x][y];
-		board[x][y] = null;
-		this.drawSquare(x, y);
+		
 		return temp;
 	}
 
@@ -220,9 +231,9 @@ public class CheckerBoard
 	 */
 	public boolean canEndTurn()
 	{
-		if (select != null)
+		if (selectedPiece != null)
 		{
-			return select.hasCaptured() || select.hasMoved();
+			return selectedPiece.hasCaptured() || selectedPiece.hasMoved();
 		}
 		return false;
 	}
@@ -231,20 +242,21 @@ public class CheckerBoard
 	 */
 	public void endTurn()
 	{
-		this.drawSquare(select.getX(), select.getY());
-		this.drawPiece(select, select.getX(), select.getY());
-		select.setMoved(false);
-		select.setCaptured(false);
-		select = null;
-		turn = !turn;
+		this.drawSquare(selectedPiece.getX(), selectedPiece.getY());
+		this.drawPiece(selectedPiece, selectedPiece.getX(), selectedPiece.getY());
+		selectedPiece.setMoved(false);
+		selectedPiece.setCaptured(false);
+		selectedPiece = null;
+		darkTurn = !darkTurn;
 	}
+	
 	/**
 	 * Gets whose turn it is. 
 	 * @return True is dark's turn, false is light's turn.
 	 */
 	public boolean getTurn()
 	{
-		return turn;
+		return darkTurn;
 	}
 	//Tester
 	/**
@@ -253,7 +265,7 @@ public class CheckerBoard
 	 */
 	public void changeTurn(boolean turn)
 	{
-		this.turn = turn;
+		this.darkTurn = turn;
 	}
 	/**
 	 * Determines if the game has ended, and if it has, who won.
@@ -272,8 +284,7 @@ public class CheckerBoard
 					if (board[row][column].isDark())
 					{
 						dark++;
-					}
-					else
+					} else
 					{
 						light++;
 					}
@@ -283,8 +294,7 @@ public class CheckerBoard
 		if (light == 0)
 		{
 			return "Dark has won!";
-		}
-		else if (dark == 0)
+		} else if (dark == 0)
 		{
 			return "Light has won!";
 		}
@@ -296,7 +306,7 @@ public class CheckerBoard
 	 */
 	public void setSelect(Piece select)
 	{
-		this.select = select;
+		this.selectedPiece = select;
 	}
 	
 	
@@ -326,25 +336,22 @@ public class CheckerBoard
 	{	
 		if (board[x][y] != null)//you are selecting a piece
 		{
-			if (board[x][y].isDark() == turn && (select == null || (!select.hasMoved() && !select.hasCaptured())))
+			if (board[x][y].isDark() == darkTurn && (selectedPiece == null || (!selectedPiece.hasMoved() && !selectedPiece.hasCaptured())))
 			{
 				System.out.println("Piece canSelect = true");
 				return true;
-			}
-			else
+			} else
 			{
 				System.out.println("Piece canSelect = false");
 				return false;
 			}
-		}
-		else //selects space
+		} else //selects space
 		{
-			if (select != null && ((!select.hasMoved() && select.validMove(x, y)) || (select.hasCaptured() && select.validMove(x, y) && (x == select.getX() - 2 || x == select.getX() + 2))))
+			if (selectedPiece != null && ((!selectedPiece.hasMoved() && selectedPiece.validMove(x, y)) || (selectedPiece.hasCaptured() && selectedPiece.validMove(x, y) && (x == selectedPiece.getX() - 2 || x == selectedPiece.getX() + 2))))
 			{
 				System.out.println("Space canSelect = true");
 				return true;
-			}
-			else
+			} else
 			{
 				System.out.println("Space canSelect = false");
 				return false; 
@@ -361,18 +368,17 @@ public class CheckerBoard
 	{
 		if (board[x][y] != null)
 		{
-			if (select != null)
+			if (selectedPiece != null)
 			{
-				this.drawSquare(select.getX(), select.getY(), false);
-				this.drawPiece(select, select.getX(), select.getY());
+				this.drawSquare(selectedPiece.getX(), selectedPiece.getY(), false);
+				this.drawPiece(selectedPiece, selectedPiece.getX(), selectedPiece.getY());
 			}
 			this.drawSquare(x, y, true);
-            select = board[x][y];
-            this.place(select, x, y);
-		}
-		else//selecting empty space
+            selectedPiece = board[x][y];
+            this.place(selectedPiece, x, y);
+		} else//selecting empty space
 		{
-			select.move(x, y);
+			selectedPiece.move(x, y);
 		}
 	}
 	
@@ -380,6 +386,7 @@ public class CheckerBoard
 	{
 		return BOARDSIZE;
 	}
+	
 	public static void main(String[] hi)
 	{
 

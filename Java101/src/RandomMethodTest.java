@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Scanner;
 //TODO: RESUBMIT
 public class RandomMethodTest {
@@ -16,7 +18,7 @@ public class RandomMethodTest {
 		System.out.println(findBiggest(3, 5, 2));
 		*/
 
-		String apple = "apple";
+		/*String apple = "apple";
 		String bat = "bat";
 		String cat = "cat";
 		lexicographicOrder(apple, bat, cat);
@@ -25,6 +27,16 @@ public class RandomMethodTest {
 		lexicographicOrder(bat, cat, apple);
 		lexicographicOrder(cat, apple, bat);
 		lexicographicOrder(cat, bat, apple);
+		*/
+		LinkedList<String> list = new LinkedList<>();
+		list.addLast("apple");
+		list.addLast("bat");
+		list.addLast("cat");
+		System.out.println(list);
+		reverse(list);
+		System.out.println(list);
+
+		
 
 
 
@@ -40,6 +52,18 @@ public class RandomMethodTest {
 	    {
 	        System.out.println(exception);
 	    } */
+	}
+	
+	public static void reverse(LinkedList<String> strings)
+	{
+		LinkedList<String> newStrings = new LinkedList<String>();
+		ListIterator iterator = strings.listIterator();
+		while (iterator.hasNext())
+		{
+			newStrings.addFirst((String) iterator.next());
+			System.out.println(newStrings);
+		}
+		strings = newStrings;
 	}
 	
 	public static void writeAll(String[] lines, String filename)

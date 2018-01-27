@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /.classpath
 /.project
 /.settings/
@@ -83,3 +84,7 @@
 /TestTernary.class
 /Tester.class
 /TimesTable.class
+=======
+/TimesTable.class
+/java101/
+>>>>>>> f486baebbe9316992296caed267967e78ae77d95

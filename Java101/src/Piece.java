@@ -77,7 +77,7 @@ public class Piece
 	 * @param y The second index of the coordinates of the location.
 	 * @return True if the piece can move there, false if not. 
 	 */
-	public boolean validMove(int x, int y)
+	/*public boolean validMove(int x, int y)
 	{
 		boolean valid = false;
 		if (x >= 0 && x <= b.getBoardSize() - 1 && y >= 0 && y <= b.getBoardSize() - 1)
@@ -132,6 +132,7 @@ public class Piece
 		}
 		return valid;	
 	}
+	*/
 
 	
 	/**
@@ -243,13 +244,21 @@ public class Piece
 			System.out.println(temp);
 			System.out.println("Coordinates: (" + x + ", " + y + ").");
 			moved = true;
+<<<<<<< HEAD
 		} else if((this.positionX - x == 2 || this.positionX - x == -2) && (this.positionY - y == 2 || this.positionY - y == -2))
+=======
+		} else if((this.x - x == 2 || this.x - x == -2) && (this.y - y == 2 || this.y - y == -2))
+>>>>>>> f486baebbe9316992296caed267967e78ae77d95
 		{
 			this.capture(x, y, -(this.positionX - x) / 2, -(this.positionY - y) / 2);
 			
 		}
+<<<<<<< HEAD
 		
 		if((b.getTurn() && this.positionY == b.getBoardSize() - 1) || (!b.getTurn() && this.positionY == 0))
+=======
+		if((b.getTurn() && this.y == b.getBoardSize() - 1) || (!b.getTurn() && this.y == 0))
+>>>>>>> f486baebbe9316992296caed267967e78ae77d95
 		{
 			king = true;
 			Piece temp = b.remove(x, y);

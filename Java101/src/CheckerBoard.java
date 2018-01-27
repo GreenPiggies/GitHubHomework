@@ -91,6 +91,71 @@ public class CheckerBoard
 		}
 	}
 	
+	public boolean validMove(int x, int y)
+	{
+		boolean valid = false;
+		if(x >= 0 && x <= BOARDSIZE - 1 && y >= 0 && y <= BOARDSIZE - 1)
+		{
+			if ((x - 1 == select.getX()) || (x + 1 == select.getX()))
+			{
+				if (select.isKing() && (y - 1 == select.getY() || y + 1 == select.getY()))
+				{
+					
+				}
+			}
+			/*
+			if (select.isKing())
+			{
+				if ((x - 1 == select.getX() || x + 1 == select.getX()) && (y - 1 == select.getY() || y + 1 == select.getY()))
+				{
+					valid = true;
+				} else if ((x - 2 == select.getX() || x + 2 == select.getX()) && (y - 2 == select.getY() || y + 2 == select.getY()))
+				{
+					int captureX = -(select.getX() - x) / 2; //(x - this.x) / 2
+					int captureY = -(select.getY() - y) / 2; //(y - this.y) / 2
+					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
+					{
+						valid = true;
+					}
+				}
+			}	
+			else if (select.isDark())
+			{
+				if ((x - 1 == select.getX() || x + 1 == select.getX()) && y - 1 == select.getY())
+				{
+					valid = true;
+				}
+				else if ((x - 2 == select.getX() || x + 2 == select.getX()) && (y - 2 == select.getY()))
+				{
+					int captureX = -(select.getX() - x) / 2;
+					int captureY = -(select.getY() - y) / 2;
+					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
+					{
+						valid = true;
+					}	
+				}
+			}
+			else
+			{
+				if ((x - 1 == select.getX() || x + 1 == select.getX()) && y + 1 == select.getY())
+				{
+					valid = true;
+				}	
+				else if((x - 2 == select.getX() || x + 2 == select.getX()) && (y + 2 == select.getY()))
+				{
+					int captureX = -(select.getX() - x) / 2;
+					int captureY = -(select.getY() - y) / 2;
+					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
+					{
+						valid = true;
+					}
+				}
+			}
+			*/
+		}
+		return valid;	
+	}
+	
 	
 	/**
 	 * Places a piece on the CheckerBoard
@@ -202,13 +267,11 @@ public class CheckerBoard
 		{
 			//g2.setColor(Color.WHITE);
 			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
-		}
-		else if ((x + y) % 2 == 0)
+		} else if ((x + y) % 2 == 0)
 		{
 			//g2.setColor(Color.RED);
 			StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
-		} 	
-		else
+		} else
 		{
 			//g2.setColor(Color.GRAY);
 			StdDrawPlus.setPenColor(StdDrawPlus.RED);
@@ -259,6 +322,7 @@ public class CheckerBoard
 		return darkTurn;
 	}
 	//Tester
+<<<<<<< HEAD
 	/**
 	 * Changes the turn to the variable turn.
 	 * @param turn The value turn is changed to.
@@ -267,6 +331,9 @@ public class CheckerBoard
 	{
 		this.darkTurn = turn;
 	}
+=======
+	
+>>>>>>> f486baebbe9316992296caed267967e78ae77d95
 	/**
 	 * Determines if the game has ended, and if it has, who won.
 	 * @return If the game has ended, it returns the winner. If the game has not ended, it returns null.
@@ -374,8 +441,13 @@ public class CheckerBoard
 				this.drawPiece(selectedPiece, selectedPiece.getX(), selectedPiece.getY());
 			}
 			this.drawSquare(x, y, true);
+<<<<<<< HEAD
             selectedPiece = board[x][y];
             this.place(selectedPiece, x, y);
+=======
+            select = board[x][y];
+            this.place(select, x, y);
+>>>>>>> f486baebbe9316992296caed267967e78ae77d95
 		} else//selecting empty space
 		{
 			selectedPiece.move(x, y);

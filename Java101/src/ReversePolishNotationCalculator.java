@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-//DONE: FIX Q
+//TODO: FIX Q
 //DONE: LESS POP BEST POP
 //DONE: CHECK STACK SIZE BEFORE OPERAND
 //DONE: negative numbers pls
@@ -16,10 +16,10 @@ public class ReversePolishNotationCalculator
 			 BufferedReader input = new BufferedReader(console))
 		{
 			String line = "";
-			Stack<Integer> numStack = new Stack<>();
 			while (!line.toLowerCase().equals("q")) 
 			{
 				int secondNum;
+				Stack<Integer> numStack = new Stack<>();
 				System.out.print(">> ");
 				line = input.readLine();
 				if (line.matches("-?[0-9]+"))
@@ -61,7 +61,6 @@ public class ReversePolishNotationCalculator
 						}
 					}
 				}
-				System.out.println(numStack);
 				
 			} 
 			

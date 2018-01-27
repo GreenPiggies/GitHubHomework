@@ -3,9 +3,8 @@ public class ShoppingListTester
 {
 	public static void main(String[] args)
 	{
-		ShoppingList_ArrayList cart = new ShoppingList_ArrayList(10);
+		ShoppingList_Stack cart = new ShoppingList_Stack();
 		cart.inputItems();
 		System.out.println(cart.toString());
-		
 	}
 }

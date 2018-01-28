@@ -30,174 +30,91 @@ public class Piece
 {
 	private int positionX;
 	private int positionY;
-	private CheckerBoard b;
-	private boolean dark;
-	private boolean king;
+	private boolean isDark;
+	private boolean isKing;
 	private boolean moved;
 	private boolean captured;
 	/**
-	 * The testing version for creating a Piece.
+	 * Creates a piece with a specified x, y, color, and royalty. This is generally used for testing, as the royalty of the piece can be specialized.
 	 * @param x The first index of the coordinates of the piece created.
 	 * @param y The second index of the coordinates of the piece created.
 	 * @param dark The side on which the piece will be on.
 	 * @param king True if the piece is a king, false if not.
-	 * @param b The checkerboard that the piece is on.
 	 */
-	public Piece(int x, int y, boolean dark, boolean king, CheckerBoard b)//just for testing purposes
+	public Piece(int x, int y, boolean dark, boolean king)//just for testing purposes
 	{
 		this.positionX = x;
 		this.positionY = y;
-		this.dark = dark;
-		this.king = king;
-		this.b = b;
+		this.isDark = dark;
+		this.isKing = king;
 		this.moved = false;
 		this.captured = false;
 	}
 	/**
-	 * The constructor for creating a normal piece. 
+	 * Creates a piece with a specified x, y, and color. The royalty is defaulted to uncrowned.
 	 * @param x The first index of the coordinates of the piece created. 
 	 * @param y The second index of the coordinates of the piece created.
 	 * @param side The side on which the piece will be on.
 	 * @param b The CheckerBoard that the piece is located on. 
 	 */
-	public Piece(int x, int y, boolean side, CheckerBoard b)
+	public Piece(int x, int y, boolean side)
 	{
 		this.positionX = x;
 		this.positionY = y;
-		this.dark = side;
-		this.king = false;
-		this.b = b;
+		this.isDark = side;
+		this.isKing = false;
 		this.moved = false;
 		this.captured = false;
 	}
 	
-	/**
-	 * Checks if a piece can move to a certain location.
-	 * @param x The first index of the coordinates of the location.
-	 * @param y The second index of the coordinates of the location.
-	 * @return True if the piece can move there, false if not. 
-	 */
-	/*public boolean validMove(int x, int y)
-	{
-		boolean valid = false;
-		if (x >= 0 && x <= b.getBoardSize() - 1 && y >= 0 && y <= b.getBoardSize() - 1)
-		{
-			if (king)
-			{
-				if ((x - 1 == this.positionX || x + 1 == this.positionX) && (y - 1 == this.positionY || y + 1 == this.positionY))
-				{
-					valid = true;
-				}
-				else if ((x - 2 == this.positionX || x + 2 == this.positionX) && (y - 2 == this.positionY || y + 2 == this.positionY))
-				{
-					int captureX = -(this.positionX - x) / 2; //(x - this.x) / 2
-					int captureY = -(this.positionY - y) / 2; //(y - this.y) / 2
-					if (b.pieceAt(this.positionX + captureX, this.positionY + captureY) != null)
-					{
-						valid = true;
-					}
-				}
-			} else if (dark)
-			{
-				if ((x - 1 == this.positionX || x + 1 == this.positionX) && y - 1 == this.positionY)
-				{
-					valid = true;
-				}
-				else if ((x - 2 == this.positionX || x + 2 == this.positionX) && (y - 2 == this.positionY))
-				{
-					int captureX = -(this.positionX - x) / 2;
-					int captureY = -(this.positionY - y) / 2;
-					if (b.pieceAt(this.positionX + captureX, this.positionY + captureY) != null)
-					{
-						valid = true;
-					}	
-				}
-			}
-			else
-			{
-				if ((x - 1 == this.positionX || x + 1 == this.positionX) && y + 1 == this.positionY)
-				{
-					valid = true;
-				}	
-				else if((x - 2 == this.positionX || x + 2 == this.positionX) && (y + 2 == this.positionY))
-				{
-					int captureX = -(this.positionX - x) / 2;
-					int captureY = -(this.positionY - y) / 2;
-					if (b.pieceAt(this.positionX + captureX, this.positionY + captureY) != null)
-					{
-						valid = true;
-					}
-				}
-			}
-		}
-		return valid;	
-	}
-	*/
-
 	
 	/**
-	 * Returns the value of king. 
-	 * @return The value of the king variable.
+	 * Returns the royalty of the piece. It will return true if the piece is crowned and false if the piece is not crowned.
+	 * @return True if the piece is crowned, false if the piece is not crowned.
 	 */
 	public boolean isKing() 
 	{
-		return this.king;
+		return this.isKing;
 	}
 	/**
-	 * Returns the value of side.
-	 * @return The value of the side variable.
+	 * Returns the color of the piece. It will return true if the piece is dark and false if the piece is not dark (light).
+	 * @return True if the piece is dark, false if the piece is not dark.
 	 */
 	public boolean isDark()
 	{
-		return this.dark;
+		return this.isDark;
 	}
 	/**
-	 * Returns the value of captured.
-	 * @return The value of the captured variable.
+	 * Returns a boolean indicating whether or not the piece has captured another piece. 
+	 * @return True if the piece has captured, false if not.
 	 */
 	public boolean hasCaptured()
 	{
 		return captured;
 	}
 	/**
-	 * Returns the value of x.
-	 * @return The value of the x variable. 
+	 * Returns the x position of the piece.
+	 * @return The x position of the piece. 
 	 */
 	public int getX()
 	{
 		return positionX;
 	}
 	/**
-	 * Returns the value of y.
-	 * @return The value of the y variable.
+	 * Returns the y position of the piece.
+	 * @return The y position of the piece.
 	 */
 	public int getY()
 	{
 		return positionY;
 	}
 	/**
-	 * Returns the value of moved.
-	 * @return The value of the moved variable.
+	 * Returns a boolean indication whether or not the piece has moved.
+	 * @return True if the piece has moved, false if not.
 	 */
 	public boolean hasMoved()
 	{
 		return moved;
-	}
-	/**
-	 * Changes the value of moved.
-	 * @param newMoved The new value moved is assigned to. 
-	 */
-	public void setMoved(boolean newMoved)
-	{
-		moved = newMoved;
-	}
-	/**
-	 * Changes the value of captured.
-	 * @param newCaptured The new value captured is assigned to. 
-	 */
-	public void setCaptured(boolean newCaptured)
-	{
-		captured = newCaptured;
 	}
 	/*
 	 * Move
@@ -209,70 +126,51 @@ public class Piece
 	 * - update if I have captured or moved a piece. 
 	 */	
 	/**
-	 * Captures a piece, assuming validMove == true
-	 * @param x The first index of the coordinates of the piece capturing. 
-	 * @param y The second index of the coordinates of the piece capturing
-	 * @param changeX The first index of the coordinates of the new position of the piece.
-	 * @param changeY The second index of the coordinates of the new position of the piece. 
+	 * Denotes capture movement: changes the coordinates of the piece and sets moved and captured to true. 
+	 * Note that this method is only a part of the true capture() method in CheckerBoard.
+	 * @param destinationX The x coordinate of the piece's specified new position after capturing.
+	 * @param destinationY The y coordinate of the piece's specified new position after capturing.
 	 */
-	public void capture(int x, int y, int changeX, int changeY)
+	public void captureMovement(int destinationX, int destinationY)
 	{
-		b.drawSquare(x, y, true);
-		b.place(b.remove(this.positionX, this.positionY), x, y); //new position
-		b.remove(this.positionX + changeX, this.positionY + changeY); //changeX and changeY 
-		this.positionX = x;
-		this.positionY = y;
+		movement(destinationX, destinationY);
 		captured = true;
-		moved = true;
 	}
 	/**
-	 * Moves a piece, assuming validMove returned true;
-	 * @param x The first index of the coordinates in which the piece is to be moved to.
-	 * @param y The second index of the coordinates in which the piece is to be moved to. 
+	 * Denotes regular movement: changes the coordinates of the piece and sets moved to true.
+	 * @param destinationX The x coordinate of the piece's specified new position after moving.
+	 * @param destinationY The y coordinate of the piece's specified new position after moving.
 	 */
-	public void move(int x, int y)
+	public void movement(int destinationX, int destinationY)
 	{
-		if (this.positionX - x == 1 || this.positionX - x == -1)
+		if (destinationX > -1 && destinationX < CheckerBoard.BOARDSIZE && 
+			destinationY > -1 && destinationY < CheckerBoard.BOARDSIZE)
 		{
-			Piece temp = b.remove(this.positionX, this.positionY);
-			this.positionX = x;
-			this.positionY = y;
-			b.drawSquare(x, y, true);
-			b.place(temp, this.positionX, this.positionY);
-			System.out.println(b.pieceAt(this.positionX, this.positionY));
-			System.out.println(b.pieceAt(x, y));
-			System.out.println(temp);
-			System.out.println("Coordinates: (" + x + ", " + y + ").");
+			positionX = destinationX;
+			positionY = destinationY;
 			moved = true;
-<<<<<<< HEAD
-		} else if((this.positionX - x == 2 || this.positionX - x == -2) && (this.positionY - y == 2 || this.positionY - y == -2))
-=======
-		} else if((this.x - x == 2 || this.x - x == -2) && (this.y - y == 2 || this.y - y == -2))
->>>>>>> f486baebbe9316992296caed267967e78ae77d95
-		{
-			this.capture(x, y, -(this.positionX - x) / 2, -(this.positionY - y) / 2);
-			
-		}
-<<<<<<< HEAD
-		
-		if((b.getTurn() && this.positionY == b.getBoardSize() - 1) || (!b.getTurn() && this.positionY == 0))
-=======
-		if((b.getTurn() && this.y == b.getBoardSize() - 1) || (!b.getTurn() && this.y == 0))
->>>>>>> f486baebbe9316992296caed267967e78ae77d95
-		{
-			king = true;
-			Piece temp = b.remove(x, y);
-			b.drawSquare(x, y, true);
-			b.place(temp, x, y);
-			Piece apple = b.pieceAt(x, y);
-			System.out.println("Apple Coordinates: (" + x + ", " + y + ").");
-			System.out.println("Apple.king = " + apple.king);
-			System.out.println("Apple.moved = " + apple.moved);	
-			System.out.println("Apple.captured = " + apple.captured);
-			System.out.println("Apple.side = " + apple.dark);
 		}
 		
 	}
+	
+	/**
+	 * Sets the boolean denoting if the piece has moved or not.
+	 * @param moved The new value denoting if the piece has moved or not.
+	 */
+	public void setMoved(boolean moved) 
+	{
+		this.moved = moved;		
+	}
+	
+	/**
+	 * Sets the boolean denoting if the piece has moved or not.
+	 * @param captured The new value denoting if the piece has moved or not.
+	 */
+	public void setCaptured(boolean captured) 
+	{
+		this.captured = captured;		
+	}
+	
 	
 	
 	

@@ -1,100 +1,7 @@
-<<<<<<< HEAD
-/.classpath
-/.project
-/.settings/
-=======
-<<<<<<< HEAD
-/.classpath
-/.project
-/.settings/
-/BankAccountsArray.dat
-/BigBank.dat
-/Miller/
-/example-file.txt
-/example-file.txt.rtf
-/java101/
-/java101Homework12.zip
-/java101Homework15.zip
-/java101Homework16.zip
-/java101Homework17(First Part).zip
-/java101Homework17Part2.zip
-/junkOutput.txt
-/pawn-dark-crowned.png
-/pawn-dark.png
-/pawn-light-crowned.png
-/pawn-light.png
-/queen-dark.png
-/queen-dark2.png
-/sample.txt
-/sample2.txt
-/sheep.txt
-/sheepNumber.txt
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
-/Actor.class
-/Appointment.class
-/ArrayDemo.class
-/Bank.class
-/BankAccount.class
-/BankAccountExceptions.class
-<<<<<<< HEAD
-/BankAccountsArray.dat
-=======
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
-/BankArray.class
-/BankConsole.class
-/BankInterestViewer$1addInterestListener.class
-/BankInterestViewer.class
-/BankTester.class
-/BetterBankConsole.class
-<<<<<<< HEAD
-/BigBank.dat
-=======
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
-/Board.class
-/CheckerBoard.class
-/CheckerBoardTest.class
-/CheckerBoardV2.class
-/CheckerComponenet.class
-/CheckerFrame$MousePressedListener.class
-/CheckerFrame$TimerListener.class
-/CheckerFrame.class
-/CheckerV2Frame$KeyListener.class
-/CheckerV2Frame$MousePressedListener.class
-/CheckerV2Frame$TimerListener.class
-/CheckerV2Frame.class
-<<<<<<< HEAD
-/Miller/
-/java101Homework17Part2.zip
-/junkOutput.txt
-/pawn-dark-crowned.png
-/pawn-dark.png
-/pawn-light-crowned.png
-/pawn-light.png
-/queen-dark.png
-/queen-dark2.png
-/sample.txt
-/sample2.txt
-/sheep.txt
-/sheepNumber.txt
-=======
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
-/CheckerV2Viewer.class
-/CheckerViewer.class
-/CheckingAccount.class
-/DemoLinkedList.class
-/Dice.class
-/DrawCheckerBoard.class
-/DrawPiece.class
-/Find.class
-/FindA.class
-/FindB.class
-/InsufficientFundsException.class
-<<<<<<< HEAD
-=======
 /Kliu.class
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
 /LogExceptions.class
 /MapStuff.class
+/Miller/
 /Movie$CastMember.class
 /Movie.class
 /Number.class
@@ -104,15 +11,8 @@
 /PieceV2.class
 /QueensEight.class
 /QueensException.class
-<<<<<<< HEAD
 /ReversePolishNotationCalculator.class
 /SavingsAccount.class
-=======
-/RandomMethodTest.class
-/ReversePolishNotationCalculator.class
-/SavingsAccount.class
-/ShoppingListTester.class
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
 /ShoppingList_ArrayList.class
 /ShoppingList_Arrays.class
 /ShoppingList_LinkedList.class
@@ -121,11 +21,5 @@
 /StdDrawPlus.class
 /TestTernary.class
 /Tester.class
-<<<<<<< HEAD
-=======
-/TimesTable.class
-=======
->>>>>>> f7e53603aa63dccd5b2322a9606042b1e3aa2f56
 /TimesTable.class
 /java101/
->>>>>>> f486baebbe9316992296caed267967e78ae77d95

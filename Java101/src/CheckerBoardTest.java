@@ -63,7 +63,7 @@ public class CheckerBoardTest
 		test.endTurn();
 		assertEquals(testPiece1.hasCaptured(), false);
 		assertEquals(testPiece1.hasMoved(), false);
-		assertEquals(test.getTurn(), false);
+		assertEquals(test.isDarkTurn(), false);
 	}
 	
 	public void test()
@@ -73,7 +73,7 @@ public class CheckerBoardTest
 		test.setTurn(true);
 		test.place(testPiece1, 0, 0);
 		assertEquals(test.winner(), "Dark");
-		assertEquals(test.getTurn(), false);
+		assertEquals(test.isDarkTurn(), false);
 	}
 	
 	public void testCanSelect()

@@ -38,10 +38,10 @@ public class CheckerBoard
 	 */
 	//TODO: ValidMove comes here!
 	
-	private static final int BOARDSIZE = 8;
 	private Piece[][] board;
-	private boolean darkTurn = true; //true is dark and false is light. Dark is bottom and top is light. 
-	private Piece selectedPiece = null;
+	public static final int BOARDSIZE = 8;
+	private boolean darkTurn; //true is dark and false is light. Dark is bottom and top is light. 
+	private Piece selectedPiece;
 	
 	/**
 	 * Creates a CheckerBoard
@@ -57,217 +57,147 @@ public class CheckerBoard
 	public CheckerBoard(boolean test)
 	{
 		board = new Piece[BOARDSIZE][BOARDSIZE];
+		darkTurn = true;
+		selectedPiece = null;
 		StdDrawPlus.setXscale(0, BOARDSIZE);
 		StdDrawPlus.setYscale(0, BOARDSIZE);
 		for(int row = 0; row < BOARDSIZE; row++)
 		{
 			for(int column = 0; column < BOARDSIZE; column++)
 			{
-				if ((row + column) % 2 != 0)
-		        {
-			        this.drawSquare(row, column, false);
+				if (test)
+				{
 					board[row][column] = null;
-		        } 
-		        else
-		        {
-		        	this.drawSquare(row, column, false);
-			        if (column >= 0 && column <= 2 && !test)
-		    		{
-			        	Piece newPiece = new Piece(row, column, true, false, this);
-			        	this.place(newPiece, row, column);
-		    		}
-		    		else if (column >= BOARDSIZE - 3 && column <= BOARDSIZE - 1 && !test)
-		    		{
-		    			Piece newPiece = new Piece(row, column, false, false, this);
-			        	this.place(newPiece, row, column);
-		    		}
-		    		else
-		    		{
+				} else
+				{
+					if ((row + column) % 2 != 0)
+			        {
+				        this.drawSquare(row, column, false);
 						board[row][column] = null;
-		    		}
-		            
-				}			
-			}	
-		}
-	}
-	
-	public boolean validMove(int x, int y)
-	{
-		boolean valid = false;
-		if(x >= 0 && x <= BOARDSIZE - 1 && y >= 0 && y <= BOARDSIZE - 1)
-		{
-			if ((x - 1 == select.getX()) || (x + 1 == select.getX()))
-			{
-				if (select.isKing() && (y - 1 == select.getY() || y + 1 == select.getY()))
-				{
-					
-				}
-			}
-			/*
-			if (select.isKing())
-			{
-				if ((x - 1 == select.getX() || x + 1 == select.getX()) && (y - 1 == select.getY() || y + 1 == select.getY()))
-				{
-					valid = true;
-				} else if ((x - 2 == select.getX() || x + 2 == select.getX()) && (y - 2 == select.getY() || y + 2 == select.getY()))
-				{
-					int captureX = -(select.getX() - x) / 2; //(x - this.x) / 2
-					int captureY = -(select.getY() - y) / 2; //(y - this.y) / 2
-					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
-					{
-						valid = true;
-					}
-				}
-			}	
-			else if (select.isDark())
-			{
-				if ((x - 1 == select.getX() || x + 1 == select.getX()) && y - 1 == select.getY())
-				{
-					valid = true;
-				}
-				else if ((x - 2 == select.getX() || x + 2 == select.getX()) && (y - 2 == select.getY()))
-				{
-					int captureX = -(select.getX() - x) / 2;
-					int captureY = -(select.getY() - y) / 2;
-					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
-					{
-						valid = true;
-					}	
-				}
-			}
-			else
-			{
-				if ((x - 1 == select.getX() || x + 1 == select.getX()) && y + 1 == select.getY())
-				{
-					valid = true;
+			        } else
+			        {
+			        	this.drawSquare(row, column, false);
+				        if (column >= 0 && column <= 2 && !test)
+			    		{
+				        	Piece newPiece = new Piece(row, column, true);
+				        	this.place(newPiece, row, column);
+			    		} else if (column >= BOARDSIZE - 3 && column <= BOARDSIZE - 1 && !test)
+			    		{
+			    			Piece newPiece = new Piece(row, column, false);
+				        	this.place(newPiece, row, column);
+			    		} else
+			    		{
+							board[row][column] = null;
+			    		}
+			            
+					}			
 				}	
-				else if((x - 2 == select.getX() || x + 2 == select.getX()) && (y + 2 == select.getY()))
-				{
-					int captureX = -(select.getX() - x) / 2;
-					int captureY = -(select.getY() - y) / 2;
-					if (pieceAt(select.getX() + captureX, select.getY() + captureY) != null)
-					{
-						valid = true;
-					}
-				}
 			}
-			*/
 		}
-		return valid;	
+	}
+	
+	/**
+	 * Checks if a specified location is a valid destination for the selectedPiece to be moved to. Accounts for color, royalty, and enemy pieces/empty squares.
+	 * @param destinationX The x position of the specified location.
+	 * @param destinationY The y position of the specified location.
+	 * @return
+	 */
+	public boolean validMove(int destinationX, int destinationY)
+	{
+		if (destinationX > -1 && destinationX < BOARDSIZE && 
+			destinationY > -1 && destinationY < BOARDSIZE)
+		{
+			
+		}
 	}
 	
 	
 	/**
-	 * Places a piece on the CheckerBoard
+	 * Places a piece on the CheckerBoard. It also updates the GUI, placing a piece at the specified location.
 	 * @param p The piece to be placed on the checkerBoard
-	 * @param x The first index of the 2 dimensional array in which the piece will be placed.
-	 * @param y The second index of the 2 dimensional array in which the piece will be placed.
+	 * @param destinationX The x position of the specified location.
+	 * @param destinationY The y position of the specified location.
 	 */
-	public void place(Piece p, int x, int y)
+	public void place(Piece p, int destinationX, int destinationY)
 	{
-		board[x][y] = p;
-		this.drawPiece(p, x, y);	
+		board[destinationX][destinationY] = p;
+		this.drawPiece(p, destinationX, destinationY);	
 	}
-	
-	public Piece[][] getBoard() 
-	{
-		return board;
-	}
-	
-	public void setBoard(Piece[][] board) 
-	{
-		this.board = board;
-	}
-	
-	public static int getBoardsize() 
-	{
-		return BOARDSIZE;
-	}
-	
-	public Piece getSelect() 
-	{
-		return selectedPiece;
-	}
-	
-	public void setTurn(boolean turn) 
-	{
-		this.darkTurn = turn;
-	}
-	
+
 	/**
-	 * Draws a piece.
-	 * @param p The piece to be drawn
-	 * @param x The first index of the 2 dimensional array in which the piece will be drawn.
-	 * @param y The second index of the 2 dimensional array in which the piece will be drawn. 
+	 * Draws a piece on the checker board.
+	 * @param p The piece to be drawn.
+	 * @param selectedX The x position of the specified location.
+	 * @param selectedY The y position of the specified location. 
 	 */
-	public void drawPiece(Piece p, int x, int y)
+	public void drawPiece(Piece p, int selectedX, int selectedY)
 	{
 		if (p != null)
 		{
 			if (p.isDark() && p.isKing())
 			{
-				StdDrawPlus.picture(x + .5, y + .5, "pawn-dark-crowned.png", 1, 1);
-			}
-			else if (p.isDark() && !p.isKing())
+				StdDrawPlus.picture(selectedX + .5, selectedY + .5, "pawn-dark-crowned.png", 1, 1);
+			} else if (p.isDark() && !p.isKing())
 			{
-				StdDrawPlus.picture(x + .5, y + .5, "pawn-dark.png", 1, 1);
-			}
-			else if (!p.isDark() && p.isKing())
+				StdDrawPlus.picture(selectedX + .5, selectedY + .5, "pawn-dark.png", 1, 1);
+			} else if (!p.isDark() && p.isKing())
 			{
-				StdDrawPlus.picture(x + .5, y + .5, "pawn-light-crowned.png", 1, 1);
-			}
-			else
+				StdDrawPlus.picture(selectedX + .5, selectedY + .5, "pawn-light-crowned.png", 1, 1);
+			} else
 			{
-				StdDrawPlus.picture(x + .5, y + .5, "pawn-light.png", 1, 1);
+				StdDrawPlus.picture(selectedX + .5, selectedY + .5, "pawn-light.png", 1, 1);
 			}
 		}
 		
 	}
 	/**
-	 * Removes a piece from the CheckerBoard
-	 * @param x The first index of the 2 dimensional array in which will be removed.
-	 * @param y The second index of the 2 dimensional array in which will be removed.
-	 * @return The piece that was removed.
+	 * Removes a piece from the CheckerBoard. It also updates the GUI, removing a piece at the specified location.
+	 * @param selectedX The x position of the specified location.
+	 * @param selectedY The y position of the specified location.
+	 * @return The piece that was removed, or null if there was no piece to remove/location is invalid.
 	 */
-	public Piece remove(int x, int y)
+	public Piece remove(int selectedX, int selectedY)
 	{
 		Piece temp = null;
-		if (board[x][y] == null)
+		if (board[selectedX][selectedY] == null)
 		{
 			System.out.println("No piece to remove.");
+		} else if (selectedX < 0 || selectedX > BOARDSIZE - 1 ||
+				   selectedY < 0 || selectedY > BOARDSIZE - 1)
+		{
+			System.out.println("Location specified is out of bounds.");
 		} else
 		{
-			temp = board[x][y];
-			board[x][y] = null;
-			this.drawSquare(x, y);
+			temp = board[selectedX][selectedY];
+			board[selectedX][selectedY] = null;
+			this.drawSquare(selectedX, selectedY);
 		}
-		
 		return temp;
 	}
 
 	/**
-	 * Draws a square on the checkerboard.
-	 * @param x The first index of the 2 dimensional array in which the square will be drawn.
-	 * @param y The second index of the 2 dimensional array in which the square will be drawn.
+	 * Draws a square on the checker board. Square color is determined by the board.
+	 * @param selectedX The x position of the specified location.
+	 * @param selectedY The y position of the specified location.
 	 */
-	public void drawSquare(double x, double y)
+	public void drawSquare(double selectedX, double selectedY)
 	{
-		this.drawSquare(x, y, false);	
+		this.drawSquare(selectedX, selectedY, false);	
 	}
 	
 	/**
-	 * Draws a square on the CheckerBoard
-	 * @param x The first index of the 2 dimensional array in which the square will be drawn.
-	 * @param y The second index of the 2 dimensional array in which the square will be drawn.
+	 * Draws a square on the checkerboard. However, if select is true, the square will be white. If not, the square color is determined by the board.
+	 * @param selectedX The x position of the specified location.
+	 * @param selectedY The y position of the specified location.
 	 * @param select If select is true, the square is white, if not, the square will be drawn according to the board. 
 	 */
-	public void drawSquare(double x, double y, boolean select)
+	public void drawSquare(double selectedX, double selectedY, boolean select)
 	{
 		if (select)
 		{
 			//g2.setColor(Color.WHITE);
 			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
-		} else if ((x + y) % 2 == 0)
+		} else if ((selectedX + selectedY) % 2 == 0)
 		{
 			//g2.setColor(Color.RED);
 			StdDrawPlus.setPenColor(StdDrawPlus.GRAY);
@@ -276,32 +206,20 @@ public class CheckerBoard
 			//g2.setColor(Color.GRAY);
 			StdDrawPlus.setPenColor(StdDrawPlus.RED);
 		}
-		StdDrawPlus.filledSquare(x + .5, y + .5, .5);
+		StdDrawPlus.filledSquare(selectedX + .5, selectedY + .5, .5);
 	}
+	
 	/**
-	 * Returns the piece at the given location.
-	 * @param x The first index of the 2 dimensional array in which the piece there is checked.
-	 * @param y The second index of the 2 dimensional array in which the piece there is checked. 
-	 * @return The piece at the given location. 
-	 */
-	public Piece pieceAt(int x, int y)
-	{
-		return board[x][y];
-	}
-	/**
-	 * Checks if the player can end their current turn.
+	 * Checks and returns a boolean signifying if the player can end their current turn.
 	 * @return True if the player can end, false if not. 
 	 */
 	public boolean canEndTurn()
 	{
-		if (selectedPiece != null)
-		{
-			return selectedPiece.hasCaptured() || selectedPiece.hasMoved();
-		}
-		return false;
+		//Conditional operator makes this a one-liner :)
+		return selectedPiece != null ? selectedPiece.hasMoved() : false;
 	}
 	/**
-	 * Ends the turn, assuming canEndTurn() returned true.
+	 * Ends the turn, assuming canEndTurn() returned true. This deselects the selected piece and allows the other player to select pieces.
 	 */
 	public void endTurn()
 	{
@@ -314,26 +232,14 @@ public class CheckerBoard
 	}
 	
 	/**
-	 * Gets whose turn it is. 
+	 * Returns the boolean determining whether the turn 
 	 * @return True is dark's turn, false is light's turn.
 	 */
-	public boolean getTurn()
+	public boolean isDarkTurn()
 	{
 		return darkTurn;
 	}
-	//Tester
-<<<<<<< HEAD
-	/**
-	 * Changes the turn to the variable turn.
-	 * @param turn The value turn is changed to.
-	 */
-	public void changeTurn(boolean turn)
-	{
-		this.darkTurn = turn;
-	}
-=======
-	
->>>>>>> f486baebbe9316992296caed267967e78ae77d95
+
 	/**
 	 * Determines if the game has ended, and if it has, who won.
 	 * @return If the game has ended, it returns the winner. If the game has not ended, it returns null.
@@ -367,67 +273,90 @@ public class CheckerBoard
 		}
 		return null;
 	}
+	
 	/**
-	 * Assigns the select variable a value.
-	 * @param select The value the select variable is assigned to.
+	 * Moves the selected piece to a specified location. It changes all necessary variables and GUIs.
+	 * @param destinationX The x position of the specified location.
+	 * @param destinationY The y position of the specified location.
 	 */
-	public void setSelect(Piece select)
+	public void move(int destinationX, int destinationY)
 	{
-		this.selectedPiece = select;
+		Piece movedPiece = board[selectedPiece.getX()][selectedPiece.getY()];
+		board[destinationX][destinationY] = movedPiece;
+		movedPiece.movement(destinationX, destinationY);
+	}
+	
+	/**
+	 * Moves the selected piece to a specified location. However, since this is a capture, the piece in between the origin and destination 
+	 * of the selectedPiece is removed. It changes all necessary variables and GUIs.
+	 * @param destinationX The x position of the specified location.
+	 * @param destinationY The y position of the specified location.
+	 */
+	public void capture(int destinationX, int destinationY)
+	{
+		/*Let's do some math! In order to figure out the piece captured, 
+		 * we can use the midpoint formula to figure out the piece halfway between two points 
+		 * (e.g. the piece halfway between selectedPiece's original position and its new position is the captured piece!) */
+		remove((selectedPiece.getX() + destinationX) / 2, (selectedPiece.getY() + destinationY) / 2);
+		Piece movedPiece = board[selectedPiece.getX()][selectedPiece.getY()];
+		board[destinationX][destinationY] = movedPiece;
+		movedPiece.captureMovement(destinationX, destinationY);
+		
+	}
+	
+	/**
+	 * Calculates and returns whether or not the distance of selectedPiece's specified movement qualifies as a capture movement (used in canSelect). 
+	 * @param destinationX The x position of the specified movement.
+	 * @param destinationY The y position of the specified movement.
+	 * @return True if the movement distance qualifies as a capture, false if not.
+	 */
+	public boolean isCaptureDistance(int destinationX, int destinationY)
+	{
+		return (Math.abs(selectedPiece.getX() - destinationX) == 2 && Math.abs(selectedPiece.getY() - destinationY) == 2);
+		
 	}
 	
 	
-	/*
-	 *  CanSelect
-	 * use variables to see if the piece has moved or not, piece has captured or not, and store the piece so canSelect can access it(:D)
-	 * Make sure to check all nooks and crannies for errors
-	 * know if ur selecting a square or a piece
-	 * if you moved already(not captured), nothing is valid to be selected. 
-	 * 
-	 * - Returns true if the square at (x, y) can be selected.
-		- A square with a piece may be selected if it is the corresponding player's turn and one of the following is true:
-			- The player has not selected a piece yet.
-			- The player has selected a piece, but did not move it.
-		- An empty square may be selected if one of the following is true:
-			- During this turn, the player has selected a Piece which hasn't moved yet and is selecting an empty spot which is a valid move for the previously selected Piece.
-			- During this turn, the player has selected a Piece, captured, and has selected another valid capture destination. When performing multi-captures, you should only select the active piece once; all other selections should be valid destination points.
-
-	 */
 	/**
 	 * Determines if the position clicked can be selected.
-	 * @param x The first index of the 2 dimensional array in which is to be checked for valid selection.
-	 * @param y The second index of the 2 dimensional array in which is to be checked for valid selection.
+	 * First, the boundaries of the specified position are checked.
+	 * After this, the position specified is evaluated.
+	 * If the position specified is a piece, the player turn, color, and moved aspect of the piece are checked. If the turn and color
+	 * both match and the player has not yet moved, the piece can be selected.
+	 * If the position specified is an empty square, the value of select (select should not be null), the moved, captured, and distance to position
+	 * are all checked. If the piece has not moved or it has captured and is making another capture, then validMove is run. If validMove returns true,
+	 * the piece can be selected.
+	 * @param selectedX The first index of the 2 dimensional array in which is to be checked for valid selection.
+	 * @param selectedY The second index of the 2 dimensional array in which is to be checked for valid selection.
 	 * @return True if the position can be selected, false if not. 
 	 */
-	public boolean canSelect(int x, int y)
+	public boolean canSelect(int selectedX, int selectedY)
 	{	
-		if (board[x][y] != null)//you are selecting a piece
+		if (selectedX > -1 && selectedX < BOARDSIZE && 
+			selectedY > -1 && selectedY < BOARDSIZE)
 		{
-			if (board[x][y].isDark() == darkTurn && (selectedPiece == null || (!selectedPiece.hasMoved() && !selectedPiece.hasCaptured())))
+			if (board[selectedX][selectedY] != null)
 			{
-				System.out.println("Piece canSelect = true");
-				return true;
+				if (isDarkTurn() == board[selectedX][selectedY].isDark() && !board[selectedX][selectedY].hasMoved())
+				{
+					return true;
+				}
 			} else
 			{
-				System.out.println("Piece canSelect = false");
-				return false;
+				if (selectedPiece != null && (!selectedPiece.hasMoved() || (selectedPiece.hasCaptured() && isCaptureDistance(selectedX, selectedY))))
+				{
+					return validMove(selectedX, selectedY);
+				}
 			}
-		} else //selects space
-		{
-			if (selectedPiece != null && ((!selectedPiece.hasMoved() && selectedPiece.validMove(x, y)) || (selectedPiece.hasCaptured() && selectedPiece.validMove(x, y) && (x == selectedPiece.getX() - 2 || x == selectedPiece.getX() + 2))))
-			{
-				System.out.println("Space canSelect = true");
-				return true;
-			} else
-			{
-				System.out.println("Space canSelect = false");
-				return false; 
-			}	
 		}
+		return false;
 	}
 
 	/**
-	 * Selects the given location.
+	 * Selects the given location. 
+	 * First selectedPiece is checked.
+	 * If the specified location is not null (a piece), then selectedPiece is assigned to the piece at the specified location and the GUI is updated.
+	 * If the specified location is an empty square, then a move or capture is executed with selectedPiece and all necessary variables and GUIs.
 	 * @param x The first index of the 2 dimensional array in which is selected.
 	 * @param y The second index of the 2 dimensional array in which is selected.
 	 */
@@ -441,23 +370,14 @@ public class CheckerBoard
 				this.drawPiece(selectedPiece, selectedPiece.getX(), selectedPiece.getY());
 			}
 			this.drawSquare(x, y, true);
-<<<<<<< HEAD
             selectedPiece = board[x][y];
             this.place(selectedPiece, x, y);
-=======
-            select = board[x][y];
-            this.place(select, x, y);
->>>>>>> f486baebbe9316992296caed267967e78ae77d95
-		} else//selecting empty space
+		} else
 		{
-			selectedPiece.move(x, y);
+			selectedPiece.movement(x, y);
 		}
 	}
 	
-	public int getBoardSize()
-	{
-		return BOARDSIZE;
-	}
 	
 	public static void main(String[] hi)
 	{

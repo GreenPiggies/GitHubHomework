@@ -70,7 +70,7 @@ public class PieceTest {
 	{
 		Piece testPiece1 = new Piece(1, 1, true, true, test);
 		test.place(testPiece1, 1, 1);
-		testPiece1.move(2, 2);
+		testPiece1.setPosition(2, 2);
 		assertEquals(testPiece1.hasMoved(), true);
 		assertEquals(testPiece1.hasCaptured(), false);
 		assertEquals(testPiece1.getX(), 2);
@@ -79,7 +79,7 @@ public class PieceTest {
 		
 		Piece testPiece2 = new Piece(3, 3, false, true, test);
 		test.place(testPiece2, 3, 3);
-		testPiece2.move(1, 1);
+		testPiece2.setPosition(1, 1);
 		assertEquals(testPiece2.hasCaptured(), true);
 		assertEquals(testPiece2.hasMoved(), false);
 		assertEquals(testPiece2.getX(), 1);

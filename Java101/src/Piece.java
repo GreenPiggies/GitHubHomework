@@ -34,6 +34,7 @@ public class Piece
 	private boolean isKing;
 	private boolean moved;
 	private boolean captured;
+	
 	/**
 	 * Creates a piece with a specified x, y, color, and royalty. This is generally used for testing, as the royalty of the piece can be specialized.
 	 * @param x The first index of the coordinates of the piece created.
@@ -50,6 +51,7 @@ public class Piece
 		this.moved = false;
 		this.captured = false;
 	}
+	
 	/**
 	 * Creates a piece with a specified x, y, and color. The royalty is defaulted to uncrowned.
 	 * @param x The first index of the coordinates of the piece created. 
@@ -76,6 +78,7 @@ public class Piece
 	{
 		return this.isKing;
 	}
+	
 	/**
 	 * Returns the color of the piece. It will return true if the piece is dark and false if the piece is not dark (light).
 	 * @return True if the piece is dark, false if the piece is not dark.
@@ -84,6 +87,7 @@ public class Piece
 	{
 		return this.isDark;
 	}
+	
 	/**
 	 * Returns a boolean indicating whether or not the piece has captured another piece. 
 	 * @return True if the piece has captured, false if not.
@@ -92,6 +96,7 @@ public class Piece
 	{
 		return captured;
 	}
+	
 	/**
 	 * Returns the x position of the piece.
 	 * @return The x position of the piece. 
@@ -100,6 +105,7 @@ public class Piece
 	{
 		return positionX;
 	}
+	
 	/**
 	 * Returns the y position of the piece.
 	 * @return The y position of the piece.
@@ -108,6 +114,7 @@ public class Piece
 	{
 		return positionY;
 	}
+	
 	/**
 	 * Returns a boolean indication whether or not the piece has moved.
 	 * @return True if the piece has moved, false if not.
@@ -116,15 +123,7 @@ public class Piece
 	{
 		return moved;
 	}
-	/*
-	 * Move
-	 * - u should change the x and y variables of that piece as well.
-	 * - if i captured a piece, need to delete the piece that i captured.
-	 * - remove first, and use place to then place it in its moved position.
-	 * - remove the piece captured(if there was anything captured) 
-	 * - if i reach the bottom or top edge, becomes king.
-	 * - update if I have captured or moved a piece. 
-	 */	
+	
 	/**
 	 * Denotes capture movement: changes the coordinates of the piece and sets moved and captured to true. 
 	 * Note that this method is only a part of the true capture() method in CheckerBoard.

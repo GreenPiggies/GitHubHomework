@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Color;
 /*
- * Creates a CheckerBoard object. The purpose of the CheckerBoard object is to represent a checker board and allow the user to play a game of checkers with it.
+ * The purpose of the CheckerBoard object is to represent a checker board and allow the user to play a game of checkers with it.
  * 
  * A CheckerBoard object contains a two-dimensional array of Piece objects, a boolean indicating the player turn, and a selected Piece object. There is also a constant boardsize that is used to determine the size of the board.
  * The two-dimensional array of Piece objects represents the checker board and stores the values of the pieces of the checker board in their respective locations.
@@ -17,15 +17,17 @@ import java.awt.Color;
  * Also, it repeatedly checks the board to determine if there is a winner.
  * 
  */
+//TODO: STDDRAW.SHOW AFTER EVERY DRAWING
 public class CheckerBoard
 {
 	private Piece[][] board;
-	public static final int BOARDSIZE = 8;
+	public static final int BOARD_LENGTH = 8;
 	private boolean darkTurn; 
 	private Piece selectedPiece;
 	
+	//TODO: FIX
 	/**
-	 * Creates a default checker board with 
+	 * Creates a default checker board. 
 	 */
 	public CheckerBoard()
 	{
@@ -33,77 +35,31 @@ public class CheckerBoard
 	}
 	/**
 	 * Creates a CheckerBoard object. 
-	 * This initializes the two dimensional array that holds the information of the checker board. If test is false, it creates a normal checker board with pieces on the black tiles for the top three and bottom three rows. If test is true, it creates a checkerboard with no pieces on it. 
+	 * This initializes the two dimensional array that holds the information of the checker board. If test is false, it creates a normal checker board with pieces on the gray squares for the top three and bottom three rows. If test is true, it creates a checker board with no pieces on it. 
 	 * Also, it sets the current turn (in this case, it defaults to dark starting first) and initializes the selected piece to null.
 	 * @param test If this is false, the checker board will be set with pieces on the black tiles for the top three and bottom three rows (classic checker board setup). If this is true, the checker board starts off empty.
 	 */
 	public CheckerBoard(boolean test)
-	{
-		//TODO: Move all the StdDrawPlus and drawing stuff to a different method
-		//TODO: Constructor sets everything to null
-<<<<<<< HEAD
-		//TODO: IF test is true, call setUpBoard that will set pieces
-		board = new Piece[BOARDSIZE][BOARDSIZE];
+	{	
+		board = new Piece[BOARD_LENGTH][BOARD_LENGTH];
 		darkTurn = true;
 		selectedPiece = null;
-		StdDrawPlus.setXscale(0, board.length);
-		StdDrawPlus.setYscale(0, board.length);
 		for (int row = 0; row < board.length; row++)
 		{
 			for (int column = 0; column < board.length; column++)
 			{
-				/*if (test)
-				{
-					board[row][column] = null;
-				} else
-				{
-		        	this.drawSquare(row, column, false);
-					if ((row + column) % 2 != 0)
-			        {
-						board[row][column] = null;
-			        } else
-			        {
-				        if (column >= 0 && column <= 2)
-			    		{
-				        	Piece newPiece = new Piece(row, column, true);
-				        	this.place(newPiece, row, column);
-			    		} else if (column >= BOARDSIZE - 3 && column <= BOARDSIZE - 1)
-			    		{
-			    			Piece newPiece = new Piece(row, column, false);
-				        	this.place(newPiece, row, column);
-			    		} else
-			    		{
-							board[row][column] = null;
-			    		}
-			            
-					}			
-				}*/
-				this.drawSquare(row, column, false);
 				board[row][column] = null;
-				if (!test)
-				{
-					//TODO: call another method that popultes the board
-=======
-		//TODO: If test is true, call setUpBoard that will set pieces.
-		board = new Piece[BOARDSIZE][BOARDSIZE];
-		darkTurn = true;
-		selectedPiece = null;
-		
-		for (int row = 0; row < BOARDSIZE; row++)
-		{
-			for (int column = 0; column < BOARDSIZE; column++)
-			{
-				this.drawSquare(row, column);
-				board[row][column] = null;
-				if (!test)
-				{
-					setUpBoard();
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
-				}
 			}
+		}
+		if (!test)
+		{
+			setUpBoard();
 		}
 		drawBoard();
 	}
+	
+	//TODO: REMOVE DRAWBOARD, USE A METHOD TO SET SCALE
+	//TODO: MOVE DRAWPIECE TO SETUPBOARD AND MOVE DRAWSQUARE TO CONSTRUCTOR
 	
 	/**
 	 * Draws the board as a graphical interface. 
@@ -124,12 +80,15 @@ public class CheckerBoard
 			}
 		}
 	}
+	
+	//TODO: ELABORATE
 	/**
 	 * Positions the pieces for the start of the game. 
 	 * This includes placing dark pieces on the gray squares in the top three rows, as well as placing light pieces on the gray squares in the bottom three rows.
 	 */
 	public void setUpBoard()
 	{
+		//TODO: USE place()
 		//Let's do the top ones first!
 		for (int row = 0; row < 3; row++)
 		{
@@ -153,129 +112,56 @@ public class CheckerBoard
 	
 	
 	/**
-<<<<<<< HEAD
-	 * Places a piece on the board. It also updates the GUI, drawing a piece at the specified location.
-	 * @param piece The piece to be placed and drawn on the board.
-	 * @param destinationX The x position of the specified location.
-	 * @param destinationY The y position of the specified location.
-=======
 	 * Places and draws a given piece at a given position on the checker board. 
-	 * @param p The piece to be placed on the checkerBoard
+	 * @param piece The piece to be placed on the checkerBoard
 	 * @param destinationX The x position of the given location.
 	 * @param destinationY The y position of the given location.
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 	 */
 	public void place(Piece piece, int destinationX, int destinationY)
 	{
-<<<<<<< HEAD
 		board[destinationX][destinationY] = piece;
-		//Set internal position of the piece: don't use movement Piece.movement!
+		piece.pieceMove(destinationX, destinationY);
+		piece.reset();
 		this.drawPiece(piece);	
 	}
 
-	/**
-	 * Draws a piece on the GUI at its internal position. 
-	 * @param piece The piece to be drawn.
-	 */
-	public void drawPiece(Piece piece)
-	{
-		final double OFFSET = 0.5;
-=======
-		board[destinationX][destinationY] = p;
-		this.drawPiece(p);	
-	}
-
+	
 	/**
 	 * Draws a given piece at its internal location. It determines the piece's shape by its color and its royalty.
 	 * @param piece The given piece to be drawn.
 	 */
 	public void drawPiece(Piece piece)
 	{
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
+		final double OFFSET = 0.5;
 		if (piece != null)
 		{
-			if (piece.isDark() && piece.isKing())
-			{
-<<<<<<< HEAD
-				StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, "pawn-dark-crowned.png", 1, 1);
-			} else if (piece.isDark() && !piece.isKing())
-			{
-				StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, "pawn-dark.png", 1, 1);
-			} else if (!piece.isDark() && piece.isKing())
-			{
-				StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, "pawn-light-crowned.png", 1, 1);
-			} else
-			{
-				StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, "pawn-light.png", 1, 1);
-=======
-				StdDrawPlus.picture(piece.getX() + .5, piece.getY() + .5, "pawn-dark-crowned.png", 1, 1);
-			} else if (piece.isDark() && !piece.isKing())
-			{
-				StdDrawPlus.picture(piece.getX() + .5, piece.getY() + .5, "pawn-dark.png", 1, 1);
-			} else if (!piece.isDark() && piece.isKing())
-			{
-				StdDrawPlus.picture(piece.getX() + .5, piece.getY() + .5, "pawn-light-crowned.png", 1, 1);
-			} else
-			{
-				StdDrawPlus.picture(piece.getX() + .5, piece.getY() + .5, "pawn-light.png", 1, 1);
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
-			}
+			String color = "-" + (piece.isDark() ? "dark" : "light");
+			String royalty = piece.isKing() ? "-crowned" : "";
+			
+			StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, "pawn" + color + royalty, 1, 1);
 		}
 		
 	}
 	/**
-<<<<<<< HEAD
-	 * Removes and returns a piece from the CheckerBoard. It also updates the GUI, removing a piece at the specified location.
-	 * @param selectedX The x position of the specified location.
-	 * @param selectedY The y position of the specified location.
-	 * @return The piece that was removed, or null if there was no piece to remove/location is out of bounds.
-=======
 	 * Removes and returns the piece at the given location on the checker board. This also removes the piece's drawing from the graphical checker board.
 	 * @param selectedX The x position of the given location.
 	 * @param selectedY The y position of the given location.
 	 * @return The piece that was removed, or null if there was no piece to remove/location is invalid.
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 	 */
 	public Piece remove(int selectedX, int selectedY)
 	{
-		//REMOVE THESE
-		//HAVE SELECT REMOVE THESE
-		Piece temp = null;
-		if (selectedX < 0 || selectedX > BOARDSIZE - 1 ||
-<<<<<<< HEAD
-			selectedY < 0 || selectedY > BOARDSIZE - 1)
-		{
-			System.out.println("Location specified is out of bounds.");
-		} else if (board[selectedX][selectedY] == null)
-		{
-=======
-		    selectedY < 0 || selectedY > BOARDSIZE - 1)
-		{
-			System.out.println("Location given is out of bounds.");
-		} else if (board[selectedX][selectedY] == null)
-		{
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
-			System.out.println("No piece to remove.");
-		} else
-		{
-			temp = board[selectedX][selectedY];
-			board[selectedX][selectedY] = null;
-			this.drawSquare(selectedX, selectedY);
-		}
+		
+		Piece temp = board[selectedX][selectedY];
+		board[selectedX][selectedY] = null;
+		this.drawSquare(selectedX, selectedY);
 		return temp;
 	}
-
-	/**
-<<<<<<< HEAD
-	 * Draws a square on the board. Square color is determined by the square's location on the board.
-	 * @param selectedX The x position of the specified location.
-	 * @param selectedY The y position of the specified location.
-=======
+	//TODO: NO NEED FOR OVERLOADED SELECT
+	/*
 	 * Draws a square on the checker board at the given location. The color is determined by the given location.
 	 * If the (sum of the x and y position of the given location) % 2 == 0, then the square is gray. If not, the square is red. 
 	 * @param selectedX The x position of the given location.
 	 * @param selectedY The y position of the given location.
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 	 */
 	public void drawSquare(double selectedX, double selectedY)
 	{
@@ -283,15 +169,9 @@ public class CheckerBoard
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Draws a square on the checkerboard. However, if select is true, the square will be white. If not, the square color is determined by the square's location on the board.
-	 * @param selectedX The x position of the specified location.
-	 * @param selectedY The y position of the specified location.
-=======
 	 * Draws a square on the checker board at the given location. However, if select is true, the square will be white. If not, the square color is determined by the given location.
 	 * @param selectedX The x position of the given location.
 	 * @param selectedY The y position of the given location.
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 	 * @param select If select is true, the square is white, if not, the square will be drawn according to the board. 
 	 * If the (sum of the x and y position of the given location) % 2 == 0, then the square is gray. If not, the square is red.
 	 */
@@ -315,14 +195,11 @@ public class CheckerBoard
 	
 	/**
 	 * Checks and returns a boolean signifying if the player can end their current turn.
+	 * A player can end their turn when they have moved a piece.
 	 * @return True if the player can end, false if not. 
 	 */
 	public boolean canEndTurn()
 	{
-<<<<<<< HEAD
-		//Conditional operator makes this a one-liner :)
-=======
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 		return selectedPiece != null && selectedPiece.hasMoved();
 	}
 	/**
@@ -333,23 +210,10 @@ public class CheckerBoard
 	{
 		this.drawSquare(selectedPiece.getX(), selectedPiece.getY());
 		this.drawPiece(selectedPiece);
-		selectedPiece.setMoved(false);
-		selectedPiece.setCaptured(false);
+		selectedPiece.reset();
 		selectedPiece = null;
 		darkTurn = !darkTurn;
 	}
-<<<<<<< HEAD
-=======
-	
-	/**
-	 * Returns the boolean determining whose turn it is.
-	 * @return True is dark's turn, false is light's turn.
-	 */
-	public boolean isDarkTurn()
-	{
-		return darkTurn;
-	}
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 
 	/**
 	 * Determines if the game has ended, and if it has, who won. 
@@ -360,9 +224,9 @@ public class CheckerBoard
 	{
 		int light = 0;
 		int dark = 0;
-		for (int row = 0; row < BOARDSIZE; row++)
+		for (int row = 0; row < BOARD_LENGTH; row++)
 		{
-			for (int column = 0; column < BOARDSIZE; column++)
+			for (int column = 0; column < BOARD_LENGTH; column++)
 			{
 				if (board[row][column] != null)
 				{
@@ -395,8 +259,7 @@ public class CheckerBoard
 	public void move(int destinationX, int destinationY)
 	{
 		Piece movedPiece = remove(selectedPiece.getX(), selectedPiece.getY());
-		movedPiece.pieceMove(destinationX, destinationY);
-		place(movedPiece, movedPiece.getX(), movedPiece.getY());
+		place(movedPiece, destinationX, destinationY);
 	}
 	
 	/**
@@ -409,7 +272,7 @@ public class CheckerBoard
 	public void capture(int destinationX, int destinationY)
 	{
 		/*Let's do some math! In order to figure out the piece captured, 
-		 * we can use the midpoint formula to figure out the piece halfway between two points 
+		 * we can use the midpoint formula to figure out the location halfway between two points 
 		 * (e.g. the piece halfway between selectedPiece's original position and its new position is the captured piece!) */
 		remove((selectedPiece.getX() + destinationX) / 2, (selectedPiece.getY() + destinationY) / 2);
 		Piece movedPiece = remove(selectedPiece.getX(), selectedPiece.getY());
@@ -425,11 +288,10 @@ public class CheckerBoard
 	 */
 	public boolean isCaptureDistance(int destinationX, int destinationY)
 	{
-		return (Math.abs(selectedPiece.getX() - destinationX) == 2 && Math.abs(selectedPiece.getY() - destinationY) == 2);
-		
+		return (Math.abs(selectedPiece.getX() - destinationX) == 2 && Math.abs(selectedPiece.getY() - destinationY) == 2);	
 	}
 	
-	
+	//TODO: CHANGE THE COMMENTS FOR THIS ONE
 	/**
 	 * Determines if the position clicked can be selected.
 	 * First, the boundaries of the given position are checked.
@@ -445,12 +307,12 @@ public class CheckerBoard
 	 */
 	public boolean canSelect(int selectedX, int selectedY)
 	{	
-		if (selectedX > -1 && selectedX < BOARDSIZE && 
-			selectedY > -1 && selectedY < BOARDSIZE)
+		if (selectedX > -1 && selectedX < board.length && 
+			selectedY > -1 && selectedY < board.length)
 		{
 			if (board[selectedX][selectedY] != null)
 			{
-				if (darkTurn == board[selectedX][selectedY].isDark() && !board[selectedX][selectedY].hasMoved())
+				if (darkTurn == board[selectedX][selectedY].isDark() && (selectedPiece == null || !selectedPiece.hasMoved()))
 				{
 					return true;
 				}
@@ -483,29 +345,24 @@ public class CheckerBoard
 	 */
 	public boolean validMove(int destinationX, int destinationY)
 	{
-		if (destinationX > -1 && destinationX < board.length && 
-			destinationY > -1 && destinationY < board.length)
+		int incrementX = destinationX - selectedPiece.getX();
+		int incrementY = destinationY - selectedPiece.getY();
+		if (selectedPiece.isKing() || (selectedPiece.isDark() && incrementY > 0 || (!selectedPiece.isDark() && incrementY < 0)))
 		{
-			int incrementX = destinationX - selectedPiece.getX();
-			int incrementY = destinationY - selectedPiece.getX();
-			if (selectedPiece.isKing() || (selectedPiece.isDark() && incrementY > 0 || (!selectedPiece.isDark() && incrementY < 0)))
+			if (Math.abs(incrementY) == 1 && Math.abs(incrementX) == 1)
 			{
-				if (Math.abs(incrementY) == 1 && Math.abs(incrementX) == 1)
-				{
-					return true;
-				} else if (Math.abs(incrementY) == 2 && Math.abs(incrementX) == 2)
-				{
-					//Captured piece does not share the same color as selected piece.
-					int capturedX = (selectedPiece.getX() + destinationX) / 2;
-					int capturedY = (selectedPiece.getY() + destinationY) / 2;
-					return board[capturedX][capturedY] != null && (board[capturedX][capturedY].isDark() == !selectedPiece.isDark());
-				} else
-				{
-					return false;
-				}
-			} 
-			return false;
-		}
+				return true;
+			} else if (Math.abs(incrementY) == 2 && Math.abs(incrementX) == 2)
+			{
+				//Captured piece does not share the same color as selected piece.
+				int capturedX = (selectedPiece.getX() + destinationX) / 2;
+				int capturedY = (selectedPiece.getY() + destinationY) / 2;
+				return board[capturedX][capturedY] != null && (board[capturedX][capturedY].isDark() == !selectedPiece.isDark());
+			} else
+			{
+				return false;
+			}
+		} 
 		return false;
 	}
 	
@@ -546,7 +403,7 @@ public class CheckerBoard
         while (test.winner() ==  null)
         {
             
-             if (StdDrawPlus.mousePressed() && StdDrawPlus.mouseX() > -1 && StdDrawPlus.mouseX() < BOARDSIZE && StdDrawPlus.mouseY() > -1 && StdDrawPlus.mouseY() < BOARDSIZE)
+             if (StdDrawPlus.mousePressed() && StdDrawPlus.mouseX() > -1 && StdDrawPlus.mouseX() < BOARD_LENGTH && StdDrawPlus.mouseY() > -1 && StdDrawPlus.mouseY() < BOARD_LENGTH)
              {
             	 x = (int) StdDrawPlus.mouseX();
                  y = (int) StdDrawPlus.mouseY();

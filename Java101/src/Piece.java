@@ -1,31 +1,16 @@
-
-/*
- * 1. Read the spec and understand the overall picture.
-2a. Create the Piece class and implement its methods, starting from the
-simple and working your way to the more complicated. Don't implement
-move() yet. Use the validMove() method as you currently have it and finish
-implementing it which you implement the move() method.
-2b. Write JUnit tests for the Piece class for all methods except the
-move() method.
-3. Create Board.java so that when you type "java Board", it displays a
-blank 8x8 board. You will be implementing parts of your board as you go
-along.
-4a. Implement the pieceAt(), place(), and remove() methods for the Board
-class.
-4b. JUnit test may be written to test these methods unless it is easier to
-visually verify the correctness compared to writing a test. On the other
-hand, if you need to click around the GUI checkerboard quite a bit in
-order to check for correctness, then it is recommended that JUnit tests be
-written instead. Don't forget the "test" option for the Board constructor,
-which may be particularly handy for testing.
-4c. Modify your Board constructor so that it now starts up with the
-correct initial configuration of the board. You might want to utilize your
-newly written methods.
-
-
-
-*/
-//TODO: Make validMoves to display POSSIBLE moves
+/**
+ * Constructs a Piece object. The Piece object contains a position in Cartesian coordinates, a color, a royalty, and two states: moved and captured.
+ * The Cartesian coordinates represent the piece's location on a corresponding CheckerBoard's board.
+ * The color is represented as a boolean, with true indicating its allegiance to the player controlling the dark pieces, and false indicating its allegiance to the player controlling the light pieces.
+ * The royalty is represented as a boolean, with true indicating that the piece is crowned, and false indicating that the piece is not crowned.
+ * The boolean moved indicates whether or not the piece has moved; it is true if the piece has moved and false if it has not.
+ * The boolean captured indicates whether or not the piece has captured; it is true if the piece has captured and false if it has not.
+ * 
+ * 
+ * 
+ * @author hungw
+ *
+ */
 public class Piece 
 {
 	private int positionX;
@@ -36,13 +21,13 @@ public class Piece
 	private boolean captured;
 	
 	/**
-	 * Creates a piece with a specified x, y, color, and royalty. This is generally used for testing, as the royalty of the piece can be specialized.
-	 * @param x The first index of the coordinates of the piece created.
-	 * @param y The second index of the coordinates of the piece created.
-	 * @param dark The side on which the piece will be on.
-	 * @param king True if the piece is a king, false if not.
+	 * Creates a piece with a given x position, y position, color, and royalty.
+	 * @param x The x position of the given location.
+	 * @param y The y position of the given location.
+	 * @param dark The given side of the piece; this will be true if the piece is dark, and false if the piece is light.
+	 * @param king The given royalty of the piece; this will be true if the piece is crowned, and false if the piece is not.
 	 */
-	public Piece(int x, int y, boolean dark, boolean king)//just for testing purposes
+	public Piece(int x, int y, boolean dark, boolean king)
 	{
 		this.positionX = x;
 		this.positionY = y;
@@ -53,17 +38,16 @@ public class Piece
 	}
 	
 	/**
-	 * Creates a piece with a specified x, y, and color. The royalty is defaulted to uncrowned.
-	 * @param x The first index of the coordinates of the piece created. 
-	 * @param y The second index of the coordinates of the piece created.
-	 * @param side The side on which the piece will be on.
-	 * @param b The CheckerBoard that the piece is located on. 
+	 * Creates a piece with a given x, y, and color. The royalty is defaulted to uncrowned.
+	 * @param xPosition The x position of the given location.
+	 * @param yPosition The x position of the given location.
+	 * @param dark The given side of the piece; this will be true if the piece is dark, and false if the piece is light.
 	 */
-	public Piece(int x, int y, boolean side)
+	public Piece(int xPosition, int yPosition, boolean dark)
 	{
-		this.positionX = x;
-		this.positionY = y;
-		this.isDark = side;
+		this.positionX = xPosition;
+		this.positionY = yPosition;
+		this.isDark = dark;
 		this.isKing = false;
 		this.moved = false;
 		this.captured = false;
@@ -125,22 +109,22 @@ public class Piece
 	}
 	
 	/**
-	 * Denotes capture movement: changes the coordinates of the piece and sets moved and captured to true. 
+	 * Denotes capture movement: changes the coordinates of the piece and marks the piece as having moved and captured.
 	 * Note that this method is only a part of the true capture() method in CheckerBoard.
-	 * @param destinationX The x coordinate of the piece's specified new position after capturing.
-	 * @param destinationY The y coordinate of the piece's specified new position after capturing.
+	 * @param destinationX The x coordinate of the piece's given new position after capturing.
+	 * @param destinationY The y coordinate of the piece's given new position after capturing.
 	 */
-	public void captureMovement(int destinationX, int destinationY)
+	public void pieceCapture(int destinationX, int destinationY)
 	{
-		movement(destinationX, destinationY);
+		pieceMove(destinationX, destinationY);
 		captured = true;
 	}
 	/**
-	 * Denotes regular movement: changes the coordinates of the piece and sets moved to true.
-	 * @param destinationX The x coordinate of the piece's specified new position after moving.
-	 * @param destinationY The y coordinate of the piece's specified new position after moving.
+	 * Denotes regular movement: changes the coordinates of the piece and marks the piece as having moved and captured.
+	 * @param destinationX The x coordinate of the piece's given new position after moving.
+	 * @param destinationY The y coordinate of the piece's given new position after moving.
 	 */
-	public void movement(int destinationX, int destinationY)
+	public void pieceMove(int destinationX, int destinationY)
 	{
 		if (destinationX > -1 && destinationX < CheckerBoard.BOARDSIZE && 
 			destinationY > -1 && destinationY < CheckerBoard.BOARDSIZE)

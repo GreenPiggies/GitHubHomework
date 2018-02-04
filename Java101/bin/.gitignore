@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /.classpath
 /.project
 /.settings/
@@ -18,6 +19,8 @@
 /Board.class
 /CheckerBoard.class
 /CheckerBoardTest.class
+=======
+>>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 /CheckerBoardV2.class
 /CheckerComponenet.class
 /CheckerFrame$MousePressedListener.class

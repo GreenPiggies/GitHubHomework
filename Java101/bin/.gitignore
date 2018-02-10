@@ -1,26 +1,18 @@
-<<<<<<< HEAD
-/.classpath
-/.project
-/.settings/
 /Actor.class
 /Appointment.class
 /ArrayDemo.class
 /Bank.class
 /BankAccount.class
 /BankAccountExceptions.class
-/BankAccountsArray.dat
 /BankArray.class
 /BankConsole.class
 /BankInterestViewer$1addInterestListener.class
 /BankInterestViewer.class
 /BankTester.class
 /BetterBankConsole.class
-/BigBank.dat
 /Board.class
 /CheckerBoard.class
 /CheckerBoardTest.class
-=======
->>>>>>> ddc9011bc80a9b391ee5f1c80ffa773f3c985d76
 /CheckerBoardV2.class
 /CheckerComponenet.class
 /CheckerFrame$MousePressedListener.class
@@ -66,15 +58,3 @@
 /Tester.class
 /TimesTable.class
 /java101/
-/java101Homework17Part2.zip
-/junkOutput.txt
-/pawn-dark-crowned.png
-/pawn-dark.png
-/pawn-light-crowned.png
-/pawn-light.png
-/queen-dark.png
-/queen-dark2.png
-/sample.txt
-/sample2.txt
-/sheep.txt
-/sheepNumber.txt

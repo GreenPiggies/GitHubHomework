@@ -28,14 +28,17 @@ public class RandomMethodTest {
 		lexicographicOrder(cat, apple, bat);
 		lexicographicOrder(cat, bat, apple);
 		*/
-		LinkedList<String> list = new LinkedList<>();
+		/*ULinkedList<String> list = new LinkedList<>();
 		list.addLast("apple");
 		list.addLast("bat");
 		list.addLast("cat");
 		System.out.println(list);
 		reverse(list);
 		System.out.println(list);
-
+		*/
+		String bob = null;
+		System.out.println(true || bob.equals("cat"));
+		bob.equals("cat");
 		
 
 

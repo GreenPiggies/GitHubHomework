@@ -1,12 +1,10 @@
 /**
- * Constructs a Piece object. The Piece object contains a position in Cartesian coordinates, a color, a royalty, and two states: moved and captured.
+ * A Piece object contains a position in Cartesian coordinates, a color, a royalty, and two states: moved and captured.
  * The Cartesian coordinates represent the piece's location on a corresponding CheckerBoard's board.
  * The color is represented as a boolean, with true indicating its allegiance to the player controlling the dark pieces, and false indicating its allegiance to the player controlling the light pieces.
  * The royalty is represented as a boolean, with true indicating that the piece is crowned, and false indicating that the piece is not crowned.
  * The boolean moved indicates whether or not the piece has moved; it is true if the piece has moved and false if it has not.
  * The boolean captured indicates whether or not the piece has captured; it is true if the piece has captured and false if it has not.
- * 
- * 
  * 
  * @author hungw
  *
@@ -120,40 +118,29 @@ public class Piece
 		captured = true;
 	}
 	/**
-	 * Denotes regular movement: changes the coordinates of the piece and marks the piece as having moved and captured.
+	 * Denotes regular movement: changes the coordinates of the piece and marks the piece as having moved if the destination is valid.
 	 * @param destinationX The x coordinate of the piece's given new position after moving.
 	 * @param destinationY The y coordinate of the piece's given new position after moving.
 	 */
 	public void pieceMove(int destinationX, int destinationY)
 	{
-		if (destinationX > -1 && destinationX < CheckerBoard.BOARDSIZE && 
-			destinationY > -1 && destinationY < CheckerBoard.BOARDSIZE)
-		{
-			positionX = destinationX;
-			positionY = destinationY;
-			moved = true;
-		}
-		
+		positionX = destinationX;
+		positionY = destinationY;
+		moved = true;
 	}
 	
+	
+	//TODO: 
 	/**
-	 * Sets the boolean denoting if the piece has moved or not.
-	 * @param moved The new value denoting if the piece has moved or not.
+	 * 
 	 */
-	public void setMoved(boolean moved) 
+	public void reset()
 	{
-		this.moved = moved;		
+		this.moved = false;
+		this.captured = false;
 	}
 	
-	/**
-	 * Sets the boolean denoting if the piece has moved or not.
-	 * @param captured The new value denoting if the piece has moved or not.
-	 */
-	public void setCaptured(boolean captured) 
-	{
-		this.captured = captured;		
-	}
-	
+
 	
 	
 	

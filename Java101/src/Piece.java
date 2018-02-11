@@ -129,10 +129,8 @@ public class Piece
 		moved = true;
 	}
 	
-	
-	//TODO: 
 	/**
-	 * 
+	 * Resets the values of the piece's moved and captured variables to false.
 	 */
 	public void reset()
 	{

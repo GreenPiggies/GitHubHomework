@@ -17,7 +17,6 @@ import java.awt.Color;
  * Also, it repeatedly checks the board to determine if there is a winner.
  * 
  */
-//TODO: STDDRAW.SHOW AFTER EVERY DRAWING
 public class CheckerBoard
 {
 	private Piece[][] board;
@@ -25,9 +24,10 @@ public class CheckerBoard
 	private boolean darkTurn; 
 	private Piece selectedPiece;
 	
-	//TODO: FIX
 	/**
-	 * Creates a default checker board. 
+	 * Creates a CheckerBoard object.
+	 * This initializes the two dimensional array that holds the information of the checker board. It creates a normal checker board with pieces on the gray squares for the top three and bottom three rows. 
+	 * Also, it sets the current turn (in this case, it defaults to dark starting first) and initializes the selected piece to null. 
 	 */
 	public CheckerBoard()
 	{
@@ -42,6 +42,7 @@ public class CheckerBoard
 	public CheckerBoard(boolean test)
 	{	
 		board = new Piece[BOARD_LENGTH][BOARD_LENGTH];
+		setScale();
 		darkTurn = true;
 		selectedPiece = null;
 		for (int row = 0; row < board.length; row++)
@@ -55,54 +56,41 @@ public class CheckerBoard
 		{
 			setUpBoard();
 		}
-		drawBoard();
 	}
-	
-	//TODO: REMOVE DRAWBOARD, USE A METHOD TO SET SCALE
-	//TODO: MOVE DRAWPIECE TO SETUPBOARD AND MOVE DRAWSQUARE TO CONSTRUCTOR
-	
+		
 	/**
-	 * Draws the board as a graphical interface. 
+	 * Sets the scale of the graphical checker board. 
 	 */
-	public void drawBoard() 
+	public void setScale() 
 	{
 		StdDrawPlus.setXscale(0, board.length);
 		StdDrawPlus.setYscale(0, board.length);
-		for (int row = 0; row < board.length; row++)
-		{
-			for (int column = 0; column < board.length; column++)
-			{
-				drawSquare(row, column);
-				if (board[row][column] != null)
-				{
-					drawPiece(board[row][column]);
-				}
-			}
-		}
 	}
 	
-	//TODO: ELABORATE
 	/**
 	 * Positions the pieces for the start of the game. 
 	 * This includes placing dark pieces on the gray squares in the top three rows, as well as placing light pieces on the gray squares in the bottom three rows.
+	 * The pieces are also drawn on the graphical checker board.
 	 */
 	public void setUpBoard()
 	{
-		//TODO: USE place()
 		//Let's do the top ones first!
 		for (int row = 0; row < 3; row++)
 		{
 			for (int column = row % 2; column < board.length; column += 2)
 			{
-				board[row][column] = new Piece(row, column, true); //This creates a dark Piece with a given location of (row, column) 
+				place(new Piece(row, column, true), row, column);
+				drawPiece(board[row][column]);
 			}
 		}
 		
+		//Let's do the bottom ones next!
 		for (int row = board.length - 3; row < board.length; row++)
 		{
 			for (int column = row % 2; column < board.length; column += 2)
 			{
-				board[row][column] = new Piece(row, column, false); //This creates a light Piece with a given location of (row, column) 
+				place(new Piece(row, column, false), row, column);
+				drawPiece(board[row][column]);
 			}
 		}
 		
@@ -156,18 +144,6 @@ public class CheckerBoard
 		this.drawSquare(selectedX, selectedY);
 		return temp;
 	}
-	//TODO: NO NEED FOR OVERLOADED SELECT
-	/*
-	 * Draws a square on the checker board at the given location. The color is determined by the given location.
-	 * If the (sum of the x and y position of the given location) % 2 == 0, then the square is gray. If not, the square is red. 
-	 * @param selectedX The x position of the given location.
-	 * @param selectedY The y position of the given location.
-	 */
-	public void drawSquare(double selectedX, double selectedY)
-	{
-		this.drawSquare(selectedX, selectedY, false);	
-	}
-	
 	/**
 	 * Draws a square on the checker board at the given location. However, if select is true, the square will be white. If not, the square color is determined by the given location.
 	 * @param selectedX The x position of the given location.
@@ -175,9 +151,9 @@ public class CheckerBoard
 	 * @param select If select is true, the square is white, if not, the square will be drawn according to the board. 
 	 * If the (sum of the x and y position of the given location) % 2 == 0, then the square is gray. If not, the square is red.
 	 */
-	public void drawSquare(double selectedX, double selectedY, boolean select)
+	public void drawSquare(int selectedX, int selectedY)
 	{
-		if (select)
+		if (board[selectedX][selectedY].equals(selectedPiece))
 		{
 			//g2.setColor(Color.WHITE);
 			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
@@ -381,10 +357,10 @@ public class CheckerBoard
 		{
 			if (selectedPiece != null)
 			{
-				this.drawSquare(selectedPiece.getX(), selectedPiece.getY(), false);
+				this.drawSquare(selectedPiece.getX(), selectedPiece.getY());
 				this.drawPiece(selectedPiece);
 			}
-			this.drawSquare(x, y, true);
+			this.drawSquare(x, y);
             selectedPiece = board[x][y];
             this.place(selectedPiece, x, y);
 		} else

@@ -97,7 +97,6 @@ public class CheckerBoard
 	}
 	
 	
-	//Changed the comments to explain piece.pieceMove and piece.reset
 	/**
 	 * Places and draws a given piece at a given position on the checker board. 
 	 * This method also changes the piece's internal location, and resetting the piece's moved and captured variables.
@@ -160,7 +159,7 @@ public class CheckerBoard
 	public void drawSquare(int selectedX, int selectedY)
 	{
 		final double OFFSET = .5;
-		if (board[selectedX][selectedY] == (selectedPiece)) // 
+		if (board[selectedX][selectedY] == selectedPiece) 
 		{
 			//g2.setColor(Color.WHITE);
 			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
@@ -185,6 +184,7 @@ public class CheckerBoard
 	{
 		return selectedPiece != null && selectedPiece.hasMoved();
 	}
+	
 	/**
 	 * Ends the player's turn.
 	 * This method de-selects the currently selected piece by updating the graphical checker board (removing white highlight around selected piece) and the selected Piece variable, setting the piece's moved and captured variables to null, and finally changing the turn.
@@ -270,16 +270,18 @@ public class CheckerBoard
 	 */
 	public boolean isCaptureDistance(int destinationX, int destinationY)
 	{
-		return (Math.abs(selectedPiece.getX() - destinationX) == 2 && Math.abs(selectedPiece.getY() - destinationY) == 2);	
+		return ((selectedPiece.getX() - destinationX == 2 || selectedPiece.getX() - destinationX == -2) && 
+				(selectedPiece.getY() - destinationY == 2 || selectedPiece.getY() - destinationY == -2));	
 	}
 	
 	/**
 	 * Returns whether or not the location clicked can be selected.
+	 * Check the location to make sure its on the board first!
 	 * This will be true in one of two circumstances:
 	 * - the location selected is a piece, the piece is the player's piece, and no piece has been selected or the selected piece has not moved.
-	 * - the location selected is a square, and the selected piece has not moved or is planning to make another capture move.
-	 * @param selectedX The first index of the 2 dimensional array in which is to be checked for valid selection.
-	 * @param selectedY The second index of the 2 dimensional array in which is to be checked for valid selection.
+	 * - the location selected is a square, and the selected piece has not moved or is planning to make another valid capture move.
+	 * @param selectedX The x positon on the board that is specified to be checked.
+	 * @param selectedY The y positon on the board that is specified to be checked.
 	 * @return True if the position can be selected, false if not. 
 	 */
 	public boolean canSelect(int selectedX, int selectedY)
@@ -289,10 +291,7 @@ public class CheckerBoard
 		{
 			if (board[selectedX][selectedY] != null)
 			{
-				if (darkTurn == board[selectedX][selectedY].isDark() && (selectedPiece == null || !selectedPiece.hasMoved()))
-				{
-					return true;
-				}
+				return darkTurn == board[selectedX][selectedY].isDark() && (selectedPiece == null || !selectedPiece.hasMoved());
 			} else
 			{
 				if (selectedPiece != null && (!selectedPiece.hasMoved() || (selectedPiece.hasCaptured() && isCaptureDistance(selectedX, selectedY))))
@@ -305,10 +304,7 @@ public class CheckerBoard
 	}
 	
 	/**
-	 * Checks if a given location is a valid destination for the selectedPiece to be moved to,
-	 * given that:
-	 * The selectedPiece has not yet moved or it has captured and is making another capture.
-	 * The destination is an empty square.
+	 * Checks if a given location is a valid destination for the selectedPiece to be moved to.
 	 * 
 	 * This method first finds the distance from the selected piece to its destination. 
 	 * If the selected piece is crowned or the piece's destination is in the correct direction (dark goes down, light goes up), the distances are then checked.
@@ -324,29 +320,28 @@ public class CheckerBoard
 	{
 		int incrementX = destinationX - selectedPiece.getX();
 		int incrementY = destinationY - selectedPiece.getY();
+		
 		if (selectedPiece.isKing() || (selectedPiece.isDark() && incrementY > 0 || (!selectedPiece.isDark() && incrementY < 0)))
 		{
-			if (Math.abs(incrementY) == 1 && Math.abs(incrementX) == 1)
+			if ((incrementY == 1 || incrementY == -1) && (incrementX == 1 || incrementX == -1)) //Move
 			{
 				return true;
-			} else if (Math.abs(incrementY) == 2 && Math.abs(incrementX) == 2)
+			} else if ((incrementY == 2 || incrementY == -2) && (incrementX == 2 || incrementX == -2)) //Capture
 			{
 				//Captured piece does not share the same color as selected piece.
 				int capturedX = (selectedPiece.getX() + destinationX) / 2;
 				int capturedY = (selectedPiece.getY() + destinationY) / 2;
 				return board[capturedX][capturedY] != null && (board[capturedX][capturedY].isDark() == !selectedPiece.isDark());
-			} else
-			{
-				return false;
 			}
+			return false;
 		} 
 		return false;
 	}
 	
-
+	//TODO: CHECK MORE
 	/**
 	 * Selects the given location. 
-	 * First selectedPiece is checked to see if it is a piece or an empty square.
+	 * First the given location is checked to see if it contains a piece or is empty.
 	 * If the given location is not null (a piece), then selectedPiece is assigned to the piece at the given location and the GUI is updated.
 	 * If the given location is an empty square, then a move or capture is executed with selectedPiece and all necessary variables and GUIs.
 	 * @param x The first index of the 2 dimensional array in which is selected.
@@ -371,7 +366,7 @@ public class CheckerBoard
 	}
 	
 	
-	public static void main(String[] hi)
+	public static void main(String[] args)
 	{
 
 		CheckerBoard test = new CheckerBoard();
@@ -390,7 +385,7 @@ public class CheckerBoard
                  }
              }
 
-            // Monitors for space-bar presses. Switches turn whenever the space-bar is pressed. */
+            // Monitors for space-bar presses. Switches turn whenever the space-bar is pressed.
              if (StdDrawPlus.isSpacePressed())
              {
                  if (test.canEndTurn())

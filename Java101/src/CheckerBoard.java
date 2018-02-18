@@ -150,7 +150,6 @@ public class CheckerBoard
 		return removedPiece;
 	}
 	
-	//TODO: update comments
 	/**
 	 * Draws a square on the checker board at the given location. 
 	 * If the given location is also the location of the selected piece, the square is white. If not, the square color is determined by its location.
@@ -274,7 +273,6 @@ public class CheckerBoard
 		return (Math.abs(selectedPiece.getX() - destinationX) == 2 && Math.abs(selectedPiece.getY() - destinationY) == 2);	
 	}
 	
-	//TODO: CHANGE THE COMMENTS FOR THIS ONE
 	/**
 	 * Returns whether or not the location clicked can be selected.
 	 * This will be true in one of two circumstances:

@@ -9,6 +9,7 @@
  * @author hungw
  *
  */
+
 public class Piece 
 {
 	private int positionX;

@@ -7,7 +7,7 @@ import java.awt.Color;
 /*
  * The purpose of the CheckerBoard object is to represent a checker board and allow the user to play a game of checkers with it.
  * 
- * A CheckerBoard object contains a two-dimensional array of Piece objects, a boolean indicating the player turn, and a selected Piece object. There is also a constant boardsize that is used to determine the size of the board.
+ * A CheckerBoard object contains a two-dimensional array of Piece objects, a boolean indicating the player turn, and a selected Piece object. There is also a constant BOARD_LENGTH that is used to determine the size of the board.
  * The two-dimensional array of Piece objects represents the checker board and stores the values of the pieces of the checker board in their respective locations.
  * The boolean indicating player turn is true if the player controlling the dark pieces is currently having their turn.
  * The selected Piece object stores the piece at the location currently selected by the player. If the player has not yet selected a piece, the variable holds null.
@@ -50,6 +50,7 @@ public class CheckerBoard
 			for (int column = 0; column < board.length; column++)
 			{
 				board[row][column] = null;
+				drawSquare(row, column);
 			}
 		}
 		if (!test)
@@ -80,7 +81,6 @@ public class CheckerBoard
 			for (int column = row % 2; column < board.length; column += 2)
 			{
 				place(new Piece(row, column, true), row, column);
-				drawPiece(board[row][column]);
 			}
 		}
 		
@@ -90,7 +90,6 @@ public class CheckerBoard
 			for (int column = row % 2; column < board.length; column += 2)
 			{
 				place(new Piece(row, column, false), row, column);
-				drawPiece(board[row][column]);
 			}
 		}
 		
@@ -98,9 +97,10 @@ public class CheckerBoard
 	}
 	
 	
-	
+	//Changed the comments to explain piece.pieceMove and piece.reset
 	/**
 	 * Places and draws a given piece at a given position on the checker board. 
+	 * This method also changes the piece's internal location, and resetting the piece's moved and captured variables.
 	 * @param piece The piece to be placed on the checkerBoard
 	 * @param destinationX The x position of the given location.
 	 * @param destinationY The y position of the given location.
@@ -120,13 +120,18 @@ public class CheckerBoard
 	 */
 	public void drawPiece(Piece piece)
 	{
+		final String FILE_TYPE = ".png";
+		final String CROWN = "-crowned";
+		final String DARK = "dark";
+		final String LIGHT = "light";
 		final double OFFSET = 0.5;
+		final String PAWN = "pawn";
 		if (piece != null)
 		{
-			String color = "-" + (piece.isDark() ? "dark" : "light");
-			String royalty = piece.isKing() ? "-crowned" : "";
+			String color = "-" + (piece.isDark() ? DARK : LIGHT);
+			String royalty = piece.isKing() ? CROWN : "";
 			
-			StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, "pawn" + color + royalty, 1, 1);
+			StdDrawPlus.picture(piece.getX() + OFFSET, piece.getY() + OFFSET, PAWN + color + royalty + FILE_TYPE, 1, 1);
 		}
 		
 	}
@@ -139,21 +144,24 @@ public class CheckerBoard
 	public Piece remove(int selectedX, int selectedY)
 	{
 		
-		Piece temp = board[selectedX][selectedY];
+		Piece removedPiece = board[selectedX][selectedY];
 		board[selectedX][selectedY] = null;
 		this.drawSquare(selectedX, selectedY);
-		return temp;
+		return removedPiece;
 	}
+	
+	//TODO: update comments
 	/**
-	 * Draws a square on the checker board at the given location. However, if select is true, the square will be white. If not, the square color is determined by the given location.
+	 * Draws a square on the checker board at the given location. 
+	 * If the given location is also the location of the selected piece, the square is white. If not, the square color is determined by its location.
+	 * If the (sum of the x and y position of the given location) % 2 == 0, then the square is gray. If not, the square is red.
 	 * @param selectedX The x position of the given location.
 	 * @param selectedY The y position of the given location.
-	 * @param select If select is true, the square is white, if not, the square will be drawn according to the board. 
-	 * If the (sum of the x and y position of the given location) % 2 == 0, then the square is gray. If not, the square is red.
 	 */
 	public void drawSquare(int selectedX, int selectedY)
 	{
-		if (board[selectedX][selectedY].equals(selectedPiece))
+		final double OFFSET = .5;
+		if (board[selectedX][selectedY] == (selectedPiece)) // 
 		{
 			//g2.setColor(Color.WHITE);
 			StdDrawPlus.setPenColor(StdDrawPlus.WHITE);
@@ -166,7 +174,7 @@ public class CheckerBoard
 			//g2.setColor(Color.GRAY);
 			StdDrawPlus.setPenColor(StdDrawPlus.RED);
 		}
-		StdDrawPlus.filledSquare(selectedX + .5, selectedY + .5, .5);
+		StdDrawPlus.filledSquare(selectedX + OFFSET, selectedY + OFFSET, OFFSET);
 	}
 	
 	/**
@@ -239,8 +247,7 @@ public class CheckerBoard
 	}
 	
 	/**
-	 * Moves the selected piece to a given location. However, since this is a capture, the piece in between the origin and destination 
-	 * of the selectedPiece is removed. 
+	 * Moves the selected piece to a given location. However, since this is a capture, the piece in between the origin and destination of the selectedPiece is removed. 
 	 * The movement of the selected piece is accomplished by first removing it, then placing it at a given location. The internal location of the selected piece and its moved and captured status are also changed.
 	 * @param destinationX The x position of the given location.
 	 * @param destinationY The y position of the given location.
@@ -269,14 +276,10 @@ public class CheckerBoard
 	
 	//TODO: CHANGE THE COMMENTS FOR THIS ONE
 	/**
-	 * Determines if the position clicked can be selected.
-	 * First, the boundaries of the given position are checked.
-	 * After this, the position given is evaluated.
-	 * If the position given is a piece, the player turn, color, and moved aspect of the piece are checked. If the turn and color
-	 * both match and the player has not yet moved, the piece can be selected.
-	 * If the position given is an empty square, the value of select (select should not be null), the moved, captured, and distance to position
-	 * are all checked. If the piece has not moved or it has captured and is making another capture, then validMove is run. If validMove returns true,
-	 * the piece can be selected.
+	 * Returns whether or not the location clicked can be selected.
+	 * This will be true in one of two circumstances:
+	 * - the location selected is a piece, the piece is the player's piece, and no piece has been selected or the selected piece has not moved.
+	 * - the location selected is a square, and the selected piece has not moved or is planning to make another capture move.
 	 * @param selectedX The first index of the 2 dimensional array in which is to be checked for valid selection.
 	 * @param selectedY The second index of the 2 dimensional array in which is to be checked for valid selection.
 	 * @return True if the position can be selected, false if not. 

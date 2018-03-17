@@ -10,6 +10,9 @@
  *
  */
 
+//TODO: remove pieceCapture, use pieceMove to check distance to see if capture
+//TODO: CHECK COMMENTS BOI
+
 public class Piece 
 {
 	private int positionX;
@@ -106,6 +109,8 @@ public class Piece
 	{
 		return moved;
 	}
+	
+	//TODO: CHANGE THIS
 	
 	/**
 	 * Denotes capture movement: changes the coordinates of the piece and marks the piece as having moved and captured.

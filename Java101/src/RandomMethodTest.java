@@ -2,14 +2,42 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 //TODO: RESUBMIT
-public class RandomMethodTest {
+public class RandomMethodTest 
+{
+	
+	public static List<String> permutation(String str) 
+	{ 
+	    return permutation("", str); 
+	}
+
+	private static List<String> permutation(String prefix, String str) 
+	{
+		List<String> list = new ArrayList<String>();
+	    int length = str.length();
+	    if (length == 0) 
+	    {
+	    	list.add(prefix);
+	    }
+	    else 
+	    {
+	        for (int i = 0; i < length; i++)
+	        {
+	            list.addAll(permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, length)));
+	        }
+	    }
+    	return list;
+	}
 	
 	public static void main(String[] args)
 	{
+		
+		System.out.println(permutation("abc"));
 		/*System.out.println(findBiggest(2, 3, 5));
 		System.out.println(findBiggest(3, 2, 5));
 		System.out.println(findBiggest(5, 2, 3));
@@ -36,9 +64,6 @@ public class RandomMethodTest {
 		reverse(list);
 		System.out.println(list);
 		*/
-		String bob = null;
-		System.out.println(true || bob.equals("cat"));
-		bob.equals("cat");
 		
 
 

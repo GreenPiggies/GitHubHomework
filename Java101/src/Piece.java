@@ -110,29 +110,23 @@ public class Piece
 		return moved;
 	}
 	
-	//TODO: CHANGE THIS
 	
 	/**
-	 * Denotes capture movement: changes the coordinates of the piece and marks the piece as having moved and captured.
-	 * Note that this method is only a part of the true capture() method in CheckerBoard.
-	 * @param destinationX The x coordinate of the piece's given new position after capturing.
-	 * @param destinationY The y coordinate of the piece's given new position after capturing.
-	 */
-	public void pieceCapture(int destinationX, int destinationY)
-	{
-		pieceMove(destinationX, destinationY);
-		captured = true;
-	}
-	/**
-	 * Denotes regular movement: changes the coordinates of the piece and marks the piece as having moved if the destination is valid.
+	 * Changes the internal position of the piece as well as setting the moved variable to true. If the move is a capture, the captured variable is also set to true.
 	 * @param destinationX The x coordinate of the piece's given new position after moving.
 	 * @param destinationY The y coordinate of the piece's given new position after moving.
 	 */
 	public void pieceMove(int destinationX, int destinationY)
 	{
+		if ((positionX - destinationX == 2 || positionX - destinationX == -2) && 
+			(positionY - destinationY == 2 || positionY - destinationY == -2))
+		{
+			captured = true;
+		}
 		positionX = destinationX;
 		positionY = destinationY;
 		moved = true;
+		
 	}
 	
 	/**

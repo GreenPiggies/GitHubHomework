@@ -258,13 +258,9 @@ public class CheckerBoard {
 		place(movedPiece, destinationX, destinationY);
 	}
 
-	//TODO: When you change this, update the comments you silly billy
 	/**
-	 * Moves the selected piece to a given location. However, since this is a
-	 * capture, the piece in between the origin and destination of the selectedPiece
-	 * is removed. The movement of the selected piece is accomplished by first
-	 * removing it, then placing it at a given location. The internal location of
-	 * the selected piece and its moved and captured status are also changed.
+	 * Move the selected piece to a given location and captures the piece between the selected piece's location and the given location.
+	 * The method uses the midpoint formula to remove the captured piece, and then calls the move() method to move the selected piece to the given location.
 	 * 
 	 * @param destinationX
 	 *            The x position of the given location.
@@ -279,9 +275,7 @@ public class CheckerBoard {
 		 * position is the captured piece!)
 		 */
 		remove((selectedPiece.getX() + destinationX) / 2, (selectedPiece.getY() + destinationY) / 2);
-		Piece movedPiece = remove(selectedPiece.getX(), selectedPiece.getY());
-		movedPiece.pieceCapture(destinationX, destinationY);
-		place(movedPiece, movedPiece.getX(), movedPiece.getY());
+		move(destinationX, destinationY);
 	}
 
 	/**
@@ -330,22 +324,18 @@ public class CheckerBoard {
 		}
 		return false;
 	}
-
-	//TODO: UPDATE COMMENTS
 	
 	/**
-	 * Checks if a given location is a valid destination for the selectedPiece to be
+	 * Checks if a given location is a valid destination for the selected piece to be
 	 * moved to.
 	 * 
-	 * This method first finds the distance from the selected piece to its
-	 * destination. If the selected piece is crowned or the piece's destination is
-	 * in the correct direction (dark goes down, light goes up), the distances are
-	 * then checked. If the absolute value of both x and y distances are 1, then
-	 * true is returned. If the absolute value of both x and y distances are 2, the
-	 * location between the selected piece's location and its destination is
-	 * checked. If this location contains a piece of the opposite color to the
-	 * selected piece, then true is returned. In any other situation, the method
-	 * returns false;
+	 * First, the selected piece's royalty and the direction of its movement is checked. 
+	 * If the piece is crowned (can move in any direction) or the direction in which the piece is moving is appropriate for its color,
+	 * the distance of the move is checked.
+	 * If the distance of the move is representative of a regular move (diagonal by one tile), the method returns true.
+	 * If the distance of the move is representative of a capture move (diagonal by two tiles), 
+	 * the method checks the location between the selected piece and the destination.
+	 * 	If this location contains a piece of the opposite color of the selected piece, the method returns true.
 	 * 
 	 * @param destinationX
 	 *            The x position of the given location.
@@ -375,30 +365,25 @@ public class CheckerBoard {
 		return false;
 	}
 
-	// TODO: CHECK MORE
 	/**
-	 * Selects the given location. First the given location is checked to see if it
-	 * contains a piece or is empty. If the given location is not null (a piece),
-	 * then selectedPiece is assigned to the piece at the given location and the GUI
-	 * is updated. If the given location is an empty square, then a move or capture
-	 * is executed with selectedPiece and all necessary variables and GUIs.
+	 * Selects the given location.
 	 * 
-	 * @param x
-	 *            The first index of the 2 dimensional array in which is selected.
-	 * @param y
-	 *            The second index of the 2 dimensional array in which is selected.
+	 * First, the method checks if the specified location contains a piece.
+	 * If the specified location contains a piece, the square at the piece's location is colored white.
+	 * If the specified location does not contain a piece, the selected piece is moved to the specified location.
+	 * @param x The first index of the 2 dimensional array in which is selected.
+	 * @param y The second index of the 2 dimensional array in which is selected.
 	 */
-	public void select(int x, int y) {
-		if (board[x][y] != null) {
-			if (selectedPiece != null) {
-				this.drawSquare(selectedPiece.getX(), selectedPiece.getY());
-				this.drawPiece(selectedPiece);
-			}
-			this.drawSquare(x, y);
+	public void select(int x, int y) 
+	{
+		if (board[x][y] != null)
+		{
 			selectedPiece = board[x][y];
-			this.place(selectedPiece, x, y);
-		} else {
-			selectedPiece.pieceMove(x, y);
+			drawSquare(x, y);
+			drawPiece(selectedPiece);
+		} else 
+		{
+			move(x, y);
 		}
 	}
 

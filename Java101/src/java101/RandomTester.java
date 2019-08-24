@@ -3,21 +3,32 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 
 
 public class RandomTester 
 {
-
+	public static List<String> perm(String word)
+	{
+		List<String> combos = new ArrayList<String>();
+		if (word.length() == 1)
+		{
+			combos.add(word);
+		} else
+		{
+			char[] letters = word.toCharArray();
+			for (int i = 0; i < letters.length; i++)
+			{
+				
+			}
+		}
+	}
+	
 	public static void main(String[] args) 
 	{
-		int[] array = {5, 7, 8, 9, 6, 10};
-		IntArrays intArray = new IntArrays(array);
-		intArray.add(11, 2);
-		for (int index = 0; index < intArray.length; index++)
-		{
-			System.out.println(intArray[index] + "\t");
-		}
+		
 		
 	
 		/*int bob = 9;
